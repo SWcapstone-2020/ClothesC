@@ -32,6 +32,8 @@ public class CameraActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE =672;
     private String imageFilePath;
     private Uri photoUri;
+    final int CAMERA_REQUEST_CODE = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivity(intent);
+                startActivityForResult(intent, CAMERA_REQUEST_CODE);
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     File photoFile = null;
                     try {
@@ -111,6 +113,7 @@ public class CameraActivity extends AppCompatActivity {
             ((ImageView) findViewById(R.id.iv_result)).setImageBitmap(rotate(bitmap, exifDegree));
 
         }
+
 
     }
 

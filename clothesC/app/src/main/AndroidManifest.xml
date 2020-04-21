@@ -32,9 +32,9 @@
 
         <activity android:name=".PasswordResetActivity">
         </activity>
-
+<!--        "com.example.prac2"-->
         <provider
-            android:authorities="com.example.prac2"
+            android:authorities="${applicationId}"
             android:name="androidx.core.content.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
