@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
         findViewById(R.id.cameraButton).setOnClickListener(onClickListener);
-
+        findViewById(R.id.clothesPageButton).setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener=new View.OnClickListener() {
@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.cameraButton:
                     changeCamera();
+                    break;
+                case R.id.clothesPageButton:
+                    startClothesItemPageActivity();
                     break;
 
             }
@@ -49,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void changeCamera(){
         Intent intent=new Intent(this, CameraActivity.class);
+        startActivity(intent);
+    }
+
+    private void startClothesItemPageActivity(){
+        Intent intent=new Intent(this,ClothesItemPageActivity.class);
         startActivity(intent);
     }
 }

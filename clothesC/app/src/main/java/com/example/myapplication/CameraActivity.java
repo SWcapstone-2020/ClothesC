@@ -114,7 +114,6 @@ public class CameraActivity extends AppCompatActivity {
 
         }
 
-
     }
 
     private int exifOrientationToDegress(int exifOrientation) {
