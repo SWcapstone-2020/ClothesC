@@ -18,6 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<!--        android:name="android.support.multidex.MultiDexApplication"-->
+
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -30,6 +32,7 @@
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".PasswordResetActivity"></activity>
         <activity android:name=".CameraActivity"></activity>
+        <activity android:name=".InfoActivity"></activity>
         <activity android:name=".ClothesItemPageActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <!--        "com.example.prac2"-->

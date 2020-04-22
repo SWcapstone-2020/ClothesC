@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/login"
+        style="bold"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:gravity="center"
+        android:text="회원정보"
+        android:textColor="#000000"
+        android:textSize="24sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="10px">
+
+        <EditText
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="닉네임"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/BirthdayEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="생년월일"
+            android:inputType="date" />
+
+        <Button
+            android:id="@+id/checkButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="확인" />
+
+    </LinearLayout>
+
+</LinearLayout>
