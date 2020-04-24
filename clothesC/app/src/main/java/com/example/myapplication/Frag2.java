@@ -16,7 +16,7 @@ public class Frag2 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.activity_camerabt,container,false);
+        view = inflater.inflate(R.layout.activity_camera,container,false);
         return view;
     }
 }

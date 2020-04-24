@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fm;
     private FragmentTransaction ft;
     private Frag1 activity_longoutbt;
-    private Frag2 activity_camerabt;
+    private Frag2 activity_camera;
     private Frag3 activity_clothesbt;
 
     @Override
@@ -63,41 +63,35 @@ public class MainActivity extends AppCompatActivity {
         });
 
         activity_longoutbt = new Frag1();
-        activity_camerabt = new Frag2();
+        activity_camera = new Frag2();
         activity_clothesbt = new Frag3();
         setFrag(0); //첫 프래그먼트 화면을 무엇으로 지정해줄 것인지 선택.
     }
 
 
-    /*
-    View.OnClickListener onClickListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.logoutButton:
-                    FirebaseAuth.getInstance().signOut(); //로그아웃 시켜주는 함수
-                    startActivity(LoginActivity.class);
-                    break;
-                case R.id.cameraButton:
-                    changeCamera();
-                    break;
-                case R.id.clothesPageButton:
-                    startClothesItemPageActivity();
-                    break;
+//    View.OnClickListener onClickListener=new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            switch (v.getId()){
+//                case R.id.logoutButton:
+//                    startActivity(LoginActivity.class);
+//                    break;
+//                case R.id.action_camera:
+//                    startActivity(CameraActivity.class);
+//                    break;
+//                case R.id.clothesPageButton:
+//                    startClothesItemPageActivity();
+//                    break;
+//
+//            }
+//        }
+//    };
 
-            }
-        }
-    };
-    */
     private void startActivity(Class c){
         Intent intent=new Intent(this,c);
         startActivity(intent);
     }
 
-    private void changeCamera(){
-        Intent intent=new Intent(this, CameraActivity.class);
-        startActivity(intent);
-    }
 
     private void startClothesItemPageActivity(){
         Intent intent=new Intent(this,ClothesItemPageActivity.class);
@@ -114,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
                 break;
             case 1:
-                ft.replace(R.id.main_frame,activity_camerabt);
+                ft.replace(R.id.main_frame,activity_camera);
                 ft.commit();
                 break;
             case 2:
