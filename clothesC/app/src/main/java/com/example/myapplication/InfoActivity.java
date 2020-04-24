@@ -23,21 +23,23 @@ public class InfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        findViewById(R.id.checkButton).setOnClickListener(onClickListener);
+        findViewById(R.id.profileSignButton).setOnClickListener(onClickListener);
+
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.checkButton:
-                    profileUpdate();
+                case R.id.profileSignButton:
+                    profileSign();
                     break;
             }
 
         }
     };
-    private void profileUpdate(){
+
+    private void profileSign(){
         String name=((EditText)findViewById(R.id.nameEditText)).getText().toString(); // 닉네임 받아옴
         String birth=((EditText)findViewById(R.id.BirthdayEditText)).getText().toString(); //생년월일 받아옴
 
