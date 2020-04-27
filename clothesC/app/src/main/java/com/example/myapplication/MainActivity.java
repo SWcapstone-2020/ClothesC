@@ -6,16 +6,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
 //        findViewById(R.id.cameraButton).setOnClickListener(onClickListener);
         findViewById(R.id.clothesPageButton).setOnClickListener(onClickListener);
-
 
         //하단뷰 함수
         bottomNavigationView = findViewById(R.id.bottomNavi);
@@ -76,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(LoginActivity.class);
                     break;
                 case R.id.clothesPageButton:
-                    startClothesItemPageActivity();
+                    startActivity(ClothesItemActivity.class);
                     break;
 
             }
@@ -85,12 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void startActivity(Class c){
         Intent intent=new Intent(this,c);
-        startActivity(intent);
-    }
-
-
-    private void startClothesItemPageActivity(){
-        Intent intent=new Intent(this,ClothesItemPageActivity.class);
         startActivity(intent);
     }
 

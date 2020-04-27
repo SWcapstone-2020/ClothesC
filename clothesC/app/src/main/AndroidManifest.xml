@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
         android:name="android.hardware.camera2"
@@ -18,9 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<!--        android:name="android.support.multidex.MultiDexApplication"-->
-
-
+        <activity android:name=".SwitchLayoutActivity"></activity>
+        <!-- android:name="android.support.multidex.MultiDexApplication" -->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,24 +27,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity"></activity>
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".PasswordResetActivity"></activity>
-        <activity android:name=".CameraActivity"></activity>
-        <activity android:name=".InfoActivity"></activity>
-        <activity android:name=".ClothesItemPageActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
-
-        <!--        "com.example.prac2"-->
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".PasswordResetActivity" />
+        <activity android:name=".CameraActivity" />
+        <activity android:name=".InfoActivity" />
+        <activity
+            android:name=".ClothesItemActivity"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- "com.example.prac2" -->
         <provider
-            android:authorities="${applicationId}"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
     </application>
 
 </manifest>

@@ -7,20 +7,21 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
+import android.view.View;
 import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 
-public class ClothesItemPageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ClothesItemActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_clothes_item_page);
+        setContentView(R.layout.activity_clothes_item);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -76,27 +77,29 @@ public class ClothesItemPageActivity extends AppCompatActivity implements Naviga
         int id = item.getItemId();
         switch (id) {
             case R.id.navigation_item_outer:
-                Toast.makeText(ClothesItemPageActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                Intent switchLayout = new Intent(this, SwitchLayoutActivity.class);
+                startActivity(switchLayout);
+                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.navigation_item_tops:
-                Toast.makeText(ClothesItemPageActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.navigation_item_bottoms:
-                Toast.makeText(ClothesItemPageActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.navigation_item_shoes:
-                Toast.makeText(ClothesItemPageActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_sub_menu_item01:
-                Toast.makeText(ClothesItemPageActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_sub_menu_item02:
-                Toast.makeText(ClothesItemPageActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                 break;
 
         }
