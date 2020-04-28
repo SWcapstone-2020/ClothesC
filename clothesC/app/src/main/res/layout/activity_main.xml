@@ -25,6 +25,13 @@
             android:layout_weight="1"
             android:text="옷장" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="홈화면 입니다."
+            android:textSize="40sp"/>
+
+
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

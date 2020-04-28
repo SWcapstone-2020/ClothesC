@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private Frag1 activity_main;
     private Frag2 activity_camera;
     private Frag3 activity_clothesbt;
+    private Frag4 activity_person;
+    private Frag5 activity_write;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_create:
                         setFrag(2);
                         break;
+
+                    case R.id.action_clothe:
+                        setFrag(3);
+                        break;
+
+                    case R.id.action_profile:
+                        setFrag(4);
+                        break;
                 }
                 return true;
             }
@@ -60,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
         activity_main = new Frag1();
         activity_camera = new Frag2();
         activity_clothesbt = new Frag3();
+        activity_person = new Frag4();
+        activity_write = new Frag5();
+
         setFrag(0); //첫 프래그먼트 화면을 무엇으로 지정해줄 것인지 선택.
     }
 
@@ -99,6 +112,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 2:
                 ft.replace(R.id.main_frame,activity_clothesbt);
+                ft.commit();
+                break;
+            case 3:
+                ft.replace(R.id.main_frame,activity_person);
+                ft.commit();
+                break;
+            case 4:
+                ft.replace(R.id.main_frame,activity_write);
                 ft.commit();
                 break;
 

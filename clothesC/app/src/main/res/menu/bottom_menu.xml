@@ -9,12 +9,24 @@
     <item
         android:id="@+id/action_camera"
         android:enabled="true"
-        android:icon="@drawable/ic_camera_alt_black_24dp"
-        android:title="카메라"/>
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="검색"/>
 
     <item
         android:id="@+id/action_create"
         android:enabled="true"
         android:icon="@drawable/ic_create_black_24dp"
-        android:title="글쓰기"/>
+        android:title="게시판"/>
+
+    <item
+        android:id="@+id/action_clothe"
+        android:enabled="true"
+        android:icon="@drawable/ic_photo_library_black_24dp"
+        android:title="옷장"/>
+
+    <item
+        android:id="@+id/action_profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="프로필"/>
 </menu>
