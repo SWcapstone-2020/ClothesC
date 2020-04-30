@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.signup;
 
 public class MemberInfo {
     private String name;

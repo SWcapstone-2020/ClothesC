@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
-
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -45,6 +45,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.android.support:design:29.0.0'
     implementation 'com.google.android.material:material:1.2.0-alpha06'
+
+    implementation "com.android.support:support-vector-drawable:29.0.3"
+    implementation "com.android.support:animated-vector-drawable:29.0.3"
 
 
 }

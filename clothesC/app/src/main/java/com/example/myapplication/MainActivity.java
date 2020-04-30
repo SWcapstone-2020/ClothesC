@@ -2,15 +2,13 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.myapplication.Fragment.FragmentHome;
+import com.example.myapplication.signup.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(LoginActivity.class);
         } //로그인이 되어있지 않으면 activity_main.xml을 실행하지 않고 startLoginActivity.java 실행하여 로그인 화면으로 넘어감
 
-//        findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
+        findViewById(R.id.profileButton).setOnClickListener(onClickListener);
         findViewById(R.id.cameraButton).setOnClickListener(onClickListener);
         findViewById(R.id.clothesPageButton).setOnClickListener(onClickListener);
 
@@ -42,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-//                case R.id.logoutButton:
-//                    startActivity(LoginActivity.class);
-//                    break;
+                case R.id.profileButton:
+                    startActivity(ProfileActivity.class);
+                    break;
                 case R.id.clothesPageButton:
                     startActivity(ClothesItemActivity.class);
                     break;

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="84f0932c-aeba-496e-bbad-ae41e9c98126" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../java/com/example/myapplication/ProfileActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/activity_profile.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/example/myapplication/InfoActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/example/myapplication/signup/InfoActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/example/myapplication/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/example/myapplication/signup/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/example/myapplication/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/example/myapplication/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/example/myapplication/MemberInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/example/myapplication/signup/MemberInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/example/myapplication/PasswordResetActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/example/myapplication/signup/PasswordResetActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/example/myapplication/SignUpActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/example/myapplication/signup/SignUpActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activity_info.xml" beforeDir="false" afterPath="$PROJECT_DIR$/activity_info.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/activity_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activity_password_reset.xml" beforeDir="false" afterPath="$PROJECT_DIR$/activity_password_reset.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activity_sign_up.xml" beforeDir="false" afterPath="$PROJECT_DIR$/activity_sign_up.xml" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../../.." />
+  </component>
+  <component name="ProjectId" id="1bFYNnrVRuy8Xkl1t1JsgPnXOLQ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../.." />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="84f0932c-aeba-496e-bbad-ae41e9c98126" name="Default Changelist" comment="" />
+      <created>1588229270667</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1588229270667</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
