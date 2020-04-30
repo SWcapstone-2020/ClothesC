@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../ClothesC-clothesC-My Application.iml" filepath="$PROJECT_DIR$/../ClothesC-clothesC-My Application.iml" group="My Application" />
+      <module fileurl="file://$PROJECT_DIR$/ClothesC-clothesC-app.iml" filepath="$PROJECT_DIR$/ClothesC-clothesC-app.iml" group="My Application/app" />
       <module fileurl="file://$PROJECT_DIR$/../My Application.iml" filepath="$PROJECT_DIR$/../My Application.iml" group="My Application" />
       <module fileurl="file://$PROJECT_DIR$/.idea/app.iml" filepath="$PROJECT_DIR$/.idea/app.iml" group="My Application/app" />
       <module fileurl="file://$PROJECT_DIR$/../clothesC-My Application.iml" filepath="$PROJECT_DIR$/../clothesC-My Application.iml" group="My Application" />
