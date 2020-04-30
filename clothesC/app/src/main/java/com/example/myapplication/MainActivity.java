@@ -15,9 +15,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView bottomNavigationView; //바텀 네비게이션 뷰
-    private FragmentManager fm;
-    private FragmentTransaction ft;
+//    private BottomNavigationView bottomNavigationView; 바텀 네비게이션 뷰
+//    private FragmentManager fm;
+//    private FragmentTransaction ft;
 //    private FragmentHome fragment_home;
 
     @Override
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent=new Intent(this,c);
         startActivity(intent);
     }
+
 
 /*        bottomNavigationView = findViewById(R.id.bottomNavi);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

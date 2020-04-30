@@ -1,8 +1,16 @@
 package com.example.myapplication;
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.EditText;
+import android.widget.TextClock;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -10,54 +18,74 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.signup.LoginActivity;
 import com.example.myapplication.signup.MemberInfo;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.IOException;
+
 public class ProfileActivity extends AppCompatActivity {
-//    private static final String TAG="InfoActivity";
+    private static final String TAG = "ProfileActivity";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
-
+        findViewById(R.id.checkButton).setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.logoutButton:
-                    startActivity(LoginActivity.class);
-                    break;
+        switch (v.getId()){
+            case R.id.logoutButton:
+                startActivity(LoginActivity.class);
+                finish();
+                break;
+            case R.id.checkButton:
+                getProfile();
+                break;
             }
-
         }
     };
 
-/*
     private void getProfile(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         if (user != null) {
-            // Name, email address, and profile photo Url
-            String name = user.getDisplayName();
-            String birth = user.getEmail();
-//            Uri photoUrl = user.getPhotoUrl();
-
-            // Check if user's email is verified
+            db.collection("users").document(user.getUid()).get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            String name = documentSnapshot.get("name").toString();
+                            String birth = documentSnapshot.get("birth").toString();
+                            TextView textName=(TextView)findViewById(R.id.nameEditText);
+                            textName.setText(name);
+                            TextView textBirth=(TextView)findViewById(R.id.BirthdayEditText);
+                            textBirth.setText(birth);
+//                            Log.d(TAG, "onComplete: " +documentSnapshot.get("name").toString());
+                        }
+                    })
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) { //성공시 출력
+//                            Log.d(TAG, "onComplete");
+                        }
+                    });
             boolean emailVerified = user.isEmailVerified();
-
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getIdToken() instead.
             String uid = user.getUid();
         }
     }
-*/
+
+
 
     private void startToast(String msg){
         Toast.makeText(this, msg,Toast.LENGTH_SHORT).show();
@@ -67,6 +95,7 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent=new Intent(this,c);
         startActivity(intent);
     }
+
 
 
 

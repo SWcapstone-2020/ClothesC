@@ -87,7 +87,6 @@ public class CameraActivity extends AppCompatActivity {
         return image;
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
