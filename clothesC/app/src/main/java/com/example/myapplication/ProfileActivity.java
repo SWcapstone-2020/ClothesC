@@ -37,26 +37,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
-        findViewById(R.id.checkButton).setOnClickListener(onClickListener);
-    }
-
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.logoutButton:
-                startActivity(LoginActivity.class);
-                finish();
-                break;
-            case R.id.checkButton:
-                getProfile();
-                break;
-            }
-        }
-    };
-
-    private void getProfile(){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -83,7 +63,24 @@ public class ProfileActivity extends AppCompatActivity {
             boolean emailVerified = user.isEmailVerified();
             String uid = user.getUid();
         }
+
+
+//        ((ProfileActivity)mContext).getProfile();
+
+        findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
     }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.logoutButton:
+                startActivity(LoginActivity.class);
+                finish();
+                break;
+            }
+        }
+    };
 
 
 
