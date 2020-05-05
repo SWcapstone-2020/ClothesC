@@ -28,4 +28,11 @@
         android:layout_weight="1"
         android:text="프로필" />
 
+    <Button
+        android:id="@+id/templogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="임시 로그아웃" />
+
 </LinearLayout>

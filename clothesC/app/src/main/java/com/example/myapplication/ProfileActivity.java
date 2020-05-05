@@ -34,6 +34,7 @@ import java.io.InputStream;
 public class ProfileActivity extends AppCompatActivity {
     private static final String TAG = "ProfileActivity";
     ImageView imageView;
+    FirebaseAuth auth;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,15 +84,16 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(LoginActivity.class);
                 finish();
                 break;
-            case R.id.profileImgButton:
-                Intent intent=new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent,1);
             }
         }
     };
 
+    private void logout(){
+        auth.signOut();
+//        LoginManager.getInstance().logOut();
+        finish();
+        startActivity(LoginActivity.class);
+    }
 
 
     private void startToast(String msg){
@@ -103,25 +105,5 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                try {
-                    // 선택한 이미지에서 비트맵 생성
-                    InputStream in = getContentResolver().openInputStream(data.getData());
-                    Bitmap img = BitmapFactory.decodeStream(in);
-                    in.close();
-                    // 이미지 표시
-                    imageView.setImageBitmap(img);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
 
 }

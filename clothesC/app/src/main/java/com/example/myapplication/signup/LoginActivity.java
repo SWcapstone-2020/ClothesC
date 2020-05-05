@@ -33,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
         //▲ activity_log xml에서 id값이 signButton을 가지는 애가 클릭 될때 onClickListener 함수 발생
         findViewById(R.id.searchPassword).setOnClickListener(onClickListener);
 
+        findViewById(R.id.temp).setOnClickListener(onClickListener);
+
     }
 
 
@@ -59,6 +61,9 @@ public class LoginActivity extends AppCompatActivity {
                 case R.id.searchPassword:
                     startActivity(PasswordResetActivity.class);
                     break;
+
+                case R.id.temp:
+                    startActivity(InfoActivity.class);
             }
         }
     }; //버튼이 눌릴 때 수행할 반응을 적어둔 함수

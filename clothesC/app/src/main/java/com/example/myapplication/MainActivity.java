@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.profileButton).setOnClickListener(onClickListener);
         findViewById(R.id.cameraButton).setOnClickListener(onClickListener);
         findViewById(R.id.clothesPageButton).setOnClickListener(onClickListener);
+        findViewById(R.id.templogout).setOnClickListener(onClickListener);
 
     }
 
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.cameraButton:
                     startActivity(CameraActivity.class);
+                case R.id.templogout:
+                    startActivity(LoginActivity.class);
             }
         }
     };
