@@ -52,13 +52,6 @@
 
         </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/profileImgButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button"
-            android:layout_marginTop="30dp"/>
-
         <EditText
             android:id="@+id/nameEditText"
             android:layout_width="match_parent"

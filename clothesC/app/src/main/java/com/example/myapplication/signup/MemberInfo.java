@@ -5,7 +5,7 @@ public class MemberInfo {
     private String birth;
     private String profilePic;
 
-    public MemberInfo(String name, String birth, String profilePic) {
+    public MemberInfo(String name, String birth) {
         this.name = name;
         this.birth = birth;
         this.profilePic=profilePic;
@@ -26,13 +26,6 @@ public class MemberInfo {
         this.birth = birth;
     }
 
-    public String getProfilePic() {
-        return profilePic;
-    }
-
-    public void setProfilePic(String profilePic) {
-        this.profilePic = profilePic;
-    }
 
 
 }

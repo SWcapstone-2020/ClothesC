@@ -133,10 +133,9 @@ public class InfoActivity extends AppCompatActivity {
     private void profileSign(){
         String name=((EditText)findViewById(R.id.nameEditText)).getText().toString(); // 닉네임 받아옴
         String birth=((EditText)findViewById(R.id.BirthdayEditText)).getText().toString(); //생년월일 받아옴
-        String profilePic=((ImageView)findViewById(R.id.startProfileImage)).toString();
 
         if(name.length()>0 && birth.length()>5) {
-            MemberInfo memberInfo = new MemberInfo(name, birth, profilePic);
+            MemberInfo memberInfo = new MemberInfo(name, birth);
 
             if(user !=null){
                 db.collection("users").document(user.getUid()).set(memberInfo)

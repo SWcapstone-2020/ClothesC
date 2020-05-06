@@ -94,7 +94,6 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(LoginActivity.class);
         }
 
-        findViewById(R.id.profileImgButton).setOnClickListener(onClickListener);
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
     }
 
