@@ -42,6 +42,8 @@ public class InfoActivity extends AppCompatActivity {
     ImageView profileImageView;
     private FirebaseAuth auth;
     private FirebaseStorage storage;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +88,9 @@ public class InfoActivity extends AppCompatActivity {
 
             Uri file = Uri.fromFile(new File(getPath(data.getData())));
             StorageReference storageRef = storage.getReferenceFromUrl("gs://clothesc-ver1.appspot.com"); //storage 서버로 이동
-            StorageReference riversRef = storageRef.child("images/" + file.getLastPathSegment());
+            String profile=file.getLastPathSegment();
+            profile="profile.png";
+            StorageReference riversRef = storageRef.child("profileImage/" + user.getUid()+"/"+profile);
             UploadTask uploadTask = riversRef.putFile(file);
 
             try {
@@ -132,8 +136,6 @@ public class InfoActivity extends AppCompatActivity {
         String profilePic=((ImageView)findViewById(R.id.startProfileImage)).toString();
 
         if(name.length()>0 && birth.length()>5) {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
             MemberInfo memberInfo = new MemberInfo(name, birth, profilePic);
 
             if(user !=null){
