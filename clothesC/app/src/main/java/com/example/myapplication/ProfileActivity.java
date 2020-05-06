@@ -81,6 +81,7 @@ public class ProfileActivity extends AppCompatActivity {
         public void onClick(View v) {
         switch (v.getId()){
             case R.id.logoutButton:
+                FirebaseAuth.getInstance().signOut();
                 startActivity(LoginActivity.class);
                 finish();
                 break;

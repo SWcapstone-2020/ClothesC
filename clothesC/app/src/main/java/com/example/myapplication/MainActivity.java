@@ -51,7 +51,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.cameraButton:
                     startActivity(CameraActivity.class);
                 case R.id.templogout:
+                    FirebaseAuth.getInstance().signOut();
                     startActivity(LoginActivity.class);
+                    finish();
+                    break;
             }
         }
     };
