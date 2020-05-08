@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="201dfdcb-ec96-4bb6-afe8-174723fbbd2f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../clothesC/app/.idea/libraries/Gradle__com_github_bumptech_glide_glide_3_7_0_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../clothesC/app/.idea/libraries/Gradle__com_google_firebase_firebase_database_19_3_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../clothesC/app/.idea/libraries/Gradle__com_google_firebase_firebase_database_collection_17_0_1_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../clothesC/app/.idea/libraries/Gradle__com_google_firebase_firebase_storage_19_1_0_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../clothesC/app/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../clothesC/app/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../clothesC/app/.idea/libraries/Gradle__com_google_firebase_firebase_database_collection_17_0_0_aar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../clothesC/app/.idea/libraries/Gradle__gun0912_ted_tedpermission_2_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../clothesC/app/.idea/libraries/Gradle__gun0912_ted_tedpermission_2_0_0_aar.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,7 +23,7 @@
   <component name="ProjectId" id="1acr1ZfsvvtBvAppwUrcZgjy06O" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../clothesC/app" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../clothesC" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">

@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.cameraButton).setOnClickListener(onClickListener);
         findViewById(R.id.clothesPageButton).setOnClickListener(onClickListener);
         findViewById(R.id.templogout).setOnClickListener(onClickListener);
+        // 게시글 글쓰기 버튼
+        findViewById(R.id.post_write).setOnClickListener(onClickListener);
+
 
     }
 
@@ -54,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
                     FirebaseAuth.getInstance().signOut();
                     startActivity(LoginActivity.class);
                     finish();
+                    break;
+                case R.id.post_write:
+                    startActivity(WritePostActivity.class);
                     break;
             }
         }

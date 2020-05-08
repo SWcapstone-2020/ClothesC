@@ -33,6 +33,7 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".CameraActivity" />
         <activity android:name=".signup.InfoActivity" />
+        <activity android:name=".WritePostActivity" />
         <activity
             android:name=".ClothesItemActivity"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- "com.example.prac2" -->
