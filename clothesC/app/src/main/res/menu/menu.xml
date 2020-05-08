@@ -7,6 +7,8 @@
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
+    <!-- SwitchLayoutActivity.java에서 이 아이디 값으로 를 불러옴-->
     <item
         android:id="@+id/menu_switch_layout"
         android:title="switch"

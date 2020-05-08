@@ -6,6 +6,9 @@
     android:background="#FFFFFF"
     android:orientation="horizontal">
 
+    <!--  recycler view 레이아웃 추가  -->
+    <!-- Image 구역  -->
+    <!--    -->
     <ImageView
         android:id="@+id/image_big"
         android:layout_width="120dp"
@@ -13,6 +16,8 @@
         android:scaleType="centerCrop"
         android:src="@drawable/img1"/>
 
+    <!-- Content 구역 (게시물 제목, 설명)  -->
+    <!-- itemViewer.java에서    -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -6,13 +6,15 @@
     android:background="#FFFFFF"
     android:orientation="vertical">
 
+    <!--  grid view 레이아웃 추가  -->
+    <!-- Image 구역   -->
     <ImageView
         android:id="@+id/image_small"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:scaleType="centerCrop"
         android:src="@drawable/img1" />
-
+    <!-- Content 구역 (게시물 제목)   -->
     <TextView
         android:id="@+id/title_small"
         android:layout_width="match_parent"
