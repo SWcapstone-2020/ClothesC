@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- 아이템 아이디 지정: action_settings.
+    ClothesItemActivity.java에서 이 아이디 값으로 setting 메뉴를 불러옴-->
+    <!-- string.xml 에서 지정된 action_settings의 이름을 불러와 title로 지정 -->
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         app:showAsAction="never" />
@@ -9,4 +12,5 @@
         android:title="switch"
         app:showAsAction="always"
         android:icon="@drawable/ic_span_1"/>
+
 </menu>

@@ -7,8 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <!-- If you want to remove ActionBar. Then,
-     Set your Activity-theme'AppTheme.NoActionBar' in Manifest.xml -->
+
+    <!-- 상단바 없는 테마, Manifest.xml에서 activity 속성을 android:theme="@style/AppTheme.NoActionBar"로 설정 -->
     <style name="AppTheme.NoActionBar" perent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>

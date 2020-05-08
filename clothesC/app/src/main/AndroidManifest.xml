@@ -36,7 +36,8 @@
         <activity android:name=".WritePostActivity" />
         <activity
             android:name=".ClothesItemActivity"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- "com.example.prac2" -->
+            android:theme="@style/AppTheme.NoActionBar" /><!-- 상단바 없음 -->
+            <!-- "com.example.prac2" -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}"

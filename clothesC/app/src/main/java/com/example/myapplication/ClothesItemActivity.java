@@ -23,21 +23,26 @@ public class ClothesItemActivity extends AppCompatActivity implements Navigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clothes_item);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-//      Use Toolbar instead ActionBar.
+//      기본 액션바 대신 툴바 사용선언
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//      Using ActionBar methods
+//      툴바에 액션바 기능 사용
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu); // Custom Menu icon implement on 'onOptionsItemSelected' method.
-        actionBar.setDisplayHomeAsUpEnabled(true); // BACK Button
-        actionBar.setTitle("My Closet"); // ActionBar Title
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu); // 뒤로가기 버튼을 해당 아이콘으로 커스텀
+        actionBar.setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼 생성
+
+        actionBar.setTitle("My Closet"); // 상단바 title 지정
 
 //      Navigation Drawer
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // activity_clothes_item.xml 에서 지정한 id 값으로 네비게이션 드로어를 불러옴
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+        // this라고 주고 위에서 implements NavigationView.OnNavigationItemSelectedListener 이렇게 하면,
+        //아래에 NavigationView.OnNavigationItemSelectedListener(인터페이스)의 구현체를 따로 빼서 메소드로 처리할 수 있다.
+        // 위 내용은 잘 모르겠음 그냥 onNavigationItemSelected 메소드(메뉴 선택 시 동작을 지정하는 메소드)를 따로 빼서 처리할 수 있다는 듯.
     }
 
     @Override
@@ -48,9 +53,10 @@ public class ClothesItemActivity extends AppCompatActivity implements Navigation
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // toolbar 메뉴 선택 시 동작 지정.
+        // AndroidManifest.xml에서 뒤로가기시 이동할 상위 액티비티를 지정.
+
+        //menu.xml에서 id 값으로 지정된 '액션바 메뉴'들을 불러옴
         int id = item.getItemId();
 
         switch (id) {
@@ -71,14 +77,19 @@ public class ClothesItemActivity extends AppCompatActivity implements Navigation
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // 네비게이션 드로어 메뉴 선택 시 동작 지정.
+        // 네비게이션 드로어 메뉴가 선택되면, 네비게이션 드로어 닫힘
         item.setChecked(true);
         mDrawerLayout.closeDrawers();
 
+        // drawer.xml에서 id 값으로 지정된 네비게이션드로어 메뉴들을 불러옴
         int id = item.getItemId();
         switch (id) {
             case R.id.navigation_item_outer:
+                // SwitchLayoutActivity로 이동
                 Intent switchLayout = new Intent(this, SwitchLayoutActivity.class);
                 startActivity(switchLayout);
+                // 선택된 메뉴의 title을 가져와 화면에 표시
                 Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                 break;
 
@@ -107,8 +118,10 @@ public class ClothesItemActivity extends AppCompatActivity implements Navigation
         return true;
     }
 
+
     @Override
     public void onBackPressed() {
+    // 뒤로가기 시 네비게이션 드로어 닫힘
         if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
             mDrawerLayout.closeDrawer(GravityCompat.START);
         }

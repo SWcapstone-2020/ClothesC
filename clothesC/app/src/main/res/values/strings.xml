@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="hello_world">Hello world!</string>
+    <!-- 옷장 상단바 서브메뉴의 하위메뉴 이름 -->
     <string name="action_settings">Settings</string>
+    <!-- 옷장 네비게이션 드로어 상단 header 이름 -->
+    <string name="drawer_header_text">Clothes C</string>
+    <!-- 옷장 네비게이션 드로어 메뉴 이름들   -->
     <string name="nav_item_outer">아우터</string>
     <string name="nav_item_tops">상의</string>
     <string name="nav_item_bottoms">하의</string>
@@ -9,7 +13,4 @@
     <string name="nav_sub_menu">Sub Menu</string>
     <string name="nav_sub_menu_item01">Sub Menu Item 1</string>
     <string name="nav_sub_menu_item02">Sub Menu Item 2</string>
-    <string name="drawer_header_text">Clothes C</string>
-    <string name="second_activity_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin consectetur diam id aliquam scelerisque. Donec ultrices lacus vel dignissim pharetra. Vivamus pharetra augue quis rhoncus placerat. Sed ultricies at risus non cursus. Nam rutrum leo nec placerat consectetur. Vestibulum feugiat eleifend diam, nec interdum augue tincidunt sit amet. Praesent feugiat est auctor lacus consectetur, vitae pellentesque dolor laoreet.</string>
-    <string name="title_activity_second">SecondActivity</string>
 </resources>
