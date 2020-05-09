@@ -95,6 +95,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
+        findViewById(R.id.profileUpdate).setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -106,6 +107,9 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(LoginActivity.class);
                 finish();
                 break;
+            case R.id.profileUpdate:
+                startActivity(ProfileUpdateActivity.class);
+                finish();
             }
         }
     };
