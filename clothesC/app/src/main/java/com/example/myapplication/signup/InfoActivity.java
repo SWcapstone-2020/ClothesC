@@ -59,10 +59,9 @@ public class InfoActivity extends AppCompatActivity {
 
         findViewById(R.id.profileSignButton).setOnClickListener(onClickListener);
         findViewById(R.id.startProfileImage).setOnClickListener(onClickListener);
-//        findViewById(R.id.profileView).setOnClickListener(onClickListener);
         findViewById(R.id.picture).setOnClickListener(onClickListener);
         findViewById(R.id.gallery).setOnClickListener(onClickListener);
-//        profileImageView=(ImageView)findViewById(R.id.startProfileImage);
+        profileImageView=(ImageView)findViewById(R.id.startProfileImage);
 
         storage=FirebaseStorage.getInstance();
 
@@ -75,9 +74,9 @@ public class InfoActivity extends AppCompatActivity {
                 case R.id.profileSignButton:
                     profileSign();
                     break;
-//                case R.id.startProfileImage:
-//                    loadAlbum();
-//                    break;
+                case R.id.startProfileImage:
+                    loadAlbum();
+                    break;
                 case R.id.profileView:
                     CardView cardView = findViewById(R.id.buttonsCardView);
                     if(cardView.getVisibility()==View.VISIBLE){
