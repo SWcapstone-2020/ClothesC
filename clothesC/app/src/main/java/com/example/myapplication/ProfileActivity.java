@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import com.*;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -103,65 +104,28 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
-<<<<<<< Updated upstream
         findViewById(R.id.profileUpdate).setOnClickListener(onClickListener);
-=======
-        findViewById(R.id.profileView).setOnClickListener(onClickListener);
-        findViewById(R.id.picture).setOnClickListener(onClickListener);
-        findViewById(R.id.gallery).setOnClickListener(onClickListener);
 
->>>>>>> Stashed changes
+
     }
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
+    View.OnClickListener onClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.logoutButton:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(LoginActivity.class);
-                finish();
-                break;
-<<<<<<< Updated upstream
-            case R.id.profileUpdate:
-                startActivity(ProfileUpdateActivity.class);
-                finish();
-=======
-            case R.id.profileView:
-                CardView cardView = findViewById(R.id.buttonsCardView);
-                if(cardView.getVisibility()==View.VISIBLE){
-                    cardView.setVisibility(View.GONE);
-                }else{
-                    cardView.setVisibility(View.VISIBLE);
-                } //프로필 이미지를 누르면 밑에 사진촬영, 갤러리 버튼이 나오게끔 구현함
-            case R.id.picture:
-                startActivity(CameraActivity.class);
-                break;
-            case R.id.gallery:
-                if(ContextCompat.checkSelfPermission(InfoActivity.this,
-                        Manifest.permission.READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(InfoActivity.this,
-                            Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                        ActivityCompat.requestPermissions(InfoActivity.this,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                1);
-
-                    } else {
-                        ActivityCompat.requestPermissions(InfoActivity.this,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                1);
-                        startToast("권한을 허용해주세요.");
-                    }
-                }else {
-                    startActivity(GalleryActivity.class);
-                }
-                break;
->>>>>>> Stashed changes
+            switch (v.getId()){
+                case R.id.logoutButton:
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(LoginActivity.class);
+                    finish();
+                    break;
+                case R.id.profileUpdate:
+                    startActivity(ProfileUpdateActivity.class);
+                    break;
             }
         }
     };
+
+
 
     public void onRequestPermissionResult(int requestCode, String permissons[], int[] grantResults){
         switch (requestCode){

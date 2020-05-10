@@ -1,5 +1,7 @@
 package com.example.myapplication.signup;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,10 +17,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.loader.content.CursorLoader;
 
 import com.example.myapplication.CameraActivity;
+import com.example.myapplication.GalleryActivity;
 import com.example.myapplication.MainActivity;
+import com.example.myapplication.ProfileUpdateActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.signup.MemberInfo;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,8 +44,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class InfoActivity extends AppCompatActivity {
-    private static final String TAG="InfoActivity";
-    private static final int GALLERY_CODE = 10;
+    private  final String TAG="InfoActivity";
+    private  final int GALLERY_CODE = 10;
     ImageView profileImageView;
     private FirebaseAuth auth;
     private FirebaseStorage storage;
@@ -52,7 +59,10 @@ public class InfoActivity extends AppCompatActivity {
 
         findViewById(R.id.profileSignButton).setOnClickListener(onClickListener);
         findViewById(R.id.startProfileImage).setOnClickListener(onClickListener);
-        profileImageView=(ImageView)findViewById(R.id.startProfileImage);
+//        findViewById(R.id.profileView).setOnClickListener(onClickListener);
+        findViewById(R.id.picture).setOnClickListener(onClickListener);
+        findViewById(R.id.gallery).setOnClickListener(onClickListener);
+//        profileImageView=(ImageView)findViewById(R.id.startProfileImage);
 
         storage=FirebaseStorage.getInstance();
 
@@ -65,8 +75,39 @@ public class InfoActivity extends AppCompatActivity {
                 case R.id.profileSignButton:
                     profileSign();
                     break;
-                case R.id.startProfileImage:
-                    loadAlbum();
+//                case R.id.startProfileImage:
+//                    loadAlbum();
+//                    break;
+                case R.id.profileView:
+                    CardView cardView = findViewById(R.id.buttonsCardView);
+                    if(cardView.getVisibility()==View.VISIBLE){
+                        cardView.setVisibility(View.GONE);
+                    }else{
+                        cardView.setVisibility(View.VISIBLE);
+                    } //프로필 이미지를 누르면 밑에 사진촬영, 갤러리 버튼이 나오게끔 구현함
+                case R.id.picture:
+                    startActivity(CameraActivity.class);
+                    break;
+                case R.id.gallery:
+                    if(ContextCompat.checkSelfPermission(InfoActivity.this,
+                            Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED) {
+
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(InfoActivity.this,
+                                Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                            ActivityCompat.requestPermissions(InfoActivity.this,
+                                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                    1);
+
+                        } else {
+                            ActivityCompat.requestPermissions(InfoActivity.this,
+                                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                    1);
+                            startToast("권한을 허용해주세요.");
+                        }
+                    }else {
+                        startActivity(GalleryActivity.class);
+                    }
                     break;
             }
 
@@ -80,6 +121,7 @@ public class InfoActivity extends AppCompatActivity {
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, GALLERY_CODE);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, final int resultCode, final Intent data) {
@@ -131,8 +173,8 @@ public class InfoActivity extends AppCompatActivity {
 
 
     private void profileSign(){
-        String name=((EditText)findViewById(R.id.nameEditText)).getText().toString(); // 닉네임 받아옴
-        String birth=((EditText)findViewById(R.id.BirthdayEditText)).getText().toString(); //생년월일 받아옴
+        final String name=((EditText)findViewById(R.id.nameEditText)).getText().toString(); // 닉네임 받아옴
+        final String birth=((EditText)findViewById(R.id.BirthdayEditText)).getText().toString(); //생년월일 받아옴
 
         if(name.length()>0 && birth.length()>5) {
             MemberInfo memberInfo = new MemberInfo(name, birth);
