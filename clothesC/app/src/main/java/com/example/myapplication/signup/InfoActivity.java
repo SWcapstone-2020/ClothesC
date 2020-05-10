@@ -74,10 +74,14 @@ public class InfoActivity extends AppCompatActivity {
                 case R.id.profileSignButton:
                     profileSign();
                     break;
+                    /* 잠깐 주석처리
                 case R.id.startProfileImage:
                     loadAlbum();
                     break;
-                case R.id.profileView:
+                    */
+
+                //case R.id.profileView:
+                case R.id.startProfileImage:
                     CardView cardView = findViewById(R.id.buttonsCardView);
                     if(cardView.getVisibility()==View.VISIBLE){
                         cardView.setVisibility(View.GONE);
@@ -91,17 +95,14 @@ public class InfoActivity extends AppCompatActivity {
                     if(ContextCompat.checkSelfPermission(InfoActivity.this,
                             Manifest.permission.READ_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(InfoActivity.this,
+                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                1);
 
                         if (ActivityCompat.shouldShowRequestPermissionRationale(InfoActivity.this,
                                 Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                            ActivityCompat.requestPermissions(InfoActivity.this,
-                                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                    1);
 
                         } else {
-                            ActivityCompat.requestPermissions(InfoActivity.this,
-                                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                    1);
                             startToast("권한을 허용해주세요.");
                         }
                     }else {
@@ -114,13 +115,14 @@ public class InfoActivity extends AppCompatActivity {
     };
 
 
-
+/*
     private void loadAlbum(){
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, GALLERY_CODE);
     }
 
+ */
 
     @Override
     protected void onActivityResult(int requestCode, final int resultCode, final Intent data) {
@@ -137,10 +139,15 @@ public class InfoActivity extends AppCompatActivity {
             try {
                 // 선택한 이미지에서 비트맵 생성
                 InputStream in = getContentResolver().openInputStream(data.getData());
+
                 Bitmap img = BitmapFactory.decodeStream(in);
                 in.close();
                 // 이미지 표시
                 profileImageView.setImageBitmap(img);
+                //영상코드
+                //profilPath = data.getStringExtra("profilePath");
+                //Bitmap bmp = BitmapFactory.decorderFile(profilePath);
+                // profileImageView.setImageBitmap(bmp);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -208,7 +215,8 @@ public class InfoActivity extends AppCompatActivity {
 
     private void startActivity(Class c){
         Intent intent=new Intent(this,c);
-        startActivity(intent);
+        //startActivity(intent);
+        startActivityForResult(intent, 0);
     }
 
 
