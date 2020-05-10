@@ -38,7 +38,7 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera);
+        //setContentView(R.layout.activity_camera);
 
         //권한 체크
         // 권한 체크

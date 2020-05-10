@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +32,8 @@ public class WritePostActivity extends AppCompatActivity{
         setContentView(R.layout.activity_write_post);
 
         findViewById(R.id.check).setOnClickListener(onClickListener);
+        findViewById(R.id.image).setOnClickListener(onClickListener);
+        findViewById(R.id.video).setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -40,6 +43,12 @@ public class WritePostActivity extends AppCompatActivity{
             switch (v.getId()){
                 case R.id.check:
                     writepost();
+                    break;
+                case R.id.image:
+                    //startActivity(GalleyActivity.class,"image");
+                    break;
+                case R.id.video:
+                   // startActivity(GalleyActivity.class,"video");
                     break;
             }
         }
@@ -55,7 +64,7 @@ public class WritePostActivity extends AppCompatActivity{
             Writeinfo writeinfo = new Writeinfo(title, contents,user.getUid());
             uploader(writeinfo);
         }else {
-            startToast("회원가입을 입력해주세요.");
+            startToast("내용을 입력해주세요.");
         }
     }
 
@@ -80,5 +89,11 @@ public class WritePostActivity extends AppCompatActivity{
 
     private void startToast(String msg){
         Toast.makeText(this, msg,Toast.LENGTH_SHORT).show();
+    }
+
+    private void startActivity(Class c, String media){
+        Intent intent=new Intent(this,c);
+        intent.putExtra("media", media);
+        startActivity(intent);
     }
 }
