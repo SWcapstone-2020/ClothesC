@@ -47,7 +47,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <Button
+<!--                <Button
                     android:id="@+id/picture"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                     android:id="@+id/gallery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="갤러리" />
+                    android:text="갤러리" />-->
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

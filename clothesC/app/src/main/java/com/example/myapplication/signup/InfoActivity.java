@@ -1,46 +1,32 @@
 package com.example.myapplication.signup;
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.loader.content.CursorLoader;
 
-import com.example.myapplication.CameraActivity;
-import com.example.myapplication.GalleryActivity;
 import com.example.myapplication.MainActivity;
-import com.example.myapplication.ProfileUpdateActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.signup.MemberInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 public class InfoActivity extends AppCompatActivity {
@@ -59,8 +45,8 @@ public class InfoActivity extends AppCompatActivity {
 
         findViewById(R.id.profileSignButton).setOnClickListener(onClickListener);
         findViewById(R.id.startProfileImage).setOnClickListener(onClickListener);
-        findViewById(R.id.picture).setOnClickListener(onClickListener);
-        findViewById(R.id.gallery).setOnClickListener(onClickListener);
+//        findViewById(R.id.picture).setOnClickListener(onClickListener);
+//        findViewById(R.id.gallery).setOnClickListener(onClickListener);
         profileImageView=(ImageView)findViewById(R.id.startProfileImage);
 
         storage=FirebaseStorage.getInstance();
@@ -74,14 +60,11 @@ public class InfoActivity extends AppCompatActivity {
                 case R.id.profileSignButton:
                     profileSign();
                     break;
-                    /* 잠깐 주석처리
                 case R.id.startProfileImage:
                     loadAlbum();
                     break;
-                    */
 
-                //case R.id.profileView:
-                case R.id.picture:
+/*                case R.id.picture:
                     startActivity(CameraActivity.class);
                     break;
                 case R.id.gallery:
@@ -101,21 +84,19 @@ public class InfoActivity extends AppCompatActivity {
                     }else {
                         startActivity(GalleryActivity.class);
                     }
-                    break;
+                    break;*/
             }
 
         }
     };
 
 
-/*
     private void loadAlbum(){
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, GALLERY_CODE);
     }
 
- */
 
     @Override
     protected void onActivityResult(int requestCode, final int resultCode, final Intent data) {
