@@ -48,30 +48,25 @@ public class CameraActivity extends AppCompatActivity {
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                 .check();
 
-
-        findViewById(R.id.btn_capture).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, CAMERA_REQUEST_CODE);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    File photoFile = null;
-                    try {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, CAMERA_REQUEST_CODE);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+             File photoFile = null;
+                try {
                         photoFile = createImageFile();
                     } catch (IOException e) {
 
-                    }
+                }
 
-                    if (photoFile != null){
-                        photoUri = FileProvider.getUriForFile(getApplicationContext(), getPackageName(), photoFile);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri);
-                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                if (photoFile != null){
+                    photoUri = FileProvider.getUriForFile(getApplicationContext(), getPackageName(), photoFile);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri);
+                    startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
 
                     }
                 }
-            }
-        });
-    }
+}
+
 
     private File createImageFile() throws IOException{
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());

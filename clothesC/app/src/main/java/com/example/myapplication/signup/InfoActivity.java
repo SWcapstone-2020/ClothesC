@@ -81,13 +81,6 @@ public class InfoActivity extends AppCompatActivity {
                     */
 
                 //case R.id.profileView:
-                case R.id.startProfileImage:
-                    CardView cardView = findViewById(R.id.buttonsCardView);
-                    if(cardView.getVisibility()==View.VISIBLE){
-                        cardView.setVisibility(View.GONE);
-                    }else{
-                        cardView.setVisibility(View.VISIBLE);
-                    } //프로필 이미지를 누르면 밑에 사진촬영, 갤러리 버튼이 나오게끔 구현함
                 case R.id.picture:
                     startActivity(CameraActivity.class);
                     break;
