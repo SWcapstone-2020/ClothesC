@@ -1,9 +1,13 @@
 package com.example.myapplication.Clothes;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,15 +18,32 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.myapplication.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class ClothesItemActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerLayout;
 
+    private Context mContext;
+    private FloatingActionButton fab_main, fab_sub1, fab_sub2;
+    private Animation fab_open, fab_close;
+    private boolean isFabOpen = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clothes_item);
+
+        mContext = getApplicationContext();
+        fab_open = AnimationUtils.loadAnimation(mContext, R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(mContext, R.anim.fab_close);
+        fab_main = (FloatingActionButton) findViewById(R.id.fab_main);
+        fab_sub1 = (FloatingActionButton) findViewById(R.id.fab_sub1);
+        fab_sub2 = (FloatingActionButton) findViewById(R.id.fab_sub2);
+
+        fab_main.setOnClickListener(onClickListener);
+        fab_sub1.setOnClickListener(onClickListener);
+        fab_sub2.setOnClickListener(onClickListener);
 
 
 //      기본 액션바 대신 툴바 사용선언
@@ -44,6 +65,44 @@ public class ClothesItemActivity extends AppCompatActivity implements Navigation
         // this라고 주고 위에서 implements NavigationView.OnNavigationItemSelectedListener 이렇게 하면,
         //아래에 NavigationView.OnNavigationItemSelectedListener(인터페이스)의 구현체를 따로 빼서 메소드로 처리할 수 있다.
         // 위 내용은 잘 모르겠음 그냥 onNavigationItemSelected 메소드(메뉴 선택 시 동작을 지정하는 메소드)를 따로 빼서 처리할 수 있다는 듯.
+    }
+
+    View.OnClickListener onClickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fab_main:
+                toggleFab();
+                break;
+
+            case R.id.fab_sub1:
+                toggleFab();
+                break;
+
+            case R.id.fab_sub2:
+                toggleFab();
+                break;
+            }
+        }
+    };
+
+
+    private void toggleFab() {
+        if (isFabOpen) {
+            fab_main.setImageResource(R.drawable.ic_span_1);
+            fab_sub1.startAnimation(fab_close);
+            fab_sub2.startAnimation(fab_close);
+            fab_sub1.setClickable(false);
+            fab_sub2.setClickable(false);
+            isFabOpen = false;
+        } else {
+            fab_main.setImageResource(R.drawable.ic_span_1);
+            fab_sub1.startAnimation(fab_open);
+            fab_sub2.startAnimation(fab_open);
+            fab_sub1.setClickable(true);
+            fab_sub2.setClickable(true);
+            isFabOpen = true;
+        }
     }
 
     @Override

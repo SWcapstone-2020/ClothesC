@@ -10,8 +10,7 @@
 
     <!-- 툴바(상단바) 추가 -->
     <!--  ClothesitemActivity.java에서 해당 id 값으로 toolbar를 불러와 사용  -->
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Clothes.ClothesItemActivity">
@@ -23,6 +22,47 @@
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="#009688"
+            app:srcCompat="@drawable/ic_span_1"
+            app:borderWidth="0dp"
+            app:fabSize="normal" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_sub1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/fab_sub2"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="#ffffff"
+            app:srcCompat="@drawable/ic_create_black_24dp"
+            android:visibility="invisible"
+            app:borderWidth="0dp"
+            app:fabSize="normal"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_sub2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/fab_main"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="#ffffff"
+            android:visibility="invisible"
+            app:borderWidth="0dp"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_search_black_24dp" />
+
     </RelativeLayout>
 
     <!--  네비게이션 드로어 추가  -->
@@ -33,7 +73,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/drawer_header"
-        app:menu="@menu/drawer"/>
+        app:menu="@menu/drawer">
+
+    </com.google.android.material.navigation.NavigationView>
+
     <!--  header 레이아웃: drawer_header.xml  -->
     <!--  메뉴들:  drawer.xml (id, title, icon) -->
 
