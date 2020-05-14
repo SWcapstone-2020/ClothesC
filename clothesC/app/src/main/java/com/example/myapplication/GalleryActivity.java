@@ -2,19 +2,17 @@ package com.example.myapplication;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.widget.Gallery;
-import android.widget.ScrollView;
 
 import java.util.ArrayList;
 
-import Adaptor.GalleryAdapter;
+import com.example.myapplication.Adaptor.GalleryAdapter;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class GalleryActivity extends AppCompatActivity {
@@ -36,20 +34,30 @@ public class GalleryActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
-    public static ArrayList<String> getImagesPath(Activity activity){
+    public ArrayList<String> getImagesPath(Activity activity){
         Uri uri;
         ArrayList<String> listOfAllImages = new ArrayList<String>();
         Cursor cursor;
-        int column_index_data, column_index_folder_name;
+        int column_index_data;
         String PathOfImage = null;
-        uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        String[] projection;
 
-        String[] projection = {MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
+        //동영상
+        Intent intent = getIntent();
+        //final int media = intent.getIntExtra(INTENT_MEDIA, GALLERY_IMAGE);
+        if(intent.getStringExtra("media").equals("video")){
+            uri = android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+            projection = new String[] { MediaStore.MediaColumns.DATA, MediaStore.Video.Media.BUCKET_DISPLAY_NAME };
+        }else{
+            uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            projection = new String[] { MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME };
+        }
 
+
+        //이미지 uri 가져와서 처리
         cursor = activity.getContentResolver().query(uri, projection, null, null, null);
-
         column_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-        column_index_folder_name = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
+
 
         while(cursor.moveToNext()){
             PathOfImage = cursor.getString(column_index_data);
