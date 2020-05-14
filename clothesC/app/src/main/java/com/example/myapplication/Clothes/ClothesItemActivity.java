@@ -1,4 +1,10 @@
-package com.example.myapplication;
+package com.example.myapplication.Clothes;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -7,12 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
+import com.example.myapplication.R;
 import com.google.android.material.navigation.NavigationView;
 
 public class ClothesItemActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {

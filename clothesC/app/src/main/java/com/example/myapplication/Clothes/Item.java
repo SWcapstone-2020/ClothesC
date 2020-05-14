@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Clothes;
 
 public class Item {
     private int imgResId;
