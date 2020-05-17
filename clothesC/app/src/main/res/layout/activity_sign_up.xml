@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#ffffff">
 
     <TextView
         android:id="@+id/profile"
@@ -23,40 +24,55 @@
 
         <EditText
             android:id="@+id/emailEditText"
-            android:layout_width="match_parent"
+            android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:ems="10"
             android:hint="이메일"
             android:inputType="textEmailAddress"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:background="@drawable/edit_singup"
+            android:layout_gravity="center"
+            />
 
         <EditText
             android:id="@+id/passwordEditText"
-            android:layout_width="match_parent"
+            android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:ems="10"
             android:hint="비밀번호"
             android:inputType="textPassword"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:background="@drawable/edit_singup"
+            android:layout_gravity="center"
+            />
 
         <EditText
             android:id="@+id/passwordCheckEditText"
-            android:layout_width="match_parent"
+            android:layout_width="360dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:ems="10"
             android:hint="비밀번호확인"
             android:inputType="textPassword"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:background="@drawable/edit_singup"
+            android:layout_gravity="center"/>
 
+
+        <!-- 버튼에 있던 style="@style/Widget.AppCompat.Button"-->
         <Button
             android:id="@+id/signUpButton"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="match_parent"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="360dp"
             android:layout_height="wrap_content"
-            android:text="다음" />
+            android:text="다음"
+            android:textColor="#ffffff"
+            android:background="@drawable/bt_singup"
+            android:layout_gravity="center"
+
+            />
 
     </LinearLayout>
 
