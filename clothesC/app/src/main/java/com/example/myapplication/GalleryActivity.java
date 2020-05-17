@@ -1,40 +1,80 @@
 package com.example.myapplication;
 
-
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 
+import com.example.myapplication.Adaptor.GalleryAdapter;
+
 import java.util.ArrayList;
 
-import com.example.myapplication.Adaptor.GalleryAdapter;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.example.myapplication.Util.GALLERY_IMAGE;
+import static com.example.myapplication.Util.GALLERY_VIDEO;
+import static com.example.myapplication.Util.INTENT_MEDIA;
+import static com.example.myapplication.Util.showToast;
+
 public class GalleryActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
 
+        if (ContextCompat.checkSelfPermission(GalleryActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(GalleryActivity.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    1);
+            if (ActivityCompat.shouldShowRequestPermissionRationale(GalleryActivity.this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            } else {
+                showToast(GalleryActivity.this, "권한 허용");
+            }
+        } else {
+            recyclerInit();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    recyclerInit();
+                } else {
+                    finish();
+                    showToast(GalleryActivity.this, "허락");
+                }
+            }
+        }
+    }
+
+    private void recyclerInit(){
+        final int numberOfColumns = 3;
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
 
-        final int numberofcolumns = 3; //세줄씩 이미지가 나오게끔
-        recyclerView.setLayoutManager(new GridLayoutManager(this, numberofcolumns));
-
-        mAdapter = new GalleryAdapter(this, getImagesPath(this));
+        RecyclerView.Adapter mAdapter = new GalleryAdapter(this, getImagesPath(this));
         recyclerView.setAdapter(mAdapter);
     }
 
-    public ArrayList<String> getImagesPath(Activity activity){
+    public ArrayList<String> getImagesPath(Activity activity) {
         Uri uri;
         ArrayList<String> listOfAllImages = new ArrayList<String>();
         Cursor cursor;
@@ -42,10 +82,9 @@ public class GalleryActivity extends AppCompatActivity {
         String PathOfImage = null;
         String[] projection;
 
-        //동영상
         Intent intent = getIntent();
-        //final int media = intent.getIntExtra(INTENT_MEDIA, GALLERY_IMAGE);
-        if(intent.getStringExtra("media").equals("video")){
+        final int media = intent.getIntExtra(INTENT_MEDIA, GALLERY_IMAGE);
+        if(media == GALLERY_VIDEO){
             uri = android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
             projection = new String[] { MediaStore.MediaColumns.DATA, MediaStore.Video.Media.BUCKET_DISPLAY_NAME };
         }else{
@@ -53,18 +92,14 @@ public class GalleryActivity extends AppCompatActivity {
             projection = new String[] { MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME };
         }
 
-
-        //이미지 uri 가져와서 처리
         cursor = activity.getContentResolver().query(uri, projection, null, null, null);
         column_index_data = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
 
-
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             PathOfImage = cursor.getString(column_index_data);
 
             listOfAllImages.add(PathOfImage);
         }
         return listOfAllImages;
     }
-
 }
