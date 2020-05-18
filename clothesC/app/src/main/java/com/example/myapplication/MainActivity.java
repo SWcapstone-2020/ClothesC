@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.myapplication.Clothes.ClothesItemActivity;
 import com.example.myapplication.signup.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 //import androidx.fragment.app.FragmentManager;
 //import androidx.fragment.app.FragmentTransaction;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.post_write:
-                    startActivity(WritePostActivity.class);
+                    startActivity(ShowPostActivity.class);
                     break;
             }
         }

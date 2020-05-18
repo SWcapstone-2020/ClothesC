@@ -9,16 +9,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 
-import com.example.myapplication.Adaptor.GalleryAdapter;
-
-import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.Adaptor.GalleryAdapter;
+
+import java.util.ArrayList;
 
 import static com.example.myapplication.Util.GALLERY_IMAGE;
 import static com.example.myapplication.Util.GALLERY_VIDEO;
