@@ -8,6 +8,19 @@ import java.util.Map;
 
 public class PostInfo implements Serializable {
     private String title;
+
+    @Override
+    public String toString() {
+        return "PostInfo{" +
+                "title='" + title + '\'' +
+                ", contents=" + contents +
+                ", formats=" + formats +
+                ", publisher='" + publisher + '\'' +
+                ", createdAt=" + createdAt +
+                ", id='" + id + '\'' +
+                '}';
+    }
+
     private ArrayList<String> contents;
     private ArrayList<String> formats;
     private String publisher;

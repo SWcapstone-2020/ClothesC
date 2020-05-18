@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -24,7 +23,6 @@ import java.util.Date;
 
 public class ShowPostActivity extends AppCompatActivity {
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_post);
@@ -32,13 +30,15 @@ public class ShowPostActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+
         db.collection("posts")
+
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    ArrayList<PostInfo> postList=new ArrayList<>();;
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            ArrayList<PostInfo> postList = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 postList.add(new PostInfo(document.getData().get("title").toString(),
                                         (ArrayList<String>) document.getData().get("contents"),
@@ -51,17 +51,14 @@ public class ShowPostActivity extends AppCompatActivity {
                             recyclerView.setHasFixedSize(true);
                             recyclerView.setLayoutManager(new LinearLayoutManager(ShowPostActivity.this));
 
-                            RecyclerView.Adapter mAdapter = new PostAdapter(ShowPostActivity.this, postList);
+                            RecyclerView.Adapter mAdapter = new PostAdapter(ShowPostActivity.this, postList);;
                             recyclerView.setAdapter(mAdapter);
-
                         } else {
 
                         }
                     }
+
                 });
-        final int numberOfColumns = 3;
-
-
         findViewById(R.id.writePost).setOnClickListener(onClickListener);
 
 

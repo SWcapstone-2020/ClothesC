@@ -49,8 +49,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.GalleryViewHol
     @Override
     public void onBindViewHolder(@NonNull final GalleryViewHolder holder, int position) {
         CardView cardView = holder.cardView;
-        TextView textView=cardView.findViewById(R.id.textView);
-        textView.setText(mDataset.get(position).getTitle());
+        TextView titleTextView=cardView.findViewById(R.id.titleTextView);
+        titleTextView.setText(mDataset.get(position).getTitle());
+
+        TextView createdAtText=cardView.findViewById(R.id.createAtTextView);
+        createdAtText.setText(mDataset.get(position).getCreatedAt().toString());
+
     }
 
     @Override
