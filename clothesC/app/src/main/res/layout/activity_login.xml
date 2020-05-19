@@ -34,16 +34,12 @@
             android:inputType="textEmailAddress"
             android:background="@drawable/ic_input"
             android:layout_gravity="center"
-<<<<<<< Updated upstream
             android:drawableLeft="@drawable/ic_person_blue_24dp"
             android:paddingLeft="25dp"
             android:paddingBottom="5dp"
             android:drawablePadding="8dp"
             />
-=======
-            android:drawableLeft="@drawable/ic_person_black_24dp"
-            android:padding="20dp" />
->>>>>>> Stashed changes
+
 
         <EditText
             android:id="@+id/passwordEditText"
@@ -54,10 +50,7 @@
             android:ems="10"
             android:hint="비밀번호"
             android:inputType="textPassword"
-<<<<<<< Updated upstream
-=======
             android:padding="20dp"
->>>>>>> Stashed changes
             android:layout_gravity="center"
             android:drawableLeft="@drawable/ic_lock_blue_24dp"
             android:paddingLeft="25dp"
