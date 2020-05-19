@@ -35,34 +35,6 @@
             app:borderWidth="0dp"
             app:fabSize="normal" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_sub1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/fab_sub2"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginRight="20dp"
-            android:backgroundTint="#ffffff"
-            app:srcCompat="@drawable/ic_create_black_24dp"
-            android:visibility="invisible"
-            app:borderWidth="0dp"
-            app:fabSize="normal"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_sub2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/fab_main"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginRight="20dp"
-            android:backgroundTint="#ffffff"
-            android:visibility="invisible"
-            app:borderWidth="0dp"
-            app:fabSize="normal"
-            app:srcCompat="@drawable/ic_search_black_24dp" />
-
     </RelativeLayout>
 
     <!--  네비게이션 드로어 추가  -->

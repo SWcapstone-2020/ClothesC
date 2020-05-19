@@ -88,7 +88,8 @@ public class ShowPostActivity extends AppCompatActivity {
                                             (ArrayList<String>) document.getData().get("contents"),
                                             (ArrayList<String>) document.getData().get("formats"),
                                             document.getData().get("publisher").toString(),
-                                            new Date(document.getDate("createdAt").getTime())
+                                            new Date(document.getDate("createdAt").getTime()),
+                                            document.getId()
                                     ));
                                 }
 

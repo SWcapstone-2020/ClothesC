@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,15 +34,8 @@ public class ClothesItemActivity extends AppCompatActivity implements Navigation
         setContentView(R.layout.activity_clothes_item);
 
         mContext = getApplicationContext();
-        fab_open = AnimationUtils.loadAnimation(mContext, R.anim.fab_open);
-        fab_close = AnimationUtils.loadAnimation(mContext, R.anim.fab_close);
-        fab_main = (FloatingActionButton) findViewById(R.id.fab_main);
-        fab_sub1 = (FloatingActionButton) findViewById(R.id.fab_sub1);
-        fab_sub2 = (FloatingActionButton) findViewById(R.id.fab_sub2);
 
         fab_main.setOnClickListener(onClickListener);
-        fab_sub1.setOnClickListener(onClickListener);
-        fab_sub2.setOnClickListener(onClickListener);
 
 
 //      기본 액션바 대신 툴바 사용선언
@@ -72,14 +64,6 @@ public class ClothesItemActivity extends AppCompatActivity implements Navigation
         public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_main:
-                toggleFab();
-                break;
-
-            case R.id.fab_sub1:
-                toggleFab();
-                break;
-
-            case R.id.fab_sub2:
                 toggleFab();
                 break;
             }

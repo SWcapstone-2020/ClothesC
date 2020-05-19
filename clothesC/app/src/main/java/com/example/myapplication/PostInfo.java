@@ -44,6 +44,7 @@ public class PostInfo implements Serializable {
         this.createdAt = createdAt;
     }
 
+
     public Map<String, Object> getPostInfo(){
         Map<String, Object> docData = new HashMap<>();
         docData.put("title",title);

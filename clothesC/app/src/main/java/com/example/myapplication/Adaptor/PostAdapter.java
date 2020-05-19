@@ -3,11 +3,15 @@ package com.example.myapplication.Adaptor;
 import android.app.Activity;
 import android.util.Patterns;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -16,19 +20,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.PostInfo;
 import com.example.myapplication.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.GalleryViewHolder> {
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
     private ArrayList<PostInfo> mDataset;
     private Activity activity;
+    private FirebaseFirestore firebaseFirestore;
 
-    static class GalleryViewHolder extends RecyclerView.ViewHolder {
+    static class PostViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
 
-        GalleryViewHolder(Activity activity, CardView v, PostInfo postInfo) {
+        PostViewHolder(Activity activity, CardView v, PostInfo postInfo) {
             super(v);
             cardView = v;
 
@@ -61,6 +69,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.GalleryViewHol
     public PostAdapter(Activity activity, ArrayList<PostInfo> myDataset) {
         mDataset = myDataset;
         this.activity = activity;
+        firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -71,20 +80,27 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.GalleryViewHol
 
     @NonNull
     @Override
-    public PostAdapter.GalleryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         CardView cardView = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post, parent, false);
-        final GalleryViewHolder galleryViewHolder = new GalleryViewHolder(activity, cardView, mDataset.get(viewType));
+        final PostViewHolder postViewHolder = new PostViewHolder(activity, cardView, mDataset.get(viewType));
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             }
         });
 
-        return galleryViewHolder;
+        cardView.findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopup(v,postViewHolder.getAdapterPosition());
+            }
+        });
+
+        return postViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final GalleryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final PostViewHolder holder, int position) {
         CardView cardView = holder.cardView;
 
         //제목 출력
@@ -101,7 +117,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.GalleryViewHol
 
         for (int i = 0; i < contentList.size(); i++) {
             String contents = contentList.get(i);
-            if (Patterns.WEB_URL.matcher(contents).matches()) { //내용이 url인가? (즉 이미지인가 동영상인가)
+            if (Patterns.WEB_URL.matcher(contents).matches()) { //내용이 url인가? (이미지인가 동영상인가)
                 Glide.with(activity).load(contents).override(1000).thumbnail(0.1f).into((ImageView) contentsLayout.getChildAt(i));
             } else { //텍스트인가
                 ((TextView) contentsLayout.getChildAt(i)).setText(contents);
@@ -113,4 +129,43 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.GalleryViewHol
     public int getItemCount() {
         return mDataset.size();
     }
+
+    public void showPopup(View v, final int position) { //수정, 삭제 메뉴 뜨게함
+        PopupMenu popup = new PopupMenu(activity, v);
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.modify:
+
+                        return true;
+                    case R.id.delete:
+                        firebaseFirestore.collection("posts").document(mDataset.get(position).getId())
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(activity, "게시글을 삭제하였습니다",Toast.LENGTH_SHORT).show();
+//                                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                       Toast.makeText(activity, "게시글을 삭제하지 못했습니다.",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                        return true;
+                    default:
+                        return false;
+                }
+
+            }
+        });
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.post, popup.getMenu());
+        popup.show();
+    }
+
 }
