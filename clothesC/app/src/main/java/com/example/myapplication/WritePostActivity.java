@@ -215,8 +215,10 @@ public class WritePostActivity extends AppCompatActivity {
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageRef = storage.getReference();
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+            PostInfo postinfo=(PostInfo)getIntent().getSerializableExtra("postInfo");
+
             final DocumentReference documentReference = postInfo == null ? firebaseFirestore.collection("posts").document() : firebaseFirestore.collection("posts").document(postInfo.getId());
-            final Date date = postInfo == null ? new Date() : postInfo.getCreatedAt();
+            final Date date = postInfo == null ? new Date() : postInfo.getCreatedAt();  //수정시 수정된 날짜로 변경되는걸 방지
             for (int i = 0; i < parent.getChildCount(); i++) {
                 LinearLayout linearLayout = (LinearLayout) parent.getChildAt(i);
                 for (int ii = 0; ii < linearLayout.getChildCount(); ii++) {

@@ -1,6 +1,7 @@
 package com.example.myapplication.Adaptor;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -20,7 +21,6 @@ import com.bumptech.glide.Glide;
 import com.example.myapplication.PostInfo;
 import com.example.myapplication.R;
 import com.example.myapplication.listener.OnPostListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,7 +29,6 @@ import java.util.Locale;
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
     private ArrayList<PostInfo> mDataset;
     private Activity activity;
-    private FirebaseFirestore firebaseFirestore;
     private OnPostListener onPostListener;
 
     static class PostViewHolder extends RecyclerView.ViewHolder {
@@ -66,9 +65,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     }
 
     public PostAdapter(Activity activity, ArrayList<PostInfo> myDataset) {
-        mDataset = myDataset;
+        this.mDataset = myDataset;
         this.activity = activity;
-        firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
     public void setOnPostListener(OnPostListener onPostListener){
@@ -122,23 +120,30 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         if(contentsLayout.getTag()==null || !contentsLayout.equals(contentList)){
             contentsLayout.setTag(contentList);
             contentsLayout.removeAllViews();
-            if(contentList.size()>0) {
-                for (int i = 0; i < contentList.size(); i++) {
-                    String contents = contentList.get(i);
-                    if (Patterns.WEB_URL.matcher(contents).matches()) { //내용이 url인가? (즉 이미지인가 동영상인가)
-                        ImageView imageView = new ImageView(activity);
-                        imageView.setLayoutParams(layoutParams);
-                        imageView.setAdjustViewBounds(true);
-                        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                        contentsLayout.addView(imageView);
-                        Glide.with(activity).load(contents).override(1000).thumbnail(0.1f).into(imageView);
-                    } else { //텍스트인가
-                        TextView textView = new TextView(activity);
-                        textView.setLayoutParams(layoutParams);
-                        textView.setText(contents);
-                        contentsLayout.addView(textView);
-
-                    }
+            final int MORE_NEED=2;
+            for (int i = 0; i < contentList.size(); i++) {
+                if(i==MORE_NEED){
+                    TextView textView = new TextView(activity);
+                    textView.setLayoutParams(layoutParams);
+                    textView.setText("더보기...");
+                    contentsLayout.addView(textView);
+                    break;
+                }
+                String contents = contentList.get(i);
+                if (Patterns.WEB_URL.matcher(contents).matches()
+                        &&contents.contains("https://firebasestorage.googleapis.com/v0/b/clothesc-ver1.appspot.com/o/posts")) { //내용이 url인가? (즉 이미지인가 동영상인가)
+                    ImageView imageView = new ImageView(activity);
+                    imageView.setLayoutParams(layoutParams);
+                    imageView.setAdjustViewBounds(true);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    contentsLayout.addView(imageView);
+                    Glide.with(activity).load(contents).override(1000).thumbnail(0.1f).into(imageView);
+                } else { //텍스트인가
+                    TextView textView = new TextView(activity);
+                    textView.setLayoutParams(layoutParams);
+                    textView.setText(contents);
+                    textView.setTextColor(Color.rgb(0,0,0)); //텍스트 내용 색깔 지정
+                    contentsLayout.addView(textView);
                 }
             }
         }
@@ -155,13 +160,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                String id=mDataset.get(position).getId();
                 switch (item.getItemId()) {
                     case R.id.modify:
-                        onPostListener.onModify(id);
+                        onPostListener.onModify(position);
                         return true;
                     case R.id.delete:
-                        onPostListener.onDelete(id);
+                        onPostListener.onDelete(position);
                        /* firebaseFirestore.collection("posts").document(mDataset.get(position).getId())
                                 .delete()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {

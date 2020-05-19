@@ -2,7 +2,7 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -26,6 +26,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,9 +35,11 @@ import java.util.Date;
 public class ShowPostActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private FirebaseFirestore firebaseFirestore;
+    private   StorageReference storageRef;
     private PostAdapter postAdapter;
     private ArrayList<PostInfo> postList;
     private Util util;
+    private int successCount;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +47,12 @@ public class ShowPostActivity extends AppCompatActivity {
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         firebaseFirestore = FirebaseFirestore.getInstance();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        storageRef=storage.getReference();
+
+
+
         if (firebaseUser == null) {
             startActivity(LoginActivity.class);
         } else {
@@ -90,29 +100,45 @@ public class ShowPostActivity extends AppCompatActivity {
 
     OnPostListener onPostListener = new OnPostListener() {
         @Override
-        public void onDelete(String id) {
-            Log.e("로그", "삭제:"+id);
+        public void onDelete(int position) {
+            final String id=postList.get(position).getId();
 
-            firebaseFirestore.collection("posts").document(id)
-                    .delete()
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+            ArrayList<String> contentList = postList.get(position).getContents();
+            for (int i = 0; i < contentList.size(); i++) {
+                String contents = contentList.get(i);
+                if (Patterns.WEB_URL.matcher(contents).matches()
+                        &&contents.contains("https://firebasestorage.googleapis.com/v0/b/clothesc-ver1.appspot.com/o/posts")) { //내용이 url인가? (즉 이미지인가 동영상인가)
+                    successCount++;
+                    String[] list=contents.split("\\?");
+                    String[] list2=list[0].split("%2F");
+                    String name=list2[list2.length-1];
+
+                    StorageReference desertRef = storageRef.child("posts/"+id+"/"+name);
+                    desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            util.showToast("게시글을 삭제하였습니다");
-                            postUpdate();
+                            util.showToast("삭제 했습니다.");
+                            successCount--;
+                            storageDeleteUpdate(id);
                         }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
+                    }).addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e) {
-                            util.showToast("게시글을 삭제하지 못했습니다");
+                        public void onFailure(@NonNull Exception exception) {
+                            util.showToast("삭제하지 못했습니다");
                         }
                     });
+
+                }
+            }
+            storageDeleteUpdate(id);
         }
 
+
+
+
         @Override
-        public void onModify(String id) {
-            Log.e("로그", "수정"+id);
+        public void onModify(int position) {
+            goWriteActivity(WritePostActivity.class, postList.get(position));
        }
     };
 
@@ -156,8 +182,34 @@ public class ShowPostActivity extends AppCompatActivity {
         }
     }
 
+    private void storageDeleteUpdate(String id){
+        if(successCount==0){
+            firebaseFirestore.collection("posts").document(id)
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            util.showToast("게시글을 삭제하였습니다");
+                            postUpdate();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            util.showToast("게시글을 삭제하지 못했습니다");
+                        }
+                    });
+        }
+    }
+
     private void startActivity(Class c) {
         Intent intent = new Intent(this, c);
+        startActivity(intent);
+    }
+
+    private void goWriteActivity(Class c, PostInfo postInfo) {
+        Intent intent = new Intent(this, c);
+        intent.putExtra("postInfo",postInfo);
         startActivity(intent);
     }
 }
