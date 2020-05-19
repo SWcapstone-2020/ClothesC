@@ -8,10 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.Clothes.ClothesItemActivity;
 import com.example.myapplication.Post.ProfileActivity;
-<<<<<<< HEAD
-=======
 import com.example.myapplication.Post.ShowPostActivity;
->>>>>>> fa297d7722eee59918d62916e7b38d060247ff10
 import com.example.myapplication.signup.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

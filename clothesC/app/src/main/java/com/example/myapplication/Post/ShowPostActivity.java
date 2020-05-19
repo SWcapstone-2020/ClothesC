@@ -10,11 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Adaptor.PostAdapter;
-<<<<<<< HEAD:clothesC/app/src/main/java/com/example/myapplication/ShowPostActivity.java
-import com.example.myapplication.Post.PostInfo;
-=======
 import com.example.myapplication.R;
->>>>>>> fa297d7722eee59918d62916e7b38d060247ff10:clothesC/app/src/main/java/com/example/myapplication/Post/ShowPostActivity.java
 import com.example.myapplication.listener.OnPostListener;
 import com.example.myapplication.signup.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -111,7 +107,7 @@ public class ShowPostActivity extends AppCompatActivity {
             ArrayList<String> contentList = postList.get(position).getContents();
             for (int i = 0; i < contentList.size(); i++) {
                 String contents = contentList.get(i);
-                if (isStorageUrl(contents)) { //내용이 url인가? (즉 이미지인가 동영상인가)
+                if(isStorageUrl(contents)){ //내용이 url인가? (즉 이미지인가 동영상인가)
                     successCount++;
 
                     StorageReference desertRef = storageRef.child("posts/" + id + "/" + storageUrlToName(contents));

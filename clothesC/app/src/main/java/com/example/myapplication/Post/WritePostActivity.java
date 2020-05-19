@@ -15,13 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-<<<<<<< HEAD:clothesC/app/src/main/java/com/example/myapplication/WritePostActivity.java
-import com.example.myapplication.Post.PostInfo;
-=======
 import com.example.myapplication.GalleryActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.Util;
->>>>>>> fa297d7722eee59918d62916e7b38d060247ff10:clothesC/app/src/main/java/com/example/myapplication/Post/WritePostActivity.java
 import com.example.myapplication.view.ContentsItemView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
