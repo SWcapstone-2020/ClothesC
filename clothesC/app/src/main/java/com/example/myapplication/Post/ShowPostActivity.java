@@ -1,8 +1,7 @@
-package com.example.myapplication;
+package com.example.myapplication.Post;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -11,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Adaptor.PostAdapter;
+import com.example.myapplication.R;
 import com.example.myapplication.listener.OnPostListener;
 import com.example.myapplication.signup.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,13 +32,16 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.example.myapplication.Util.isStorageUrl;
+import static com.example.myapplication.Util.showToast;
+import static com.example.myapplication.Util.storageUrlToName;
+
 public class ShowPostActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private FirebaseFirestore firebaseFirestore;
-    private   StorageReference storageRef;
+    private StorageReference storageRef;
     private PostAdapter postAdapter;
     private ArrayList<PostInfo> postList;
-    private Util util;
     private int successCount;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +52,7 @@ public class ShowPostActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        storageRef=storage.getReference();
-
+        storageRef = storage.getReference();
 
 
         if (firebaseUser == null) {
@@ -76,8 +78,7 @@ public class ShowPostActivity extends AppCompatActivity {
                 }
             });
         }
-        util=new Util(this);
-        postList= new ArrayList<>();
+        postList = new ArrayList<>();
         postAdapter = new PostAdapter(ShowPostActivity.this, postList);
         postAdapter.setOnPostListener(onPostListener);
 
@@ -101,30 +102,26 @@ public class ShowPostActivity extends AppCompatActivity {
     OnPostListener onPostListener = new OnPostListener() {
         @Override
         public void onDelete(int position) {
-            final String id=postList.get(position).getId();
+            final String id = postList.get(position).getId();
 
             ArrayList<String> contentList = postList.get(position).getContents();
             for (int i = 0; i < contentList.size(); i++) {
                 String contents = contentList.get(i);
-                if (Patterns.WEB_URL.matcher(contents).matches()
-                        &&contents.contains("https://firebasestorage.googleapis.com/v0/b/clothesc-ver1.appspot.com/o/posts")) { //내용이 url인가? (즉 이미지인가 동영상인가)
+                if (isStorageUrl(contents)) { //내용이 url인가? (즉 이미지인가 동영상인가)
                     successCount++;
-                    String[] list=contents.split("\\?");
-                    String[] list2=list[0].split("%2F");
-                    String name=list2[list2.length-1];
 
-                    StorageReference desertRef = storageRef.child("posts/"+id+"/"+name);
+                    StorageReference desertRef = storageRef.child("posts/" + id + "/" + storageUrlToName(contents));
                     desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            util.showToast("삭제 했습니다.");
+                            showToast(ShowPostActivity.this, "삭제 했습니다.");
                             successCount--;
                             storageDeleteUpdate(id);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-                            util.showToast("삭제하지 못했습니다");
+                            showToast(ShowPostActivity.this, "삭제하지 못했습니다");
                         }
                     });
 
@@ -134,12 +131,10 @@ public class ShowPostActivity extends AppCompatActivity {
         }
 
 
-
-
         @Override
         public void onModify(int position) {
             goWriteActivity(WritePostActivity.class, postList.get(position));
-       }
+        }
     };
 
 
@@ -154,7 +149,7 @@ public class ShowPostActivity extends AppCompatActivity {
         }
     };
 
-    private void postUpdate(){
+    private void postUpdate() {
         if (firebaseUser != null) {
             CollectionReference collectionReference = firebaseFirestore.collection("posts");
             collectionReference.orderBy("createdAt", Query.Direction.DESCENDING).get()
@@ -182,21 +177,21 @@ public class ShowPostActivity extends AppCompatActivity {
         }
     }
 
-    private void storageDeleteUpdate(String id){
-        if(successCount==0){
+    private void storageDeleteUpdate(String id) {
+        if (successCount == 0) {
             firebaseFirestore.collection("posts").document(id)
                     .delete()
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            util.showToast("게시글을 삭제하였습니다");
+                            showToast(ShowPostActivity.this, "게시글을 삭제하였습니다");
                             postUpdate();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            util.showToast("게시글을 삭제하지 못했습니다");
+                            showToast(ShowPostActivity.this, "게시글을 삭제하지 못했습니다");
                         }
                     });
         }
@@ -209,7 +204,7 @@ public class ShowPostActivity extends AppCompatActivity {
 
     private void goWriteActivity(Class c, PostInfo postInfo) {
         Intent intent = new Intent(this, c);
-        intent.putExtra("postInfo",postInfo);
+        intent.putExtra("postInfo", postInfo);
         startActivity(intent);
     }
 }

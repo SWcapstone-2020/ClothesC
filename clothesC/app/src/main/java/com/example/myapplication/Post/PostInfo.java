@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Post;
 
 import java.io.Serializable;
 import java.util.ArrayList;

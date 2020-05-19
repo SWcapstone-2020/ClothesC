@@ -30,13 +30,13 @@
         <activity android:name=".signup.SignUpActivity" />
         <activity android:name=".signup.LoginActivity" />
         <activity android:name=".signup.PasswordResetActivity" />
-        <activity android:name=".ProfileUpdateActivity" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".Post.ProfileUpdateActivity" />
+        <activity android:name=".Post.ProfileActivity" />
         <activity android:name=".CameraActivity" />
         <activity android:name=".signup.InfoActivity" />
-        <activity android:name=".WritePostActivity"/>
+        <activity android:name=".Post.WritePostActivity"/>
         <activity android:name=".GalleryActivity"/>
-        <activity android:name="ShowPostActivity"/>
+        <activity android:name=".Post.ShowPostActivity"/>
         <activity
             android:name=".Clothes.ClothesItemActivity"
             android:theme="@style/AppTheme.NoActionBar" /><!-- 상단바 없음 -->

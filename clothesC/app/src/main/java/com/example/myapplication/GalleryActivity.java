@@ -45,7 +45,7 @@ public class GalleryActivity extends AppCompatActivity {
                     Manifest.permission.READ_EXTERNAL_STORAGE)) {
 
             } else {
-                util.showToast( "권한 허용");
+                showToast( GalleryActivity.this,"권한 허용");
             }
         } else {
             recyclerInit();
@@ -60,7 +60,7 @@ public class GalleryActivity extends AppCompatActivity {
                     recyclerInit();
                 } else {
                     finish();
-                    util.showToast("허락");
+                    showToast(GalleryActivity.this,"허락");
                 }
             }
         }

@@ -7,13 +7,12 @@ import android.widget.Toast;
 import java.net.URLConnection;
 
 public class Util {
-    private static Activity activity;
 
     public Util(Activity activity){
-        this.activity=activity;
+        /**/
     }
 
-    public static void showToast(String msg){
+    public static void showToast(Activity activity,String msg){
         Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
     }
     public static final String INTENT_PATH = "path";
