@@ -119,28 +119,29 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         ArrayList<String> contentList = mDataset.get(position).getContents();
 
-        contentsLayout.removeAllViews();
-        if(contentList.size()>0) {
-            for (int i = 0; i < contentList.size(); i++) {
-                String contents = contentList.get(i);
-                if (Patterns.WEB_URL.matcher(contents).matches()) { //내용이 url인가? (즉 이미지인가 동영상인가)
-                    ImageView imageView = new ImageView(activity);
-                    imageView.setLayoutParams(layoutParams);
-                    imageView.setAdjustViewBounds(true);
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                    contentsLayout.addView(imageView);
+        if(contentsLayout.getTag()==null || !contentsLayout.equals(contentList)){
+            contentsLayout.setTag(contentList);
+            contentsLayout.removeAllViews();
+            if(contentList.size()>0) {
+                for (int i = 0; i < contentList.size(); i++) {
+                    String contents = contentList.get(i);
+                    if (Patterns.WEB_URL.matcher(contents).matches()) { //내용이 url인가? (즉 이미지인가 동영상인가)
+                        ImageView imageView = new ImageView(activity);
+                        imageView.setLayoutParams(layoutParams);
+                        imageView.setAdjustViewBounds(true);
+                        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        contentsLayout.addView(imageView);
                         Glide.with(activity).load(contents).override(1000).thumbnail(0.1f).into(imageView);
-                } else { //텍스트인가
-                    TextView textView = new TextView(activity);
-                    textView.setLayoutParams(layoutParams);
-                    textView.setText(contents);
-                    contentsLayout.addView(textView);
+                    } else { //텍스트인가
+                        TextView textView = new TextView(activity);
+                        textView.setLayoutParams(layoutParams);
+                        textView.setText(contents);
+                        contentsLayout.addView(textView);
 
+                    }
                 }
             }
         }
-
-
     }
 
 
