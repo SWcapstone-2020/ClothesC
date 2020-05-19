@@ -2,7 +2,6 @@ package com.example.myapplication.Adaptor;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,6 +24,8 @@ import com.example.myapplication.listener.OnPostListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import static com.example.myapplication.Util.isStorageUrl;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
     private ArrayList<PostInfo> mDataset;
@@ -130,8 +131,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     break;
                 }
                 String contents = contentList.get(i);
-                if (Patterns.WEB_URL.matcher(contents).matches()
-                        &&contents.contains("https://firebasestorage.googleapis.com/v0/b/clothesc-ver1.appspot.com/o/posts")) { //내용이 url인가? (즉 이미지인가 동영상인가)
+                if (isStorageUrl(contents)) { //내용이 url인가? (즉 이미지인가 동영상인가)
                     ImageView imageView = new ImageView(activity);
                     imageView.setLayoutParams(layoutParams);
                     imageView.setAdjustViewBounds(true);

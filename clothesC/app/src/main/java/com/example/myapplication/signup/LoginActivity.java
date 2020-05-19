@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +15,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import static com.example.myapplication.Util.showToast;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -75,25 +76,22 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                startToast("로그인을 성공했습니다.");
+                                showToast(LoginActivity.this,"로그인을 성공했습니다.");
                                 finish();
                             } else {
                                 if(task.getException().toString() !=null){
-                                    startToast(task.getException().toString());
+                                    showToast(LoginActivity.this,"이메일 혹은 비밀번호를 확인해주세요");
                                 }
                             }
                         }
                     });
             }
         else{
-            startToast("이메일 혹은 비밀번호를 입력해주세요.");
+            showToast(LoginActivity.this,"이메일 혹은 비밀번호를 입력해주세요.");
         }
 
     }//회원가입이 이루어지는 함수
 
-    private void startToast(String msg){
-        Toast.makeText(this, msg,Toast.LENGTH_SHORT).show();
-    } // 알림창 띄우는 함수
 
     private void startActivity(Class c){
         Intent intent=new Intent(this,c);

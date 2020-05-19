@@ -9,7 +9,6 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +27,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.InputStream;
+
+import static com.example.myapplication.Util.showToast;
 
 public class InfoActivity extends AppCompatActivity {
     private  final String TAG="InfoActivity";
@@ -164,28 +165,24 @@ public class InfoActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-
-                                startToast("회원정보 등록을 성공했습니다.");
+                                showToast(InfoActivity.this,"회원정보 등록을 성공했습니다.");
                                 startActivity(MainActivity.class);
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                startToast("회원정보 등록을 실패했습니다.");
+                                showToast(InfoActivity.this,"회원정보 등록을 실패했습니다");
                             }
                         });
                 }
             }
 
             else{
-                startToast("회원정보를 입력해주세요.");
+            showToast(InfoActivity.this,"회원정보를 입력해주세요");
             }
     }
 
-    private void startToast(String msg){
-        Toast.makeText(this, msg,Toast.LENGTH_SHORT).show();
-    }
 
     private void startActivity(Class c){
         Intent intent=new Intent(this,c);

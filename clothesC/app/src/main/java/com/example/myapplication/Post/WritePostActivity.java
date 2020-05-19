@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Post;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,7 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+<<<<<<< HEAD:clothesC/app/src/main/java/com/example/myapplication/WritePostActivity.java
 import com.example.myapplication.Post.PostInfo;
+=======
+import com.example.myapplication.GalleryActivity;
+import com.example.myapplication.R;
+import com.example.myapplication.Util;
+>>>>>>> fa297d7722eee59918d62916e7b38d060247ff10:clothesC/app/src/main/java/com/example/myapplication/Post/WritePostActivity.java
 import com.example.myapplication.view.ContentsItemView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,6 +48,7 @@ import static com.example.myapplication.Util.INTENT_PATH;
 import static com.example.myapplication.Util.isImageFile;
 import static com.example.myapplication.Util.isStorageUrl;
 import static com.example.myapplication.Util.isVideoFile;
+import static com.example.myapplication.Util.showToast;
 import static com.example.myapplication.Util.storageUrlToName;
 
 public class WritePostActivity extends AppCompatActivity {
@@ -176,7 +183,7 @@ public class WritePostActivity extends AppCompatActivity {
                         desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                util.showToast("파일을 삭제하였습니다.");
+                                showToast(WritePostActivity.this,"파일을 삭제하였습니다.");
                                 pathList.remove(parent.indexOfChild(selectedView) - 1);
                                 parent.removeView(selectedView);
                                 buttonsBackgroundLayout.setVisibility(View.GONE);
@@ -184,7 +191,7 @@ public class WritePostActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
-                                util.showToast( "파일을 삭제하는데 실패하였습니다.");
+                                showToast(WritePostActivity.this, "파일을 삭제하는데 실패하였습니다.");
                             }
                         });
                     }else{
@@ -279,7 +286,7 @@ public class WritePostActivity extends AppCompatActivity {
                 storeUpload(documentReference, new PostInfo(title, contentsList, formatList, user.getUid(), date));
             }
         } else {
-            util.showToast("제목을 입력해주세요.");
+            showToast(WritePostActivity.this,"제목을 입력해주세요.");
         }
     }
 

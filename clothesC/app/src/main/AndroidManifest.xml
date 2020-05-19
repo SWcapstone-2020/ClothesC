@@ -34,9 +34,9 @@
         <activity android:name=".Post.ProfileActivity" />
         <activity android:name=".CameraActivity" />
         <activity android:name=".signup.InfoActivity" />
-        <activity android:name=".WritePostActivity"/>
+        <activity android:name=".Post.WritePostActivity"/>
         <activity android:name=".GalleryActivity"/>
-        <activity android:name="ShowPostActivity"/>
+        <activity android:name=".Post.ShowPostActivity"/>
         <activity
             android:name=".Clothes.ClothesItemActivity"
             android:theme="@style/AppTheme.NoActionBar" /><!-- 상단바 없음 -->
