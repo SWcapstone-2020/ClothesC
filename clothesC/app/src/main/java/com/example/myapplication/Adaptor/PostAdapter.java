@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -20,8 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.PostInfo;
 import com.example.myapplication.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.myapplication.listener.OnPostListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -32,15 +30,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private ArrayList<PostInfo> mDataset;
     private Activity activity;
     private FirebaseFirestore firebaseFirestore;
+    private OnPostListener onPostListener;
 
     static class PostViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
 
-        PostViewHolder(Activity activity, CardView v, PostInfo postInfo) {
+        PostViewHolder(CardView v) {
             super(v);
             cardView = v;
-
-            LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
+        }
+/*            LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             ArrayList<String> contentList = postInfo.getContents();
 
@@ -63,13 +62,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     }
                 }
             }
-        }
+        }*/
     }
 
     public PostAdapter(Activity activity, ArrayList<PostInfo> myDataset) {
         mDataset = myDataset;
         this.activity = activity;
         firebaseFirestore = FirebaseFirestore.getInstance();
+    }
+
+    public void setOnPostListener(OnPostListener onPostListener){
+        this.onPostListener=onPostListener;
     }
 
     @Override
@@ -82,7 +85,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         CardView cardView = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_post, parent, false);
-        final PostViewHolder postViewHolder = new PostViewHolder(activity, cardView, mDataset.get(viewType));
+        final PostViewHolder postViewHolder = new PostViewHolder(cardView);
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,17 +116,33 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         //내용 출력
         LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         ArrayList<String> contentList = mDataset.get(position).getContents();
 
-        for (int i = 0; i < contentList.size(); i++) {
-            String contents = contentList.get(i);
-            if (Patterns.WEB_URL.matcher(contents).matches()) { //내용이 url인가? (이미지인가 동영상인가)
-                Glide.with(activity).load(contents).override(1000).thumbnail(0.1f).into((ImageView) contentsLayout.getChildAt(i));
-            } else { //텍스트인가
-                ((TextView) contentsLayout.getChildAt(i)).setText(contents);
+        contentsLayout.removeAllViews();
+        if(contentList.size()>0) {
+            for (int i = 0; i < contentList.size(); i++) {
+                String contents = contentList.get(i);
+                if (Patterns.WEB_URL.matcher(contents).matches()) { //내용이 url인가? (즉 이미지인가 동영상인가)
+                    ImageView imageView = new ImageView(activity);
+                    imageView.setLayoutParams(layoutParams);
+                    imageView.setAdjustViewBounds(true);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    contentsLayout.addView(imageView);
+                        Glide.with(activity).load(contents).override(1000).thumbnail(0.1f).into(imageView);
+                } else { //텍스트인가
+                    TextView textView = new TextView(activity);
+                    textView.setLayoutParams(layoutParams);
+                    textView.setText(contents);
+                    contentsLayout.addView(textView);
+
+                }
             }
         }
+
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -135,13 +154,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
+                String id=mDataset.get(position).getId();
                 switch (item.getItemId()) {
                     case R.id.modify:
-
+                        onPostListener.onModify(id);
                         return true;
                     case R.id.delete:
-                        firebaseFirestore.collection("posts").document(mDataset.get(position).getId())
+                        onPostListener.onDelete(id);
+                       /* firebaseFirestore.collection("posts").document(mDataset.get(position).getId())
                                 .delete()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -155,7 +175,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                     public void onFailure(@NonNull Exception e) {
                                        Toast.makeText(activity, "게시글을 삭제하지 못했습니다.",Toast.LENGTH_SHORT).show();
                                     }
-                                });
+                                });*/
                         return true;
                     default:
                         return false;

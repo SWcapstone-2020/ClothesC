@@ -26,11 +26,14 @@ import static com.example.myapplication.Util.INTENT_MEDIA;
 import static com.example.myapplication.Util.showToast;
 
 public class GalleryActivity extends AppCompatActivity {
+    private Util util;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
+
+        util=new Util(this);
 
         if (ContextCompat.checkSelfPermission(GalleryActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -42,7 +45,7 @@ public class GalleryActivity extends AppCompatActivity {
                     Manifest.permission.READ_EXTERNAL_STORAGE)) {
 
             } else {
-                showToast(GalleryActivity.this, "권한 허용");
+                util.showToast( "권한 허용");
             }
         } else {
             recyclerInit();
@@ -57,7 +60,7 @@ public class GalleryActivity extends AppCompatActivity {
                     recyclerInit();
                 } else {
                     finish();
-                    showToast(GalleryActivity.this, "허락");
+                    util.showToast("허락");
                 }
             }
         }
