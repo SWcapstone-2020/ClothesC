@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ClothesC</string>
+    <string name="app_name">OtmaepC</string>
     <string name="hello_world">Hello world!</string>
     <!-- 옷장 상단바 서브메뉴의 하위메뉴 이름 -->
     <string name="action_settings">Settings</string>
