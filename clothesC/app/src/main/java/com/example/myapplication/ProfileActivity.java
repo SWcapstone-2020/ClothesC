@@ -1,4 +1,4 @@
-package com.example.myapplication.Post;
+package com.example.myapplication;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,8 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.myapplication.GalleryActivity;
-import com.example.myapplication.R;
 import com.example.myapplication.signup.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;

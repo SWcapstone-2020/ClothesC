@@ -1,4 +1,4 @@
-package com.example.myapplication.Post;
+package com.example.myapplication;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
 
-import com.example.myapplication.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -84,23 +83,6 @@ public class ProfileUpdateActivity extends AppCompatActivity {
 
     }
 
-/*    private void updateImage(){
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl("gs://clothesc-ver1.appspot.com");
-        StorageReference desertRef = storageRef.child("profileImage/" + user.getUid()+"/"+"profile.png");
-
-        desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                startToast("삭제성공");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                startToast("삭제실패");
-            }
-        });
-    }*/
     private void loadAlbum(){
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(MediaStore.Images.Media.CONTENT_TYPE);

@@ -1,6 +1,7 @@
 package com.example.myapplication.Adaptor;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -17,6 +18,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.myapplication.Post.DetailPostActivity;
 import com.example.myapplication.Post.PostInfo;
 import com.example.myapplication.R;
 import com.example.myapplication.listener.OnPostListener;
@@ -39,30 +41,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             super(v);
             cardView = v;
         }
-/*            LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            ArrayList<String> contentList = postInfo.getContents();
-
-            if (contentsLayout.getChildCount() == 0) {
-                for (int i = 0; i < contentList.size(); i++) {
-                    String contents = contentList.get(i);
-                    if (Patterns.WEB_URL.matcher(contents).matches()) { //내용이 url인가? (즉 이미지인가 동영상인가)
-                        ImageView imageView = new ImageView(activity);
-                        imageView.setLayoutParams(layoutParams);
-                        imageView.setAdjustViewBounds(true);
-                        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                        contentsLayout.addView(imageView);
-//                        Glide.with(activity).load(contents).override(1000).thumbnail(0.1f).into(imageView);
-                    } else { //텍스트인가
-                        TextView textView = new TextView(activity);
-                        textView.setLayoutParams(layoutParams);
-//                        textView.setText(contents);
-                        contentsLayout.addView(textView);
-
-                    }
-                }
-            }
-        }*/
     }
 
     public PostAdapter(Activity activity, ArrayList<PostInfo> myDataset) {
@@ -88,6 +66,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(activity, DetailPostActivity.class);
+                intent.putExtra("postInfo", mDataset.get(postViewHolder.getAdapterPosition()));
+                activity.startActivity(intent);
             }
         });
 
