@@ -24,7 +24,7 @@ public class ClothesItemActivity extends AppCompatActivity implements Navigation
     private DrawerLayout mDrawerLayout;
 
     private Context mContext;
-    private FloatingActionButton fab_main, fab_sub1, fab_sub2;
+    private FloatingActionButton fab_main;
     private Animation fab_open, fab_close;
     private boolean isFabOpen = false;
 
@@ -34,6 +34,8 @@ public class ClothesItemActivity extends AppCompatActivity implements Navigation
         setContentView(R.layout.activity_clothes_item);
 
         mContext = getApplicationContext();
+
+        fab_main=findViewById(R.id.fab_main);
 
         fab_main.setOnClickListener(onClickListener);
 
@@ -74,17 +76,11 @@ public class ClothesItemActivity extends AppCompatActivity implements Navigation
     private void toggleFab() {
         if (isFabOpen) {
             fab_main.setImageResource(R.drawable.ic_span_1);
-            fab_sub1.startAnimation(fab_close);
-            fab_sub2.startAnimation(fab_close);
-            fab_sub1.setClickable(false);
-            fab_sub2.setClickable(false);
+
             isFabOpen = false;
         } else {
             fab_main.setImageResource(R.drawable.ic_span_1);
-            fab_sub1.startAnimation(fab_open);
-            fab_sub2.startAnimation(fab_open);
-            fab_sub1.setClickable(true);
-            fab_sub2.setClickable(true);
+
             isFabOpen = true;
         }
     }
