@@ -190,10 +190,6 @@ public class WritePostActivity extends AppCompatActivity {
                                 showToast(WritePostActivity.this, "파일을 삭제하는데 실패하였습니다.");
                             }
                         });
-                    }else{
-                        pathList.remove(parent.indexOfChild(selectedView) - 1);
-                        parent.removeView(selectedView);
-                        buttonsBackgroundLayout.setVisibility(View.GONE);
                     }
                     break;
             }
