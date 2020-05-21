@@ -1,18 +1,16 @@
-package com.example.myapplication.Post;
+package com.example.myapplication.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.view.ViewGroup;
 
 import com.example.myapplication.Adaptor.PostAdapter;
+import com.example.myapplication.Post.PostInfo;
+import com.example.myapplication.Post.WritePostActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.listener.OnPostListener;
-import com.example.myapplication.signup.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -20,8 +18,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -32,11 +28,18 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.Date;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import static com.example.myapplication.Util.isStorageUrl;
 import static com.example.myapplication.Util.showToast;
 import static com.example.myapplication.Util.storageUrlToName;
 
-public class ShowPostActivity extends AppCompatActivity {
+
+public class HomeFragment extends Fragment {
+
     private FirebaseUser firebaseUser;
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageRef;
@@ -44,9 +47,18 @@ public class ShowPostActivity extends AppCompatActivity {
     private ArrayList<PostInfo> postList;
     private int successCount;
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_post);
+    public HomeFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -55,50 +67,30 @@ public class ShowPostActivity extends AppCompatActivity {
         storageRef = storage.getReference();
 
 
-        if (firebaseUser == null) {
-            startActivity(LoginActivity.class);
-        } else {
-
-            DocumentReference documentReference = firebaseFirestore.collection("users").document(firebaseUser.getUid());
-            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document != null) {
-                            if (document.exists()) {
-//                                Log.d("show","Document data:"+document.getData());
-                            } else {
-                                startActivity(LoginActivity.class);
-                            }
-                        }
-                    } else {
-//                        Log.d("show","get failed with"+task.getException());
-                    }
-                }
-            });
-        }
         postList = new ArrayList<>();
-        postAdapter = new PostAdapter(ShowPostActivity.this, postList);
+        postAdapter = new PostAdapter(getActivity(), postList);
         postAdapter.setOnPostListener(onPostListener);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        findViewById(R.id.writePost).setOnClickListener(onClickListener);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        view.findViewById(R.id.writePost).setOnClickListener(onClickListener);
 
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(ShowPostActivity.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(postAdapter);
 
+        return view;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        postUpdate();
-
-
-    }
-
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.writePost:
+                    startActivity(WritePostActivity.class);
+                    break;
+            }
+        }
+    };
     OnPostListener onPostListener = new OnPostListener() {
         @Override
         public void onDelete(int position) {
@@ -114,14 +106,14 @@ public class ShowPostActivity extends AppCompatActivity {
                     desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            showToast(ShowPostActivity.this, "삭제 했습니다.");
+                            showToast(getActivity(), "삭제 했습니다.");
                             successCount--;
                             storageDeleteUpdate(id);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-                            showToast(ShowPostActivity.this, "삭제하지 못했습니다");
+                            showToast(getActivity(), "삭제하지 못했습니다");
                         }
                     });
 
@@ -130,24 +122,20 @@ public class ShowPostActivity extends AppCompatActivity {
             storageDeleteUpdate(id);
         }
 
-
         @Override
         public void onModify(int position) {
             goWriteActivity(WritePostActivity.class, postList.get(position));
         }
     };
 
+    /*
+    protected void onResume() {
+        super.onResume();
+        postUpdate();
 
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.writePost:
-                    startActivity(WritePostActivity.class);
-                    break;
-            }
-        }
-    };
+
+    }
+ */
 
     private void postUpdate() {
         if (firebaseUser != null) {
@@ -184,27 +172,31 @@ public class ShowPostActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            showToast(ShowPostActivity.this, "게시글을 삭제하였습니다");
+                            showToast(getActivity(), "게시글을 삭제하였습니다");
                             postUpdate();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            showToast(ShowPostActivity.this, "게시글을 삭제하지 못했습니다");
+                            showToast(getActivity(), "게시글을 삭제하지 못했습니다");
                         }
                     });
         }
     }
 
+
+
     private void startActivity(Class c) {
-        Intent intent = new Intent(this, c);
+        Intent intent = new Intent(getActivity(), c);
         startActivity(intent);
     }
 
     private void goWriteActivity(Class c, PostInfo postInfo) {
-        Intent intent = new Intent(this, c);
+        Intent intent = new Intent(getActivity(), c);
         intent.putExtra("postInfo", postInfo);
         startActivity(intent);
     }
+
+
 }

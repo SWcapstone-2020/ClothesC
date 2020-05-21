@@ -2,15 +2,13 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.myapplication.Clothes.ClothesItemActivity;
-import com.example.myapplication.Post.ShowPostActivity;
+import com.example.myapplication.fragment.HomeFragment;
 import com.example.myapplication.signup.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 //import androidx.fragment.app.FragmentManager;
 //import androidx.fragment.app.FragmentTransaction;
@@ -26,22 +24,43 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init();
+
+        //findViewById(R.id.profileButton).setOnClickListener(onClickListener);
+       //findViewById(R.id.cameraButton).setOnClickListener(onClickListener);
+        //findViewById(R.id.clothesPageButton).setOnClickListener(onClickListener);
+       // findViewById(R.id.templogout).setOnClickListener(onClickListener);
+        // 게시글 글쓰기 버튼
+        //findViewById(R.id.post_write).setOnClickListener(onClickListener);
+
+    }
+
+    private void init(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user == null) {
             startActivity(LoginActivity.class);
         } //로그인이 되어있지 않으면 activity_main.xml을 실행하지 않고 startLoginActivity.java 실행하여 로그인 화면으로 넘어감
 
-        findViewById(R.id.profileButton).setOnClickListener(onClickListener);
-        findViewById(R.id.cameraButton).setOnClickListener(onClickListener);
-        findViewById(R.id.clothesPageButton).setOnClickListener(onClickListener);
-        findViewById(R.id.templogout).setOnClickListener(onClickListener);
-        // 게시글 글쓰기 버튼
-        findViewById(R.id.post_write).setOnClickListener(onClickListener);
-
+        //프래그먼트
+       HomeFragment homeFragment = new HomeFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, homeFragment)
+                .commit();
 
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
+    private void startActivity(Class c){
+        Intent intent=new Intent(this,c);
+        startActivity(intent);
+    }
+
+    /*
+    //기능들 버튼 잠시 주석처리
     View.OnClickListener onClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -65,72 +84,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-
-    private void startActivity(Class c){
-        Intent intent=new Intent(this,c);
-        startActivity(intent);
-    }
+     */
 
 
-/*        bottomNavigationView = findViewById(R.id.bottomNavi);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId()){
-                    case R.id.action_home:
-                        setFrag(0);
-                        break;
-                    case R.id.action_camera:
-                        setFrag(1);
-                        break;
-                    case R.id.action_create:
-                        setFrag(2);
-                        break;
 
-                    case R.id.action_clothe:
-                        setFrag(3);
-                        break;
-
-                    case R.id.action_profile:
-                        setFrag(4);
-                        break;
-                }
-                return true;
-            }
-        });
-
-        fragment_home = new FragmentHome();
-        setFrag(0); //첫 프래그먼트 화면을 무엇으로 지정해줄 것인지 선택.
-    }
-
-    //프래그먼트가 교체가 일어나는 실행문(하단뷰)
-    private void setFrag(int n){
-        fm = getSupportFragmentManager();
-        ft = fm.beginTransaction(); //실질적인 프레그먼트 교체
-        switch (n){
-            case 0:
-                ft.replace(R.id.main_frame, fragment_home);
-                ft.commit();
-                break;
-            case 1:
-                ft.replace(R.id.main_frame,fragment_board);
-                ft.commit();
-                break;
-            case 2:
-                ft.replace(R.id.main_frame,activity_clothesbt);
-                ft.commit();
-                break;
-            case 3:
-                ft.replace(R.id.main_frame,activity_person);
-                ft.commit();
-                break;
-            case 4:
-                ft.replace(R.id.main_frame,activity_write);
-                ft.commit();
-                break;
-
-        }
-    }*/
 }
 
 
