@@ -40,7 +40,8 @@
         <activity
             android:name=".Clothes.ClothesItemActivity"
             android:theme="@style/AppTheme.NoActionBar" /><!-- 상단바 없음 -->
-        <activity android:name=".Clothes.SwitchLayoutActivity"></activity>
+        <activity android:name=".Clothes.SwitchLayoutActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" ></activity>
             <!-- "com.example.prac2" -->
         <provider
             android:name="androidx.core.content.FileProvider"

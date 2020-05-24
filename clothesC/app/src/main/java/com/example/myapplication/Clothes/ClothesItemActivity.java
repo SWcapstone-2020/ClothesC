@@ -125,35 +125,41 @@ public class ClothesItemActivity extends AppCompatActivity implements Navigation
         // drawer.xml에서 id 값으로 지정된 네비게이션드로어 메뉴들을 불러옴
         int id = item.getItemId();
         switch (id) {
-            case R.id.navigation_item_outer:
-                // SwitchLayoutActivity로 이동
+            case R.id.cardigan:
                 Intent switchLayout = new Intent(this, SwitchLayoutActivity.class);
                 startActivity(switchLayout);
-                // 선택된 메뉴의 title을 가져와 화면에 표시
-                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
                 break;
-
-            case R.id.navigation_item_tops:
-                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.navigation_item_bottoms:
-                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.navigation_item_shoes:
-                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_sub_menu_item01:
-                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_sub_menu_item02:
-                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
-                break;
-
         }
+//        switch (id) {
+//            case R.id.navigation_item_outer:
+//                // SwitchLayoutActivity로 이동
+//                Intent switchLayout = new Intent(this, SwitchLayoutActivity.class);
+//                startActivity(switchLayout);
+//                // 선택된 메뉴의 title을 가져와 화면에 표시
+//                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+//                break;
+//
+//            case R.id.navigation_item_tops:
+//                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+//                break;
+//
+//            case R.id.navigation_item_bottoms:
+//                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+//                break;
+//
+//            case R.id.navigation_item_shoes:
+//                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+//                break;
+//
+//            case R.id.nav_sub_menu_item01:
+//                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+//                break;
+//
+//            case R.id.nav_sub_menu_item02:
+//                Toast.makeText(ClothesItemActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+//                break;
+//
+//        }
 
         return true;
     }

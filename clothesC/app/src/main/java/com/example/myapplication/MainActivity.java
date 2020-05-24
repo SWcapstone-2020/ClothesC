@@ -62,23 +62,23 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-    //기능들 버튼 잠시 주석처리
-    View.OnClickListener onClickListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.action_home:
-                    break;
-                case R.id.action_camera:
-                    break;
-                case R.id.action_profile:
-                    startActivity(ProfileActivity.class);
-                    break;
-                case R.id.action_clothe:
-                    startActivity(ClothesItemActivity.class);
-                    break;
-
+//
+//    //기능들 버튼 잠시 주석처리
+//    View.OnClickListener onClickListener=new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            switch (v.getId()){
+//                case R.id.action_home:
+//                    break;
+//                case R.id.action_camera:
+//                    break;
+//                case R.id.action_profile:
+//                    startActivity(ProfileActivity.class);
+//                    break;
+//                case R.id.action_clothe:
+//                    startActivity(ClothesItemActivity.class);
+//                    break;
+//
 //                case R.id.profileButton:
 //                    startActivity(ProfileActivity.class);
 //                    break;
@@ -95,9 +95,9 @@ public class MainActivity extends AppCompatActivity {
 //                case R.id.post_write:
 //                    startActivity(ShowPostActivity.class);
 //                    break;
-            }
-        }
-    };
+//            }
+//        }
+//    };
 
 
 
