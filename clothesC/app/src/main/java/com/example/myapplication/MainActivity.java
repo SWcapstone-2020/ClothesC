@@ -2,7 +2,9 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
+import com.example.myapplication.Clothes.ClothesItemActivity;
 import com.example.myapplication.fragment.HomeFragment;
 import com.example.myapplication.signup.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
        // findViewById(R.id.templogout).setOnClickListener(onClickListener);
         // 게시글 글쓰기 버튼
         //findViewById(R.id.post_write).setOnClickListener(onClickListener);
+        findViewById(R.id.action_clothe).setOnClickListener(onClickListener);
 
     }
 
@@ -59,32 +62,42 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*
+
     //기능들 버튼 잠시 주석처리
     View.OnClickListener onClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.profileButton:
+                case R.id.action_home:
+                    break;
+                case R.id.action_camera:
+                    break;
+                case R.id.action_profile:
                     startActivity(ProfileActivity.class);
                     break;
-                case R.id.clothesPageButton:
+                case R.id.action_clothe:
                     startActivity(ClothesItemActivity.class);
                     break;
-                case R.id.cameraButton:
-                    startActivity(CameraActivity.class);
-                case R.id.templogout:
-                    FirebaseAuth.getInstance().signOut();
-                    startActivity(LoginActivity.class);
-                    finish();
-                    break;
-                case R.id.post_write:
-                    startActivity(ShowPostActivity.class);
-                    break;
+
+//                case R.id.profileButton:
+//                    startActivity(ProfileActivity.class);
+//                    break;
+//                case R.id.clothesPageButton:
+//                    startActivity(ClothesItemActivity.class);
+//                    break;
+//                case R.id.cameraButton:
+//                    startActivity(CameraActivity.class);
+//                case R.id.templogout:
+//                    FirebaseAuth.getInstance().signOut();
+//                    startActivity(LoginActivity.class);
+//                    finish();
+//                    break;
+//                case R.id.post_write:
+//                    startActivity(ShowPostActivity.class);
+//                    break;
             }
         }
     };
-     */
 
 
 
