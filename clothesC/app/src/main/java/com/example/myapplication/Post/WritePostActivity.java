@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static com.example.myapplication.Util.GALLERY_IMAGE;
-import static com.example.myapplication.Util.GALLERY_VIDEO;
 import static com.example.myapplication.Util.INTENT_MEDIA;
 import static com.example.myapplication.Util.INTENT_PATH;
 import static com.example.myapplication.Util.isImageFile;
@@ -78,9 +77,7 @@ public class WritePostActivity extends AppCompatActivity {
 
         findViewById(R.id.check).setOnClickListener(onClickListener);
         findViewById(R.id.image).setOnClickListener(onClickListener);
-        findViewById(R.id.video).setOnClickListener(onClickListener);
         findViewById(R.id.imageModify).setOnClickListener(onClickListener);
-        findViewById(R.id.videoModify).setOnClickListener(onClickListener);
         findViewById(R.id.delete).setOnClickListener(onClickListener);
 
         buttonsBackgroundLayout.setOnClickListener(onClickListener);
@@ -94,22 +91,21 @@ public class WritePostActivity extends AppCompatActivity {
             }
         });
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance(); //파이어스토어 초기화
         storageRef = storage.getReference();
 
-        postInfo = (PostInfo) getIntent().getSerializableExtra("postInfo");
+        postInfo = (PostInfo) getIntent().getSerializableExtra("postInfo"); //postinfo애서 정보 불러옴
         postInit();
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {  //갤러리 불러와서 선택한 이미지 저장하는 코드
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case 0:
                 if (resultCode == Activity.RESULT_OK) {
                     String path = data.getStringExtra(INTENT_PATH);
                     pathList.add(path);
-
                     ContentsItemView contentsItemView = new ContentsItemView(this);
 
                     if (selectedEditText == null) {
@@ -155,23 +151,16 @@ public class WritePostActivity extends AppCompatActivity {
                 case R.id.image:
                     myStartActivity(GalleryActivity.class, GALLERY_IMAGE, 0);
                     break;
-                case R.id.video:
-                    myStartActivity(GalleryActivity.class, GALLERY_VIDEO, 0);
-                    break;
                 case R.id.buttonsBackgroundLayout:
                     if (buttonsBackgroundLayout.getVisibility() == View.VISIBLE) {
                         buttonsBackgroundLayout.setVisibility(View.GONE);
                     }
                     break;
-                case R.id.imageModify:
+                case R.id.imageModify: //이미지 선택시 수정하라고 나오는 버튼
                     myStartActivity(GalleryActivity.class, GALLERY_IMAGE, 1);
                     buttonsBackgroundLayout.setVisibility(View.GONE);
                     break;
-                case R.id.videoModify:
-                    myStartActivity(GalleryActivity.class, GALLERY_VIDEO, 1);
-                    buttonsBackgroundLayout.setVisibility(View.GONE);
-                    break;
-                case R.id.delete:
+                case R.id.delete: //이미지 선택시 이미지 삭제를 위해 나오는 버튼
                     final View selectedView = (View) selectedImageVIew.getParent();
                     String path = pathList.get(parent.indexOfChild(selectedView) - 1);
                     if(isStorageUrl(path)){
@@ -208,16 +197,22 @@ public class WritePostActivity extends AppCompatActivity {
     private void storageUpload() {
         final String title = ((EditText) findViewById(R.id.titleEditText)).getText().toString();
         if (title.length() > 0) {
-            loaderLayout.setVisibility(View.VISIBLE);
-            final ArrayList<String> contentsList = new ArrayList<>();
+            loaderLayout.setVisibility(View.VISIBLE); // 게시글 올릴 때 로딩화면을 나오게 함
+            final ArrayList<String> contentsList = new ArrayList<>(); // 입력한 내용을 배열로 저장
             final ArrayList<String> formatList = new ArrayList<>();
-            user = FirebaseAuth.getInstance().getCurrentUser();
+            user = FirebaseAuth.getInstance().getCurrentUser(); //파이어베이스에서 유저를 불러옴
+
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageRef = storage.getReference();
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+            //205~207까지 파이어베이스 사용을 위해 쓰는 코드
+
             PostInfo postinfo=(PostInfo)getIntent().getSerializableExtra("postInfo");
 
             final DocumentReference documentReference = postInfo == null ? firebaseFirestore.collection("posts").document() : firebaseFirestore.collection("posts").document(postInfo.getId());
+//            firebaseFirestore.collection == (홈페이지) 파이어베이스 데이터베이스에서 괄호 안에 적힌 것과 같은 폴더에 접근함.
+
+
             final Date date = postInfo == null ? new Date() : postInfo.getCreatedAt();  //수정시 수정된 날짜로 변경되는걸 방지
             for (int i = 0; i < parent.getChildCount(); i++) {
                 LinearLayout linearLayout = (LinearLayout) parent.getChildAt(i);
@@ -242,6 +237,7 @@ public class WritePostActivity extends AppCompatActivity {
                         }
                         String[] pathArray = path.split("\\.");
                         final StorageReference mountainImagesRef = storageRef.child("posts/" + documentReference.getId() + "/" + pathCount + "." + pathArray[pathArray.length - 1]);
+                        //238~239 파이어베이스 스토어에 이미지 저장
                         try {
                             InputStream stream = new FileInputStream(new File(pathList.get(pathCount)));
                             StorageMetadata metadata = new StorageMetadata.Builder().setCustomMetadata("index", "" + (contentsList.size() - 1)).build();
@@ -288,7 +284,7 @@ public class WritePostActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot successfully written!");
-                        loaderLayout.setVisibility(View.GONE);
+                        loaderLayout.setVisibility(View.GONE); //업로드 성공시 로딩 화면 끄게 함
                         Intent resultIntent = new Intent();
                         resultIntent.putExtra("postinfo", postInfo);
                         setResult(Activity.RESULT_OK, resultIntent);
@@ -307,10 +303,10 @@ public class WritePostActivity extends AppCompatActivity {
     private void postInit() {
         if (postInfo != null) {
             titleEditText.setText(postInfo.getTitle());
-            ArrayList<String> contentsList = postInfo.getContents();
+            ArrayList<String> contentsList = postInfo.getContents(); //contentsList에 작성한 내용을 넣음
             for (int i = 0; i < contentsList.size(); i++) {
                 String contents = contentsList.get(i);
-                if (isStorageUrl(contents)) {
+                if (isStorageUrl(contents)) { // isStorageUrl = 파이어베이스 데이터베이스 주소 불러옴
                     pathList.add(contents);
                     ContentsItemView contentsItemView = new ContentsItemView(this);
                     parent.addView(contentsItemView);

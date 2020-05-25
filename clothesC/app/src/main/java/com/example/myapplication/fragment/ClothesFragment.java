@@ -97,13 +97,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
 
 
     }
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-     */
 
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -111,25 +104,11 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.fab_main:
-                    toggleFab();
                     break;
             }
 
         }
     };
-
-    private void toggleFab() {
-        if (isFabOpen) {
-            fab_main.setImageResource(R.drawable.ic_span_1);
-
-            isFabOpen = false;
-        } else {
-            fab_main.setImageResource(R.drawable.ic_span_1);
-
-            isFabOpen = true;
-        }
-    }
-
 
 
     @Override
@@ -175,18 +154,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
     }
 
 
-/*
-    @Override
-    public void onBackPressed() {
-        // 뒤로가기 시 네비게이션 드로어 닫힘
-        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-        }
-        else {
-            super.onBackPressed();
-        }
-    }
- */
 
 }
 
