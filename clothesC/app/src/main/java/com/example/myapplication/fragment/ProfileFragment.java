@@ -1,13 +1,19 @@
 package com.example.myapplication.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.ProfileUpdateActivity;
@@ -24,14 +30,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
-    ImageView imageView;
     FirebaseAuth auth;
-
+    private Activity activity;
+    ImageView imageView;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -53,25 +57,8 @@ public class ProfileFragment extends Fragment {
         final TextView textBirth=(TextView)view.findViewById(R.id.BirthdayEditText);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReferenceFromUrl("gs://clothesc-ver1.appspot.com");
-        StorageReference pathReference = storageReference.child("profileImage/"+user.getUid()+"/"+"profile.png");
-        pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-
-                Glide.with(getActivity()).load(uri).into(imageView);
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                //Toast.makeText(getApplicationContext(), "다운로드 실패", Toast.LENGTH_SHORT).show();
-            }
-        });
+        Log.d(TAG, "onCreateView: "+user.getUid());
 
         if (user != null) {
             db.collection("users").document(user.getUid()).get()
@@ -84,7 +71,7 @@ public class ProfileFragment extends Fragment {
                             textName.setText(name);
                             //TextView textBirth=(TextView)findViewById(R.id.BirthdayEditText);
                             textBirth.setText(birth);
-//                            Log.d(TAG, "onComplete: " +documentSnapshot.get("name").toString());
+                            Log.d(TAG, "onComplete: " +name+birth);
                         }
                     })
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -121,7 +108,6 @@ public class ProfileFragment extends Fragment {
         }
     };
 
-
 /*
     private void startToast(String msg){
         Toast.makeText(this, msg,Toast.LENGTH_SHORT).show();
@@ -129,10 +115,47 @@ public class ProfileFragment extends Fragment {
 
  */
 
-
-
     private void startActivity(Class c){
         Intent intent=new Intent(getActivity(),c);
         startActivity(intent);
+    }
+
+    @Override
+    public void onAttach(@NonNull final Context context) {
+        super.onAttach(context);
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReferenceFromUrl("gs://clothesc-ver1.appspot.com");
+        StorageReference pathReference = storageReference.child("profileImage/"+user.getUid()+"/"+"profile.png");
+        pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Log.d(TAG,uri.toString());
+//                if(getActivity()==null){
+//                    return;
+//                }
+
+                Glide.with(context).load(uri).into(imageView);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                //Toast.makeText(getApplicationContext(), "다운로드 실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof Activity)
+//            activity = (Activity) context;
+//
+//    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 }

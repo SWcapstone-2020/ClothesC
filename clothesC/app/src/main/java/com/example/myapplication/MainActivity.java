@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.example.myapplication.fragment.ClothesFragment;
 import com.example.myapplication.fragment.HomeFragment;
 import com.example.myapplication.fragment.ProfileFragment;
@@ -13,8 +17,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 //import androidx.fragment.app.FragmentManager;
 //import androidx.fragment.app.FragmentTransaction;
@@ -32,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         init();
 
+
+        //findViewById(R.id.profileButton).setOnClickListener(onClickListener);
+       //findViewById(R.id.cameraButton).setOnClickListener(onClickListener);
+        //findViewById(R.id.clothesPageButton).setOnClickListener(onClickListener);
+       // findViewById(R.id.templogout).setOnClickListener(onClickListener);
+        // 게시글 글쓰기 버튼
+        //findViewById(R.id.post_write).setOnClickListener(onClickListener);
+//        findViewById(R.id.action_clothe).setOnClickListener(onClickListener);
+
     }
 
     private void init() {
@@ -43,9 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         //프래그먼트
         HomeFragment homeFragment = new HomeFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, homeFragment)
-                .commit();
+        setFragment(homeFragment);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -54,32 +63,31 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_home:
                         HomeFragment homeFragment = new HomeFragment();
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container, homeFragment)
-                                .commit();
+                        setFragment(homeFragment);
                         return true;
                     case R.id.action_search:
                         SearchFragment searchFragment = new SearchFragment();
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container, searchFragment)
-                                .commit();
+                        setFragment(searchFragment);
                         return true;
                     case R.id.action_profile:
                         ProfileFragment profileFragment = new ProfileFragment();
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container, profileFragment)
-                                .commit();
+                        setFragment(profileFragment);
+                        return true;
                     case R.id.action_clothes:
                         ClothesFragment clothesFragment = new ClothesFragment();
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container, clothesFragment)
-                                .commit();
+                        setFragment(clothesFragment);
                         return true;
                 }
                 return false;
             }
         });
 
+    }
+
+    private void setFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
     }
 
 
@@ -95,5 +103,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
 
 

@@ -10,18 +10,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.myapplication.Clothes.SwitchLayoutActivity;
-import com.example.myapplication.MainActivity;
-import com.example.myapplication.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+
+import com.example.myapplication.Clothes.SwitchLayoutActivity;
+import com.example.myapplication.MainActivity;
+import com.example.myapplication.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 public class ClothesFragment extends Fragment  implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "ClothesFragment";
@@ -72,7 +72,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         //actionBar.setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼 생성
 
 
-        actionBar.setTitle("My Closet"); // 상단바 title 지정 //에러
+//        actionBar.setTitle("My Closet"); // 상단바 title 지정 //에러
 
         //Navigation Drawer
         mDrawerLayout = (DrawerLayout)view.findViewById(R.id.drawer_layout);
@@ -85,7 +85,10 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
 
         return view;
     }
-
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("My Closet");
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

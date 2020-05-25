@@ -30,7 +30,6 @@
         <activity android:name=".signup.LoginActivity" />
         <activity android:name=".signup.PasswordResetActivity" />
         <activity android:name=".ProfileUpdateActivity" />
-        <activity android:name=".ProfileActivity" />
         <activity android:name=".CameraActivity" />
         <activity android:name=".signup.InfoActivity" />
         <activity android:name=".Post.WritePostActivity"/>
