@@ -7,7 +7,7 @@
         android:title="홈"/>
 
     <item
-        android:id="@+id/action_camera"
+        android:id="@+id/action_search"
         android:enabled="true"
         android:icon="@drawable/ic_search_black_24dp"
         android:title="검색"/>
@@ -19,7 +19,7 @@
         android:title="프로필"/>
 
     <item
-        android:id="@+id/action_clothe"
+        android:id="@+id/action_clothes"
         android:enabled="true"
         android:icon="@drawable/ic_photo_library_black_24dp"
         android:title="옷장"/>
