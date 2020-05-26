@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.example.myapplication.ProfileUpdateActivity;
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.signup.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -98,19 +98,14 @@ public class ProfileFragment extends Fragment {
                     startActivity(LoginActivity.class);
                     break;
                 case R.id.profileUpdate:
-                    startActivity(ProfileUpdateActivity.class);
+                    MainActivity mainActivity = (MainActivity) getActivity();
+                    mainActivity.onFragmentChanged(1);
                     break;
 
             }
         }
     };
 
-/*
-    private void startToast(String msg){
-        Toast.makeText(this, msg,Toast.LENGTH_SHORT).show();
-    }
-
- */
 
     private void startActivity(Class c){
         Intent intent=new Intent(getActivity(),c);
@@ -128,9 +123,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onSuccess(Uri uri) {
                 Log.d(TAG,uri.toString());
-//                if(getActivity()==null){
-//                    return;
-//                }
 
                 Glide.with(context).load(uri).into(imageView);
 
@@ -143,16 +135,10 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof Activity)
-//            activity = (Activity) context;
-//
-//    }
-
     @Override
     public void onDetach() {
         super.onDetach();
     }
+
+
 }

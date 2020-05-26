@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.example.myapplication.fragment.ClothesFragment;
 import com.example.myapplication.fragment.HomeFragment;
 import com.example.myapplication.fragment.ProfileFragment;
+import com.example.myapplication.fragment.ProfileUpdateFragment;
 import com.example.myapplication.fragment.SearchFragment;
 import com.example.myapplication.signup.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,15 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-//import androidx.fragment.app.FragmentManager;
-//import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
-
-//    private BottomNavigationView bottomNavigationView; 바텀 네비게이션 뷰
-//    private FragmentManager fm;
-//    private FragmentTransaction ft;
-//    private FragmentHome fragment_home;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +30,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         init();
 
-
-        //findViewById(R.id.profileButton).setOnClickListener(onClickListener);
-       //findViewById(R.id.cameraButton).setOnClickListener(onClickListener);
-        //findViewById(R.id.clothesPageButton).setOnClickListener(onClickListener);
-       // findViewById(R.id.templogout).setOnClickListener(onClickListener);
-        // 게시글 글쓰기 버튼
-        //findViewById(R.id.post_write).setOnClickListener(onClickListener);
-//        findViewById(R.id.action_clothe).setOnClickListener(onClickListener);
 
     }
 
@@ -56,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         HomeFragment homeFragment = new HomeFragment();
         setFragment(homeFragment);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -84,6 +72,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onFragmentChanged(int index) {
+
+        switch(index) {
+            case 1:
+                bottomNavigationView.setVisibility(View.GONE);
+                ProfileUpdateFragment profileUpdateFragment=new ProfileUpdateFragment();
+                setFragment(profileUpdateFragment);
+                break;
+            case 2:
+                bottomNavigationView.setVisibility(View.VISIBLE);
+                ProfileFragment profileFragment = new ProfileFragment();
+                setFragment(profileFragment);
+                break;
+        }
+
+    }
     private void setFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment)
