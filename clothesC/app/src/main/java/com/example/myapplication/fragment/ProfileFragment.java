@@ -1,6 +1,5 @@
 package com.example.myapplication.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -32,8 +31,6 @@ import com.google.firebase.storage.StorageReference;
 
 public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
-    FirebaseAuth auth;
-    private Activity activity;
     ImageView imageView;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -54,7 +51,7 @@ public class ProfileFragment extends Fragment {
 
         imageView=(ImageView) view.findViewById(R.id.profileView);
         final TextView textName=(TextView)view.findViewById(R.id.nameEditText);
-        final TextView textBirth=(TextView)view.findViewById(R.id.BirthdayEditText);
+        final TextView textBirth=(TextView)view.findViewById(R.id.introEditText);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -66,12 +63,12 @@ public class ProfileFragment extends Fragment {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             String name = documentSnapshot.get("name").toString();
-                            String birth = documentSnapshot.get("birth").toString();
+                            String intro = documentSnapshot.get("intro").toString();
                             //TextView textName=(TextView)findViewById(R.id.nameEditText);
                             textName.setText(name);
                             //TextView textBirth=(TextView)findViewById(R.id.BirthdayEditText);
-                            textBirth.setText(birth);
-                            Log.d(TAG, "onComplete: " +name+birth);
+                            textBirth.setText(intro);
+                            Log.d(TAG, "onComplete: " +name+intro);
                         }
                     })
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -126,7 +123,7 @@ public class ProfileFragment extends Fragment {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://clothesc-ver1.appspot.com");
-        StorageReference pathReference = storageReference.child("profileImage/"+user.getUid()+"/"+"profile.png");
+        StorageReference pathReference = storageReference.child("profileImage/"+user.getUid()+"/"+"profile.PNG");
         pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {

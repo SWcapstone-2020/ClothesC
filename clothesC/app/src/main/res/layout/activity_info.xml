@@ -70,12 +70,11 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/BirthdayEditText"
+            android:id="@+id/introEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="생년월일"
-            android:inputType="date" />
+            android:hint="소개" />
 
         <Button
             android:id="@+id/profileSignButton"

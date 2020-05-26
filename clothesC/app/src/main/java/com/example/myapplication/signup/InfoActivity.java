@@ -46,8 +46,6 @@ public class InfoActivity extends AppCompatActivity {
 
         findViewById(R.id.profileSignButton).setOnClickListener(onClickListener);
         findViewById(R.id.startProfileImage).setOnClickListener(onClickListener);
-//        findViewById(R.id.picture).setOnClickListener(onClickListener);
-//        findViewById(R.id.gallery).setOnClickListener(onClickListener);
         profileImageView=(ImageView)findViewById(R.id.startProfileImage);
 
         storage=FirebaseStorage.getInstance();
@@ -64,28 +62,6 @@ public class InfoActivity extends AppCompatActivity {
                 case R.id.startProfileImage:
                     loadAlbum();
                     break;
-
-/*                case R.id.picture:
-                    startActivity(CameraActivity.class);
-                    break;
-                case R.id.gallery:
-                    if(ContextCompat.checkSelfPermission(InfoActivity.this,
-                            Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(InfoActivity.this,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                1);
-
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(InfoActivity.this,
-                                Manifest.permission.READ_EXTERNAL_STORAGE)) {
-
-                        } else {
-                            startToast("권한을 허용해주세요.");
-                        }
-                    }else {
-                        startActivity(GalleryActivity.class);
-                    }
-                    break;*/
             }
 
         }
@@ -107,7 +83,7 @@ public class InfoActivity extends AppCompatActivity {
             Uri file = Uri.fromFile(new File(getPath(data.getData())));
             StorageReference storageRef = storage.getReferenceFromUrl("gs://clothesc-ver1.appspot.com"); //storage 서버로 이동
             String profile=file.getLastPathSegment();
-            profile="profile.png";
+            profile="profile.PNG";
             StorageReference riversRef = storageRef.child("profileImage/" + user.getUid()+"/"+profile);
             UploadTask uploadTask = riversRef.putFile(file);
 
@@ -155,10 +131,10 @@ public class InfoActivity extends AppCompatActivity {
 
     private void profileSign(){
         final String name=((EditText)findViewById(R.id.nameEditText)).getText().toString(); // 닉네임 받아옴
-        final String birth=((EditText)findViewById(R.id.BirthdayEditText)).getText().toString(); //생년월일 받아옴
+        final String intro=((EditText)findViewById(R.id.introEditText)).getText().toString(); //생년월일 받아옴
 
-        if(name.length()>0 && birth.length()>5) {
-            MemberInfo memberInfo = new MemberInfo(name, birth);
+        if(name.length()>0) {
+            MemberInfo memberInfo = new MemberInfo(name, intro);
 
             if(user !=null){
                 db.collection("users").document(user.getUid()).set(memberInfo)
@@ -186,7 +162,6 @@ public class InfoActivity extends AppCompatActivity {
 
     private void startActivity(Class c){
         Intent intent=new Intent(this,c);
-        //startActivity(intent);
         startActivityForResult(intent, 0);
     }
 

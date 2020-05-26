@@ -52,17 +52,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:ems="10"
-            android:hint="닉네임"
-            android:inputType="textPersonName" />
+            android:textColor ="@android:color/black"
+            android:enabled="false" />
 
         <EditText
-            android:id="@+id/BirthdayEditText"
+            android:id="@+id/introEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textColor ="@android:color/black"
             android:ems="10"
-            android:hint="생년월일"
-            android:inputType="date" />
+            android:enabled="false" />
 
         <Button
             android:id="@+id/profileUpdate"

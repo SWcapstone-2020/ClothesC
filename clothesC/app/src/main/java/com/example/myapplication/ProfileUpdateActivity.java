@@ -99,7 +99,7 @@ public class ProfileUpdateActivity extends AppCompatActivity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://clothesc-ver1.appspot.com");
         if (requestCode == GALLERY_CODE) {
-            StorageReference desertRef = storageRef.child("profileImage/" + user.getUid()+"/"+"profile.png");
+            StorageReference desertRef = storageRef.child("profileImage/" + user.getUid()+"/"+"profile.PNG");
             desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -113,7 +113,7 @@ public class ProfileUpdateActivity extends AppCompatActivity {
             });
             Uri file = Uri.fromFile(new File(getPath(data.getData())));
             String profile=file.getLastPathSegment();
-            profile="profile.png";
+            profile="profile.PNG";
             StorageReference riversRef = storageRef.child("profileImage/" + user.getUid()+"/"+profile);
             UploadTask uploadTask = riversRef.putFile(file);
 
@@ -123,12 +123,7 @@ public class ProfileUpdateActivity extends AppCompatActivity {
 
                 Bitmap img = BitmapFactory.decodeStream(in);
                 in.close();
-                // 이미지 표시
-                renewProfile.setImageBitmap(img);
-                //영상코드
-                //profilPath = data.getStringExtra("profilePath");
-                //Bitmap bmp = BitmapFactory.decorderFile(profilePath);
-                // profileImageView.setImageBitmap(bmp);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
