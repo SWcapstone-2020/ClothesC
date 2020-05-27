@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="35dp"
         android:orientation="vertical"
         android:layout_marginTop="?attr/actionBarSize">
         <TextView
@@ -16,46 +23,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:paddingTop="15dp"
+            android:paddingTop="8dp"
             android:textColor="#000000"
             android:textSize="15sp"
             android:text="Profile photo" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="10px">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            app:cardCornerRadius="100dp">
-
-            <ImageView
-                android:id="@+id/renewProfileImge"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/ic_person_black_24dp"
-                tools:srcCompat="@drawable/ic_person_black_24dp" />
-
-        </androidx.cardview.widget.CardView>
+        android:layout_marginTop="90dp">
+        <!--  프로필 영역  -->
+        <include layout="@layout/profile_header"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingTop="100dp"
-        android:paddingRight="20dp">
+        android:layout_marginTop="200dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="62dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
             android:gravity="bottom">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -69,8 +61,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="62dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginTop="25dp"
             android:gravity="bottom">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -82,10 +73,40 @@
                 android:hint="Bio" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_marginTop="25dp"
+            android:gravity="bottom">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/subTextfield1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="subTextfield1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_marginTop="25dp"
+            android:gravity="bottom">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/subTextfield2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="subTextfield2" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <Button
             android:id="@+id/updateButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="수정하기" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
