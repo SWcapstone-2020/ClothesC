@@ -17,6 +17,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.myapplication.Clothes.SubmitActivity;
 import com.example.myapplication.Clothes.SwitchLayoutActivity;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
@@ -104,6 +105,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.fab_main:
+                    myStartActivity(SubmitActivity.class);
                     break;
             }
 
@@ -153,6 +155,11 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         return true;
     }
 
+
+    private void myStartActivity(Class c) {
+        Intent intent = new Intent(getActivity(), c);
+        startActivityForResult(intent, 0);
+    }
 
 
 }

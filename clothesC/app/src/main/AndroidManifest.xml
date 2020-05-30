@@ -35,6 +35,7 @@
         <activity android:name=".GalleryActivity"/>
         <activity android:name=".Post.ShowPostActivity"/>
         <activity android:name=".Post.DetailPostActivity"/>
+        <activity android:name=".Clothes.SubmitActivity"/>
         <activity
             android:name=".Clothes.ClothesItemActivity"
             android:theme="@style/AppTheme.NoActionBar" /><!-- 상단바 없음 -->

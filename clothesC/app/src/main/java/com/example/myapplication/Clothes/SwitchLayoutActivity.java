@@ -1,17 +1,16 @@
 package com.example.myapplication.Clothes;
 
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import com.example.myapplication.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.myapplication.Clothes.ItemViewer.SPAN_COUNT_ONE;
@@ -45,11 +44,11 @@ public class SwitchLayoutActivity extends AppCompatActivity {
 
 //  item 요소(해당 이미지, 제목, 설명 등) 설정한 뒤 items(배열)에 추가하는 메소드.
     private void initItemsData() {
-        items = new ArrayList<>(4);
-        items.add(new Item(R.drawable.img1, "Image 1", 20, 33));
-        items.add(new Item(R.drawable.img2, "Image 2", 10, 54));
-        items.add(new Item(R.drawable.img3, "Image 3", 27, 20));
-        items.add(new Item(R.drawable.img4, "Image 4", 45, 67));
+//        items = new ArrayList<>(4);
+//        items.add(new Item(R.drawable.img1, "Image 1", 20, 33));
+//        items.add(new Item(R.drawable.img2, "Image 2", 10, 54));
+//        items.add(new Item(R.drawable.img3, "Image 3", 27, 20));
+//        items.add(new Item(R.drawable.img4, "Image 4", 45, 67));
     }
 
     @Override
