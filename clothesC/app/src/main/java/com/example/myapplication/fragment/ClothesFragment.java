@@ -57,7 +57,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         actionBar.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         actionBar.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         actionBar.setTitle("My Closet");
-        
 
 
         //Navigation Drawer
@@ -70,10 +69,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         // 위 내용은 잘 모르겠음 그냥 onNavigationItemSelected 메소드(메뉴 선택 시 동작을 지정하는 메소드)를 따로 빼서 처리할 수 있다는 듯.
 
         return view;
-    }
-    public void onResume() {
-        super.onResume();
-        getActivity().setTitle("My Closet");
     }
 
     @Override
