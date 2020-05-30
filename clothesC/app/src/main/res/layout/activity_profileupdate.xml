@@ -10,103 +10,113 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+        android:background="@color/colorBlue"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        app:title="edit" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:orientation="vertical"
-        android:layout_marginTop="?attr/actionBarSize">
-        <TextView
-            android:id="@+id/textView4"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:paddingTop="8dp"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            android:text="Profile photo" />
-    </LinearLayout>
+            android:layout_height="35dp"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="90dp">
-        <!--  프로필 영역  -->
-        <include layout="@layout/profile_header"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:orientation="vertical"
-        android:layout_marginTop="200dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:gravity="bottom">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/updateName"
+            <TextView
+                android:id="@+id/textView4"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:ems="10"
-                android:hint="Username" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:paddingTop="8dp"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:text="Profile photo" />
+        </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:layout_marginTop="25dp"
-            android:gravity="bottom">
+            android:layout_height="100dp"
+            android:layout_marginTop="55dp">
+            <!--  프로필 영역  -->
+            <include layout="@layout/profile_header"/>
+        </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/updateIntro"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:orientation="vertical"
+            android:layout_marginTop="165dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="Bio" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="62dp"
+                android:gravity="bottom">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:layout_marginTop="25dp"
-            android:gravity="bottom">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/updateName"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:ems="10"
+                    android:hint="Username" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/subTextfield1"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="subTextfield1" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="62dp"
+                android:layout_marginTop="25dp"
+                android:gravity="bottom">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:layout_marginTop="25dp"
-            android:gravity="bottom">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/updateIntro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="Bio" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/subTextfield2"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="subTextfield2" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="62dp"
+                android:layout_marginTop="25dp"
+                android:gravity="bottom">
 
-        <Button
-            android:id="@+id/updateButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="수정하기" />
-    </LinearLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/subTextfield1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="subTextfield1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="25dp"
+                android:gravity="bottom">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/subTextfield2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="subTextfield2" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+<!--  툴바 메뉴(버튼)로 대체  -->
+<!--  profile_update_menu.xml  -->
+<!--  id: updateButton  -->
+<!--            <Button-->
+<!--                android:id="@+id/updateButton"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="수정하기" />-->
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

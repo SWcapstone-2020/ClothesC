@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--    프로필 수정 페이지 toolbar save menu-->
+    <item android:id="@+id/updateButton"
+        android:title="save"
+        app:showAsAction="ifRoom"/>
+</menu>

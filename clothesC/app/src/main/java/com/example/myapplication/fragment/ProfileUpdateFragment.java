@@ -5,10 +5,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.loader.content.CursorLoader;
 
@@ -48,6 +56,8 @@ public class ProfileUpdateFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 툴바 메뉴 활성화
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -58,7 +68,26 @@ public class ProfileUpdateFragment extends Fragment {
 
         context=container.getContext();
 
-        view.findViewById(R.id.updateButton).setOnClickListener(onClickListener);
+        // 툴바 추가
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+
+        // 툴바 홈 버튼
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        // 벡터 아이콘 흰색으로 변경
+        Drawable img_drawble = getResources().getDrawable(R.drawable.ic_cross);
+        img_drawble.mutate();
+        img_drawble.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+
+        // 툴바 아이콘 지정
+//        activity.getSupportActionBar().setIcon(img_drawble);
+        activity.getSupportActionBar().setHomeAsUpIndicator(img_drawble);
+        // https://webnautes.tistory.com/1220
+
+//        view.findViewById(R.id.updateButton).setOnClickListener(onClickListener);
         view.findViewById(R.id.renewProfileImge).setOnClickListener(onClickListener);
         return view;
     }
@@ -67,17 +96,46 @@ public class ProfileUpdateFragment extends Fragment {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.updateButton:
-                    updateProfile();
-                    MainActivity mainActivity = (MainActivity) getActivity();
-                    mainActivity.onFragmentChanged(2);
-                    break;
+//                case R.id.updateButton:
+//                    updateProfile();
+//                    MainActivity mainActivity = (MainActivity) getActivity();
+//                    mainActivity.onFragmentChanged(2);
+//                    break;
                 case R.id.renewProfileImge:
                     loadAlbum();
                     break;
             }
         }
     };
+
+    // 툴바 메뉴(버튼) 추가
+    // https://hjink247.tistory.com/17
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        MenuInflater inflater = getMenuInflater();
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.profile_update_menu, menu);;
+    }
+
+    // 툴바 버튼 이벤트
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                finish();
+//                return true;
+
+            case R.id.updateButton:
+                updateProfile();
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.onFragmentChanged(2);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     private void updateProfile(){
         String renewalName=((TextView)getView().findViewById(R.id.updateName)).getText().toString();
