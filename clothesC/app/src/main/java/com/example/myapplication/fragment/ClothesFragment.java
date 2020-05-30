@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.Clothes.SubmitActivity;
 import com.example.myapplication.Clothes.SwitchLayoutActivity;
-import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -51,29 +50,15 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         fab_main=view.findViewById(R.id.fab_main);
 
         fab_main.setOnClickListener(onClickListener);
-
-        //      기본 액션바 대신 툴바 사용선언
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        ((MainActivity)getActivity()).getSupportActionBar();
 
-        //툴바에 액션바 기능 사용
-        final ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+        AppCompatActivity actionBar = (AppCompatActivity) getActivity();
+        actionBar.setSupportActionBar(toolbar);
+        actionBar.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        actionBar.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        actionBar.setTitle("My Closet");
+        
 
-       // actionBar.setDisplayShowCustomEnabled(true);
-        //actionBar.setDisplayShowTitleEnabled(false);
-
-        if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-
-        }
-
-
-        //  actionBar.setHomeAsUpIndicator(R.drawable.ic_menu); // 뒤로가기 버튼을 해당 아이콘으로 커스텀
-        //actionBar.setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼 생성
-
-
-//        actionBar.setTitle("My Closet"); // 상단바 title 지정 //에러
 
         //Navigation Drawer
         mDrawerLayout = (DrawerLayout)view.findViewById(R.id.drawer_layout);
