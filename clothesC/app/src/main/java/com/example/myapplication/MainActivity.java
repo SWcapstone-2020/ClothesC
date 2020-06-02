@@ -5,19 +5,19 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import com.example.myapplication.fragment.ClothesFragment;
 import com.example.myapplication.fragment.HomeFragment;
 import com.example.myapplication.fragment.ProfileFragment;
 import com.example.myapplication.fragment.ProfileUpdateFragment;
-import com.example.myapplication.fragment.SearchFragment;
+import com.example.myapplication.fragment.WeatherFragment;
 import com.example.myapplication.signup.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 
 
@@ -53,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
                         HomeFragment homeFragment = new HomeFragment();
                         setFragment(homeFragment);
                         return true;
-                    case R.id.action_search:
-                        SearchFragment searchFragment = new SearchFragment();
-                        setFragment(searchFragment);
+                    case R.id.action_weather:
+                        WeatherFragment weatherFragment = new WeatherFragment();
+                        setFragment(weatherFragment);
                         return true;
                     case R.id.action_profile:
                         ProfileFragment profileFragment = new ProfileFragment();
