@@ -22,8 +22,10 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="제목"
-                android:inputType="textPersonName" />
-
+                android:inputType="textPersonName"
+                android:textStyle="bold"
+                android:textSize="30dp"
+                android:paddingLeft="10dp"/>
             <RadioGroup
                 android:id="@+id/choiceseason"
                 android:layout_width="match_parent"
@@ -93,7 +95,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="12dp" />
                     <include
                         layout="@layout/view_contents_edit_text"
                         android:layout_width="match_parent"
@@ -103,25 +107,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="이미지" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/check"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="확인" />
 
         </LinearLayout>
 
@@ -170,5 +155,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/image"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:background="#FF92A4"
+            android:drawableLeft="@drawable/ic_image_white_24dp"
+            android:drawablePadding="-18dp"
+            android:paddingLeft="18dp"
+            android:text="이미지"
+            android:textColor="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/check"
+            app:layout_constraintHorizontal_bias="0.605"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/check"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="72dp"
+            android:layout_marginBottom="32dp"
+            android:background="#88D5FF"
+            android:drawableLeft="@drawable/ic_check_white_24dp"
+            android:drawablePadding="-24dp"
+            android:paddingLeft="18dp"
+            android:text="확인"
+            android:textColor="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </RelativeLayout>
