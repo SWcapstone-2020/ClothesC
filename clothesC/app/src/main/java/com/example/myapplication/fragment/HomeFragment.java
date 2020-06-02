@@ -27,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -61,6 +62,8 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
         postList = new ArrayList<>();
         postAdaptor = new PostAdapter(getActivity(), postList);
         postAdaptor.setOnPostListener(onPostListener);
@@ -151,7 +154,9 @@ public class HomeFragment extends Fragment {
                 String contents = contentList.get(i);
                 if(isStorageUrl(contents)){ //내용이 url인가? (즉 이미지인가 동영상인가)
                     successCount++;
-
+                    Log.d("TAG","확인: "+id);
+                    Log.d("TAG", "확인: "+storageUrlToName(contents));
+                    Log.d("TAG","확인: "+storageRef);
                     StorageReference desertRef = storageRef.child("posts/" + id + "/" + storageUrlToName(contents));
                     desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
