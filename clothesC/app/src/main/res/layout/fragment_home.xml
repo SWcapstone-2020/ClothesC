@@ -20,6 +20,6 @@
         android:backgroundTint="#F38395"
         app:borderWidth="0dp"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_add_black_24dp" />
+        app:srcCompat="@drawable/ic_add_white_24dp" />
 
 </RelativeLayout>

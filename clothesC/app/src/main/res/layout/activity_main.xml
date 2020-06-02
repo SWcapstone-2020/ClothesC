@@ -57,8 +57,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_weight="1"
-        android:background="@android:color/holo_blue_bright"
-        app:menu="@menu/bottom_menu" />
+        android:background="@drawable/navigationbar_line"
+        app:menu="@menu/bottom_menu"
+        app:itemIconTint="@drawable/menu_selector_color"
+        app:itemTextColor="@drawable/menu_selector_color"/>
 
 
 </RelativeLayout>
