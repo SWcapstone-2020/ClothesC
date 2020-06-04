@@ -18,7 +18,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.Clothes.SubmitActivity;
-import com.example.myapplication.Clothes.SwitchLayoutActivity;
+//import com.example.myapplication.Clothes.SwitchLayoutActivity;
+import com.example.myapplication.Clothes.SwitchLayoutFragment;
+
 import com.example.myapplication.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -79,8 +81,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu,inflater);
         inflater.inflate(R.menu.menu,menu);
-
-
     }
 
 
@@ -132,8 +132,13 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         int id = item.getItemId();
         switch (id) {
             case R.id.cardigan:
-                Intent switchLayout = new Intent(getActivity(), SwitchLayoutActivity.class);
-                startActivity(switchLayout);
+//                myStartActivity(SwitchLayoutFragment.class);
+//                프레그먼트 전환
+                SwitchLayoutFragment switchLayoutFrag = new SwitchLayoutFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, switchLayoutFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
                 break;
         }
         return true;

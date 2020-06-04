@@ -83,11 +83,11 @@ public class ItemViewer extends RecyclerView.Adapter<ItemViewer.ItemViewHolder> 
             super(itemView);
             // 해당하는 레이아웃의 아이템 요소 가져오기
             if (viewType == VIEW_TYPE_BIG) {  // recycler view 일 때,
-                //이미지, 제목, 설명 아이템 요소 가져오기
+                //onBindViewHolder에서 bind한 이미지, 제목, 설명을 view에 보여주기
                 iv = (ImageView) itemView.findViewById(R.id.image_big);
                 title = (TextView) itemView.findViewById(R.id.title_big);
                 info = (TextView) itemView.findViewById(R.id.tv_info);
-            } else {
+            } else { //grid view 일 때,
                 iv = (ImageView) itemView.findViewById(R.id.image_small);
                 title = (TextView) itemView.findViewById(R.id.title_small);
             }
