@@ -173,15 +173,15 @@ public class SubmitActivity extends AppCompatActivity {
                         buttonsBackgroundLayout.setVisibility(View.GONE);
                     }
                     break;
-                case R.id.imageModify: //이미지 선택시 수정하라고 나오는 버튼
+                case R.id.imageModify:
                     myStartActivity(GalleryActivity.class, GALLERY_IMAGE, 1);
                     buttonsBackgroundLayout.setVisibility(View.GONE);
                     break;
-                case R.id.delete: //이미지 선택시 이미지 삭제를 위해 나오는 버튼
+                case R.id.delete:
                     final View selectedView = (View) selectedImageVIew.getParent();
                     String path = pathList.get(parent.indexOfChild(selectedView) - 1);
-                    if (isStorageUrl(path)) {
-                        StorageReference desertRef = storageRef.child(clotheskind +"/"+ item.getId() + "/" + storageUrlToName(path));
+                    if(isStorageUrl(path)){
+                        StorageReference desertRef = storageRef.child(clotheskind+"/" + item.getId() + "/" + storageUrlToName(path));
                         desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -196,6 +196,10 @@ public class SubmitActivity extends AppCompatActivity {
                                 showToast(SubmitActivity.this, "파일을 삭제하는데 실패하였습니다.");
                             }
                         });
+                    }else{
+                        pathList.remove(parent.indexOfChild(selectedView) - 1);
+                        parent.removeView(selectedView);
+                        buttonsBackgroundLayout.setVisibility(View.GONE);
                     }
                     break;
             }

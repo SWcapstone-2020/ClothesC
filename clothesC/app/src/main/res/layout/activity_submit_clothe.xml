@@ -18,6 +18,7 @@
 
             <Spinner
                 android:id="@+id/spinner"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="15dp"
                 android:layout_height="wrap_content"/>
@@ -44,50 +45,16 @@
             </LinearLayout>
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/image"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:background="#FF92A4"
-                    android:drawableLeft="@drawable/ic_image_white_24dp"
-                    android:drawablePadding="-18dp"
-                    android:paddingLeft="18dp"
-                    android:text="이미지"
-                    android:textColor="#ffffff"
-                    android:layout_marginRight="30dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/check"
-                    app:layout_constraintHorizontal_bias="0.605"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <Button
-                    android:id="@+id/check"
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:background="#88D5FF"
-                    android:drawableLeft="@drawable/ic_check_white_24dp"
-                    android:drawablePadding="-24dp"
-                    android:paddingLeft="18dp"
-                    android:text="확인"
-                    android:textColor="#ffffff"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-            </LinearLayout>
         </LinearLayout>
+
+
 
     </ScrollView>
 
     <RelativeLayout
         android:id="@+id/buttonsBackgroundLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="#91646464"
         android:visibility="gone">
 
@@ -103,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:id="@+id/btns"
                 android:padding="5dp">
 
                 <Button
@@ -128,5 +96,43 @@
         android:layout_height="match_parent"
         android:visibility="gone"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|bottom"
+        >
 
+
+        <Button
+            android:id="@+id/image"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:background="#FF92A4"
+            android:drawableLeft="@drawable/ic_image_white_24dp"
+            android:drawablePadding="-18dp"
+            android:paddingLeft="18dp"
+
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="30dp"
+            android:text="이미지"
+            android:textColor="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/check"
+            app:layout_constraintHorizontal_bias="0.605"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/check"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="#88D5FF"
+            android:drawableLeft="@drawable/ic_check_white_24dp"
+            android:drawablePadding="-24dp"
+            android:paddingLeft="18dp"
+            android:text="확인"
+            android:textColor="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </LinearLayout>
 </RelativeLayout>
