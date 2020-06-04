@@ -34,7 +34,7 @@
                     android:orientation="vertical">
 
                     <include
-                        layout="@layout/view_contents_edit_text"
+                        layout="@layout/view_clothes_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
