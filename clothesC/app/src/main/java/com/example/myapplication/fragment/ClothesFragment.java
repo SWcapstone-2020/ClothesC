@@ -131,7 +131,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         // drawer.xml에서 id 값으로 지정된 네비게이션드로어 메뉴들을 불러옴
         int id = item.getItemId();
         switch (id) {
-            case R.id.cardigan:
+            case R.id.nav_item_outer:
 //                myStartActivity(SwitchLayoutFragment.class);
 //                프레그먼트 전환
                 SwitchLayoutFragment switchLayoutFrag = new SwitchLayoutFragment();

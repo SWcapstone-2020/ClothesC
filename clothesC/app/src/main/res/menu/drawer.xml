@@ -1,59 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/nav_item_outer">
-        <menu>
-            <item
-                android:id="@+id/cardigan"
-                android:title="가디건" />
-            <item
-                android:title="자켓" />
-        </menu>
-    </item>
-
-    <item android:title="@string/nav_item_tops">
-        <menu>
-            <item
-                android:title="셔츠" />
-            <item
-                android:title="블라우스" />
-        </menu>
-    </item>
-
-    <item android:title="@string/nav_sub_menu">
-        <menu>
-            <item
-                android:icon="@drawable/ic_emoticon"
-                android:id="@+id/nav_sub_menu_item01"
-                android:title="@string/nav_sub_menu_item01" />
-            <item
-                android:icon="@drawable/ic_emoticon"
-                android:id="@+id/nav_sub_menu_item02"
-                android:title="@string/nav_sub_menu_item02" />
-        </menu>
-    </item>
-
-<!--    <group android:checkableBehavior="single">-->
-<!--        <item-->
-<!--            android:id="@+id/navigation_item_outer"-->
-<!--            android:checked="true"-->
-<!--            android:icon="@drawable/ic_outer"-->
-<!--            android:title="@string/nav_item_outer" />-->
-<!--        <item-->
-<!--            android:id="@+id/navigation_item_tops"-->
-<!--            android:icon="@drawable/ic_tops"-->
-<!--            android:title="@string/nav_item_tops" />-->
-
-<!--        <item-->
-<!--            android:id="@+id/navigation_item_bottoms"-->
-<!--            android:icon="@drawable/ic_bottoms"-->
-<!--            android:title="@string/nav_item_bottoms" />-->
-
-<!--        <item-->
-<!--            android:id="@+id/navigation_item_shoes"-->
-<!--            android:icon="@drawable/ic_shoes"-->
-<!--            android:title="@string/nav_item_shoes" />-->
-<!--    </group>-->
-
-
-
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_outer"
+            android:title="@string/nav_item_outer"/>
+        <item
+            android:id="@+id/nav_item_tops"
+            android:title="@string/nav_item_tops"/>
+        <item
+            android:id="@+id/nav_item_bottoms"
+            android:title="@string/nav_item_bottoms"/>
+        <item
+            android:id="@+id/nav_item_shoes"
+            android:title="@string/nav_item_shoes"/>
+        <item
+            android:id="@+id/nav_item_etc"
+            android:title="@string/nav_item_etc"/>
+    </group>
 </menu>
