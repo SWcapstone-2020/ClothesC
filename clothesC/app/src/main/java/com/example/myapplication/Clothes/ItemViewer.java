@@ -61,7 +61,7 @@ public class ItemViewer extends RecyclerView.Adapter<ItemViewer.ItemViewHolder> 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         Item item = mItems.get(position % 4);   // items 에서 데이터를 꺼내 아이템 저장
-        holder.title.setText(item.getTitle());  // 현재 아이템에 해당되는 제목 설정
+//        holder.title.setText(item.getTitle());  // 현재 아이템에 해당되는 제목 설정
 //        holder.iv.setImageResource(item.getImgResId()); // 현재 아이템에 해당되는 이미지 설정
 
         if (getItemViewType(position) == VIEW_TYPE_BIG) { // 리사이클러 뷰일 때,

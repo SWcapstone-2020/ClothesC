@@ -6,19 +6,19 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.GalleryActivity;
-import com.example.myapplication.Post.PostInfo;
 import com.example.myapplication.R;
 import com.example.myapplication.Util;
 import com.example.myapplication.view.ContentsItemView;
@@ -45,7 +45,6 @@ import static com.example.myapplication.Util.INTENT_MEDIA;
 import static com.example.myapplication.Util.INTENT_PATH;
 import static com.example.myapplication.Util.isImageFile;
 import static com.example.myapplication.Util.isStorageUrl;
-import static com.example.myapplication.Util.isVideoFile;
 import static com.example.myapplication.Util.showToast;
 import static com.example.myapplication.Util.storageUrlToName;
 
@@ -60,28 +59,26 @@ public class SubmitActivity extends AppCompatActivity {
     private ImageView selectedImageVIew;
     private EditText selectedEditText;
     private EditText contentsEditText;
-    private EditText titleEditText;
     private Item item;
-    private PostInfo postInfo;
     private int pathCount, successCount;
     private Util util;
 
 
     private String clotheskind;
-    private String season;
+
+    private ArrayAdapter<CharSequence> kindspinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_clothe);
 
-        util=new Util(this);
+        util = new Util(this);
 
         parent = findViewById(R.id.contentsLayout);
         buttonsBackgroundLayout = findViewById(R.id.buttonsBackgroundLayout);
         loaderLayout = findViewById(R.id.loaderLyaout);
         contentsEditText = findViewById(R.id.contentsEditText);
-        titleEditText = findViewById(R.id.titleEditText);
 
         findViewById(R.id.check).setOnClickListener(onClickListener);
         findViewById(R.id.image).setOnClickListener(onClickListener);
@@ -90,44 +87,31 @@ public class SubmitActivity extends AppCompatActivity {
 
         buttonsBackgroundLayout.setOnClickListener(onClickListener);
         contentsEditText.setOnFocusChangeListener(onFocusChangeListener);
-        titleEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    selectedEditText = null;
-                }
-            }
-        });
+
 
         FirebaseStorage storage = FirebaseStorage.getInstance(); //파이어스토어 초기화
         storageRef = storage.getReference();
 
-        RadioGroup choicekind = (RadioGroup) findViewById(R.id.choicekind);
-        choicekind.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        spinner.setPrompt("옷 종류를 선택하세요");
+        kindspinner = ArrayAdapter.createFromResource(this, R.array.kindsClothes, android.R.layout.simple_spinner_item);
+        kindspinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(kindspinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton radioButton = (RadioButton) findViewById(checkedId);
-                clotheskind=radioButton.getText().toString();
-                Log.d("TAG","옷종류 : "+clotheskind);
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                clotheskind = kindspinner.getItem(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                showToast(SubmitActivity.this, "종류를 선택해주세요.");
             }
         });
 
-        RadioGroup choiceseason = (RadioGroup) findViewById(R.id.choiceseason);
-        choiceseason.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton radioButton = (RadioButton) findViewById(checkedId);
-                season=radioButton.getText().toString();
-                Log.d("TAG","계절 : "+season);
-            }
-        });
-
-
-
-        item=(Item) getIntent().getSerializableExtra("item");
+        item = (Item) getIntent().getSerializableExtra("item");
         postInit();
     }
-
 
 
     @Override
@@ -195,12 +179,12 @@ public class SubmitActivity extends AppCompatActivity {
                 case R.id.delete: //이미지 선택시 이미지 삭제를 위해 나오는 버튼
                     final View selectedView = (View) selectedImageVIew.getParent();
                     String path = pathList.get(parent.indexOfChild(selectedView) - 1);
-                    if(isStorageUrl(path)){
-                        StorageReference desertRef = storageRef.child("posts/" + postInfo.getId() + "/" + storageUrlToName(path));
+                    if (isStorageUrl(path)) {
+                        StorageReference desertRef = storageRef.child(clotheskind +"/"+ item.getId() + "/" + storageUrlToName(path));
                         desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                showToast(SubmitActivity.this,"파일을 삭제하였습니다.");
+                                showToast(SubmitActivity.this, "파일을 삭제하였습니다.");
                                 pathList.remove(parent.indexOfChild(selectedView) - 1);
                                 parent.removeView(selectedView);
                                 buttonsBackgroundLayout.setVisibility(View.GONE);
@@ -227,90 +211,81 @@ public class SubmitActivity extends AppCompatActivity {
     };
 
     private void storageUpload() {
-        final String title = ((EditText) findViewById(R.id.titleEditText)).getText().toString();
-        if (title.length() > 0) {
-            loaderLayout.setVisibility(View.VISIBLE); // 게시글 올릴 때 로딩화면을 나오게 함
-            final ArrayList<String> contentsList = new ArrayList<>(); // 입력한 내용을 배열로 저장
-            final ArrayList<String> formatList = new ArrayList<>();
-            user = FirebaseAuth.getInstance().getCurrentUser(); //파이어베이스에서 유저를 불러옴
+        loaderLayout.setVisibility(View.VISIBLE); // 게시글 올릴 때 로딩화면을 나오게 함
+        final ArrayList<String> contentsList = new ArrayList<>(); // 입력한 내용을 배열로 저장
+        final ArrayList<String> formatList = new ArrayList<>();
+        user = FirebaseAuth.getInstance().getCurrentUser(); //파이어베이스에서 유저를 불러옴
 
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-            StorageReference storageRef = storage.getReference();
-            FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-            //205~207까지 파이어베이스 사용을 위해 쓰는 코드
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        //205~207까지 파이어베이스 사용을 위해 쓰는 코드
 
-            Item item=(Item)getIntent().getSerializableExtra("item") ;
+        Item item = (Item) getIntent().getSerializableExtra("item");
 
-            PostInfo postinfo=(PostInfo)getIntent().getSerializableExtra("postInfo");
-
-            final DocumentReference documentReference = item == null ? firebaseFirestore.collection("Clothes/").document(clotheskind+"/") : firebaseFirestore.collection("Clothes/").document(clotheskind+"/"+item.getId());
+        final DocumentReference documentReference = item == null ? firebaseFirestore.collection(clotheskind).document() : firebaseFirestore.collection(clotheskind).document(item.getId());
 //            firebaseFirestore.collection == (홈페이지) 파이어베이스 데이터베이스에서 괄호 안에 적힌 것과 같은 폴더에 접근함.
 
 
-            final Date date = item == null ? new Date() : item.getCreatedAt();  //수정시 수정된 날짜로 변경되는걸 방지
-            for (int i = 0; i < parent.getChildCount(); i++) {
-                LinearLayout linearLayout = (LinearLayout) parent.getChildAt(i);
-                for (int ii = 0; ii < linearLayout.getChildCount(); ii++) {
-                    View view = linearLayout.getChildAt(ii);
-                    if (view instanceof EditText) {
-                        String text = ((EditText) view).getText().toString();
-                        if (text.length() > 0) {
-                            contentsList.add(text);
-                            formatList.add("text");
-                        }
-                    } else if (!isStorageUrl(pathList.get(pathCount))) {
-                        String path = pathList.get(pathCount);
-                        successCount++;
-                        contentsList.add(path);
-                        if(isImageFile(path)){
-                            formatList.add("image");
-                        }else if (isVideoFile(path)){
-                            formatList.add("video");
-                        }else{
-                            formatList.add("text");
-                        }
-                        String[] pathArray = path.split("\\.");
-                        final StorageReference mountainImagesRef = storageRef.child("Clothes/" + documentReference.getId() + "/" + pathCount + "." + pathArray[pathArray.length - 1]);
-                        //238~239 파이어베이스 스토어에 이미지 저장
-                        try {
-                            InputStream stream = new FileInputStream(new File(pathList.get(pathCount)));
-                            StorageMetadata metadata = new StorageMetadata.Builder().setCustomMetadata("index", "" + (contentsList.size() - 1)).build();
-                            UploadTask uploadTask = mountainImagesRef.putStream(stream, metadata);
-                            uploadTask.addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception exception) {
-                                }
-                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    final int index = Integer.parseInt(taskSnapshot.getMetadata().getCustomMetadata("index"));
-                                    mountainImagesRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            successCount--;
-                                            contentsList.set(index, uri.toString());
-                                            if (successCount == 0) {
-                                                Item item = new Item(title, contentsList, formatList, user.getUid(), date,season,clotheskind);
-                                                storeUpload(documentReference, item);
-                                            }
-                                        }
-                                    });
-                                }
-                            });
-                        } catch (FileNotFoundException e) {
-                            Log.e("로그", "에러: " + e.toString());
-                        }
-                        pathCount++;
+        final Date date = item == null ? new Date() : item.getCreatedAt();  //수정시 수정된 날짜로 변경되는걸 방지
+        for (int i = 0; i < parent.getChildCount(); i++) {
+            LinearLayout linearLayout = (LinearLayout) parent.getChildAt(i);
+            for (int ii = 0; ii < linearLayout.getChildCount(); ii++) {
+                View view = linearLayout.getChildAt(ii);
+                if (view instanceof EditText) {
+                    String text = ((EditText) view).getText().toString();
+                    if (text.length() > 0) {
+                        contentsList.add(text);
+                        formatList.add("text");
                     }
+                } else if (!isStorageUrl(pathList.get(pathCount))) {
+                    String path = pathList.get(pathCount);
+                    successCount++;
+                    contentsList.add(path);
+                    if (isImageFile(path)) {
+                        formatList.add("image");
+                    } else {
+                        formatList.add("text");
+                    }
+                    String[] pathArray = path.split("\\.");
+                    final StorageReference mountainImagesRef = storageRef.child(clotheskind+"/" + documentReference.getId() + "/" + pathCount + "." + pathArray[pathArray.length - 1]);
+                    //238~239 파이어베이스 스토어에 이미지 저장
+                    try {
+                        InputStream stream = new FileInputStream(new File(pathList.get(pathCount)));
+                        StorageMetadata metadata = new StorageMetadata.Builder().setCustomMetadata("index", "" + (contentsList.size() - 1)).build();
+                        UploadTask uploadTask = mountainImagesRef.putStream(stream, metadata);
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                final int index = Integer.parseInt(taskSnapshot.getMetadata().getCustomMetadata("index"));
+                                mountainImagesRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        successCount--;
+                                        contentsList.set(index, uri.toString());
+                                        if (successCount == 0) {
+                                            Item item = new Item(contentsList, formatList, user.getUid(), date,clotheskind);
+                                            storeUpload(documentReference, item);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    } catch (FileNotFoundException e) {
+                        Log.e("로그", "에러: " + e.toString());
+                    }
+                    pathCount++;
                 }
             }
+        }
 
 //            String title, ArrayList contents, ArrayList formats, String publisher, Date createdAt, String season, String kind
-            if (successCount == 0) {
-                storeUpload(documentReference, new Item(title, contentsList, formatList, user.getUid(), date,season,clotheskind));
-            }
-        } else {
-            showToast(SubmitActivity.this,"제목을 입력해주세요.");
+        if (successCount == 0) {
+            storeUpload(documentReference, new Item(contentsList, formatList, user.getUid(), date,clotheskind));
         }
     }
 
@@ -322,7 +297,7 @@ public class SubmitActivity extends AppCompatActivity {
                         Log.d(TAG, "DocumentSnapshot successfully written!");
                         loaderLayout.setVisibility(View.GONE); //업로드 성공시 로딩 화면 끄게 함
                         Intent resultIntent = new Intent();
-                        resultIntent.putExtra("Clothes",item);
+                        resultIntent.putExtra("item", item);
                         setResult(Activity.RESULT_OK, resultIntent);
                         finish();
                     }
@@ -338,7 +313,6 @@ public class SubmitActivity extends AppCompatActivity {
 
     private void postInit() {
         if (item != null) {
-            titleEditText.setText(item.getTitle());
             ArrayList<String> contentsList = item.getContents(); //contentsList에 작성한 내용을 넣음
             for (int i = 0; i < contentsList.size(); i++) {
                 String contents = contentsList.get(i);

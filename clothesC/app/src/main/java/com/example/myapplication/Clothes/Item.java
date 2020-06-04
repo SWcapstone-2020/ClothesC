@@ -7,55 +7,41 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Item implements Serializable {
-    private String title;
     private ArrayList<String> contents;
     private ArrayList<String> formats;
     private String publisher;
     private Date createdAt;
-    private String season;
     private String kind;
     private String id;
 
-    public Item(String title, ArrayList contents, ArrayList formats, String publisher, Date createdAt, String season, String kind) {
-        this.title=title;
+    public Item(ArrayList contents, ArrayList formats, String publisher, Date createdAt,  String kind) {
         this.contents=contents;
         this.formats=formats;
         this.publisher=publisher;
         this.createdAt=createdAt;
-        this.season=season;
         this.kind=kind;
     }
 
-    public Item(String title, ArrayList contents, ArrayList formats, String publisher, Date createdAt, String season, String kind, String id) {
-        this.title=title;
-        this.contents=contents;
-        this.formats=formats;
-        this.publisher=publisher;
-        this.createdAt=createdAt;
-        this.season=season;
-        this.kind=kind;
-        this.id=id;
-    }
+//    public Item(ArrayList contents, ArrayList formats, String publisher, Date createdAt, String kind, String id) {
+//        this.contents=contents;
+//        this.formats=formats;
+//        this.publisher=publisher;
+//        this.createdAt=createdAt;
+//        this.kind=kind;
+//        this.id=id;
+//    }
 
     public Map<String, Object> getItemInfo(){
         Map<String, Object> itemData = new HashMap<>();
-        itemData.put("title",title);
         itemData.put("contents",contents);
         itemData.put("formats",formats);
         itemData.put("publisher",publisher);
         itemData.put("createdAt",createdAt);
-        itemData.put("season",season);
         itemData.put("kind",kind);
         return  itemData;
     }
 
 
-    public String getTitle(){
-        return this.title;
-    }
-    public void setTitle(String title){
-        this.title = title;
-    }
     public ArrayList<String> getContents(){
         return this.contents;
     }
@@ -80,8 +66,6 @@ public class Item implements Serializable {
     public void setCreatedAt(Date createdAt){
         this.createdAt = createdAt;
     }
-    public String getSeason(){return this.season;}
-    public void setSeason(String season){this.season=season; }
     public String getKind(){return this.kind;}
     public void setKind(String kind){this.kind=kind; }
 
