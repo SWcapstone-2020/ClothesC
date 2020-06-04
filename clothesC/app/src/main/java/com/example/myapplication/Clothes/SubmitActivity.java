@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.myapplication.GalleryActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.Util;
+import com.example.myapplication.view.ClothesImgView;
 import com.example.myapplication.view.ContentsItemView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -122,21 +123,21 @@ public class SubmitActivity extends AppCompatActivity {
                 if (resultCode == Activity.RESULT_OK) {
                     String path = data.getStringExtra(INTENT_PATH);
                     pathList.add(path);
-                    ContentsItemView contentsItemView = new ContentsItemView(this);
+                    ClothesImgView clothesImgView = new ClothesImgView(this);
 
                     if (selectedEditText == null) {
-                        parent.addView(contentsItemView);
+                        parent.addView(clothesImgView);
                     } else {
                         for (int i = 0; i < parent.getChildCount(); i++) {
                             if (parent.getChildAt(i) == selectedEditText.getParent()) {
-                                parent.addView(contentsItemView, i + 1);
+                                parent.addView(clothesImgView, i + 1);
                                 break;
                             }
                         }
                     }
 
-                    contentsItemView.setImage(path);
-                    contentsItemView.setOnClickListener(new View.OnClickListener() {
+                    clothesImgView.setImage(path);
+                    clothesImgView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             buttonsBackgroundLayout.setVisibility(View.VISIBLE);
@@ -144,7 +145,7 @@ public class SubmitActivity extends AppCompatActivity {
                         }
                     });
 
-                    contentsItemView.setOnFocusChangeListener(onFocusChangeListener);
+                    clothesImgView.setOnFocusChangeListener(onFocusChangeListener);
                 }
                 break;
             case 1:
