@@ -156,11 +156,11 @@ public class WritePostActivity extends AppCompatActivity {
                         buttonsBackgroundLayout.setVisibility(View.GONE);
                     }
                     break;
-                case R.id.imageModify: //이미지 선택시 수정하라고 나오는 버튼
+                case R.id.imageModify:
                     myStartActivity(GalleryActivity.class, GALLERY_IMAGE, 1);
                     buttonsBackgroundLayout.setVisibility(View.GONE);
                     break;
-                case R.id.delete: //이미지 선택시 이미지 삭제를 위해 나오는 버튼
+                case R.id.delete:
                     final View selectedView = (View) selectedImageVIew.getParent();
                     String path = pathList.get(parent.indexOfChild(selectedView) - 1);
                     if(isStorageUrl(path)){
@@ -168,7 +168,7 @@ public class WritePostActivity extends AppCompatActivity {
                         desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                showToast(WritePostActivity.this,"파일을 삭제하였습니다.");
+                                showToast(WritePostActivity.this, "파일을 삭제하였습니다.");
                                 pathList.remove(parent.indexOfChild(selectedView) - 1);
                                 parent.removeView(selectedView);
                                 buttonsBackgroundLayout.setVisibility(View.GONE);
@@ -179,6 +179,10 @@ public class WritePostActivity extends AppCompatActivity {
                                 showToast(WritePostActivity.this, "파일을 삭제하는데 실패하였습니다.");
                             }
                         });
+                    }else{
+                        pathList.remove(parent.indexOfChild(selectedView) - 1);
+                        parent.removeView(selectedView);
+                        buttonsBackgroundLayout.setVisibility(View.GONE);
                     }
                     break;
             }
