@@ -102,6 +102,9 @@ public class SubmitActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 clotheskind = kindspinner.getItem(position).toString();
+                if(clotheskind.equals("아우터")){
+                    clotheskind="outer";
+                }
             }
 
             @Override

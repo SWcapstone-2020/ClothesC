@@ -1,7 +1,6 @@
 package com.example.myapplication.Adaptor;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.Clothes.ClothesItem;
-import com.example.myapplication.Post.DetailPostActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.listener.OnPostListener;
 
@@ -61,6 +59,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.ClothesI
     public ClothesItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         CardView cardView = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_clothes, parent, false);
         final ClothesItemViewHolder clothesViewHolder = new ClothesItemViewHolder(cardView);
+/*
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +68,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.ClothesI
                 activity.startActivity(intent);
             }
         });
+*/
 
         cardView.findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +87,8 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.ClothesI
         //내용 출력
         LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        ArrayList<String> contentList = mDataset.get(position).getContents();
 
+        ArrayList<String> contentList = mDataset.get(position).getContents();
         if(contentsLayout.getTag()==null || !contentsLayout.equals(contentList)){
             contentsLayout.setTag(contentList);
             contentsLayout.removeAllViews();
@@ -98,6 +98,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.ClothesI
                     ImageView imageView = new ImageView(activity);
                     imageView.setLayoutParams(layoutParams);
                     imageView.setAdjustViewBounds(true);
+                    imageView.setPadding(10,10,50,20);
                     imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                     contentsLayout.addView(imageView);
                     Glide.with(activity).load(contents).override(1000).thumbnail(0.1f).into(imageView);
@@ -105,6 +106,8 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.ClothesI
                     TextView textView = new TextView(activity);
                     textView.setLayoutParams(layoutParams);
                     textView.setText(contents);
+                    textView.setPadding(20,10,30,20);
+                    textView.setTextSize(15);
                     textView.setTextColor(Color.rgb(0,0,0)); //텍스트 내용 색깔 지정
                     contentsLayout.addView(textView);
                 }

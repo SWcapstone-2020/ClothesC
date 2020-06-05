@@ -116,7 +116,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                 super.onScrolled(recyclerView, dx, dy);
 
                 RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-                int visibleItemCount = layoutManager.getChildCount();
                 int totalItemCount = layoutManager.getItemCount();
                 int firstVisibleItemPosition = ((LinearLayoutManager)layoutManager).findFirstVisibleItemPosition();
                 int lastVisibleItemPosition = ((LinearLayoutManager)layoutManager).findLastVisibleItemPosition();
@@ -171,7 +170,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
     @Override
     public void onPause(){
         super.onPause();
-//        postAdaptor.playerStop();
     }
 
     @Override
@@ -196,7 +194,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
     private void postsUpdate(final boolean clear) {
         updating = true;
         Date date = itemList.size() == 0 || clear ? new Date() : itemList.get(itemList.size() - 1).getCreatedAt();
-        CollectionReference collectionReference = firebaseFirestore.collection("아우터");
+        CollectionReference collectionReference = firebaseFirestore.collection("outer");
         collectionReference.orderBy("createdAt", Query.Direction.DESCENDING).whereLessThan("createdAt", date).limit(10).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -238,7 +236,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                     Log.d("TAG","확인: "+id);
                     Log.d("TAG", "확인: "+storageUrlToName(contents));
                     Log.d("TAG","확인: "+storageRef);
-                    StorageReference desertRef = storageRef.child("아우터" + id + "/" + storageUrlToName(contents));
+                    StorageReference desertRef = storageRef.child("outer" + id + "/" + storageUrlToName(contents));
                     desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -266,7 +264,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
     };
     private void storageDeleteUpdate(String id) {
         if (successCount == 0) {
-            firebaseFirestore.collection("아우터").document(id)
+            firebaseFirestore.collection("outer").document(id)
                     .delete()
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
