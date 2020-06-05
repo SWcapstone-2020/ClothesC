@@ -105,6 +105,16 @@ public class SubmitActivity extends AppCompatActivity {
                 if(clotheskind.equals("아우터")){
                     clotheskind="outer";
                 }
+                else if(clotheskind.equals("상의")){
+                    clotheskind="shirt";
+                }
+                else if(clotheskind.equals("하의")){
+                    clotheskind="pant";
+                }
+                else {
+                    clotheskind="etc";
+                }
+
             }
 
             @Override
