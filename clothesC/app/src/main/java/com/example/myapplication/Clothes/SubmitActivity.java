@@ -60,7 +60,7 @@ public class SubmitActivity extends AppCompatActivity {
     private ImageView selectedImageVIew;
     private EditText selectedEditText;
     private EditText contentsEditText;
-    private Item item;
+    private ClothesItem item;
     private int pathCount, successCount;
     private Util util;
 
@@ -110,7 +110,7 @@ public class SubmitActivity extends AppCompatActivity {
             }
         });
 
-        item = (Item) getIntent().getSerializableExtra("item");
+        item = (ClothesItem) getIntent().getSerializableExtra("item");
         postInit();
     }
 
@@ -226,7 +226,7 @@ public class SubmitActivity extends AppCompatActivity {
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         //205~207까지 파이어베이스 사용을 위해 쓰는 코드
 
-        Item item = (Item) getIntent().getSerializableExtra("item");
+        ClothesItem item = (ClothesItem) getIntent().getSerializableExtra("item");
 
         final DocumentReference documentReference = item == null ? firebaseFirestore.collection(clotheskind).document() : firebaseFirestore.collection(clotheskind).document(item.getId());
 //            firebaseFirestore.collection == (홈페이지) 파이어베이스 데이터베이스에서 괄호 안에 적힌 것과 같은 폴더에 접근함.
@@ -273,7 +273,7 @@ public class SubmitActivity extends AppCompatActivity {
                                         successCount--;
                                         contentsList.set(index, uri.toString());
                                         if (successCount == 0) {
-                                            Item item = new Item(contentsList, formatList, user.getUid(), date,clotheskind);
+                                            ClothesItem item = new ClothesItem(contentsList, formatList, user.getUid(), date,clotheskind);
                                             storeUpload(documentReference, item);
                                         }
                                     }
@@ -290,11 +290,11 @@ public class SubmitActivity extends AppCompatActivity {
 
 //            String title, ArrayList contents, ArrayList formats, String publisher, Date createdAt, String season, String kind
         if (successCount == 0) {
-            storeUpload(documentReference, new Item(contentsList, formatList, user.getUid(), date,clotheskind));
+            storeUpload(documentReference, new ClothesItem(contentsList, formatList, user.getUid(), date,clotheskind));
         }
     }
 
-    private void storeUpload(DocumentReference documentReference, final Item item) {
+    private void storeUpload(DocumentReference documentReference, final ClothesItem item) {
         documentReference.set(item.getItemInfo())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

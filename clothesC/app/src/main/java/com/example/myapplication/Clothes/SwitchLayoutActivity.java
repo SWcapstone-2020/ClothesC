@@ -1,4 +1,4 @@
-//package com.example.myapplication.Clothes;
+//package com.example.myapplication.ClothesItem;
 //
 //import android.os.Bundle;
 //import android.view.Menu;
@@ -13,8 +13,8 @@
 //
 //import java.util.List;
 //
-//import static com.example.myapplication.Clothes.ItemViewer.SPAN_COUNT_ONE;
-//import static com.example.myapplication.Clothes.ItemViewer.SPAN_COUNT_THREE;
+//import static com.example.myapplication.ClothesItem.ItemViewer.SPAN_COUNT_ONE;
+//import static com.example.myapplication.ClothesItem.ItemViewer.SPAN_COUNT_THREE;
 //
 //public class SwitchLayoutActivity extends AppCompatActivity {
 //    private RecyclerView recyclerView;

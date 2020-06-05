@@ -1,4 +1,4 @@
-//package com.example.myapplication.Clothes;
+//package com.example.myapplication.ClothesItem;
 //
 //import android.content.Context;
 //import android.content.Intent;

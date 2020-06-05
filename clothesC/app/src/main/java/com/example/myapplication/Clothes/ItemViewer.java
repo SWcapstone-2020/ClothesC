@@ -60,7 +60,7 @@ public class ItemViewer extends RecyclerView.Adapter<ItemViewer.ItemViewHolder> 
 //  어댑터 생성자로 넘어온 items에서 position에 맞는 아이템을 꺼내서 뷰홀더에 설정하면 해당 아이템이 보이게 된다.
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        Item item = mItems.get(position % 4);   // items 에서 데이터를 꺼내 아이템 저장
+//        Item item = mItems.get(position % 4);   // items 에서 데이터를 꺼내 아이템 저장
 //        holder.title.setText(item.getTitle());  // 현재 아이템에 해당되는 제목 설정
 //        holder.iv.setImageResource(item.getImgResId()); // 현재 아이템에 해당되는 이미지 설정
 

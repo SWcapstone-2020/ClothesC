@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Item implements Serializable {
+public class ClothesItem implements Serializable {
     private ArrayList<String> contents;
     private ArrayList<String> formats;
     private String publisher;
@@ -25,7 +25,7 @@ public class Item implements Serializable {
                 '}';
     }
 
-    public Item(ArrayList contents, ArrayList formats, String publisher, Date createdAt,  String kind) {
+    public ClothesItem(ArrayList contents, ArrayList formats, String publisher, Date createdAt, String kind) {
         this.contents=contents;
         this.formats=formats;
         this.publisher=publisher;
@@ -33,7 +33,7 @@ public class Item implements Serializable {
         this.kind=kind;
     }
 
-    public Item(ArrayList contents, ArrayList formats, String publisher, Date createdAt, String kind, String id) {
+    public ClothesItem(ArrayList contents, ArrayList formats, String publisher, Date createdAt, String kind, String id) {
         this.contents=contents;
         this.formats=formats;
         this.publisher=publisher;

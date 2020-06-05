@@ -25,6 +25,10 @@ public class Util {
     public static boolean isStorageUrl(String url){
         return Patterns.WEB_URL.matcher(url).matches() && url.contains("https://firebasestorage.googleapis.com/v0/b/clothesc-ver1.appspot.com/o/posts");
     }
+
+    public static boolean isItemUrl(String url){
+        return Patterns.WEB_URL.matcher(url).matches() && url.contains("https://firebasestorage.googleapis.com/v0/b/clothesc-ver1.appspot.com/o/%EC%95%84%EC%9A%B0%ED%84%B0%");
+    }
     public static String storageUrlToName(String url){
         return url.split("\\?")[0].split("%2F")[url.split("\\?")[0].split("%2F").length - 1];
     }
