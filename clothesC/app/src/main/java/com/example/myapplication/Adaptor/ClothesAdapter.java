@@ -107,7 +107,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.ClothesI
                     textView.setLayoutParams(layoutParams);
                     textView.setText(contents);
                     textView.setPadding(20,10,30,20);
-                    textView.setTextSize(15);
+                    textView.setTextSize(20);
                     textView.setTextColor(Color.rgb(0,0,0)); //텍스트 내용 색깔 지정
                     contentsLayout.addView(textView);
                 }

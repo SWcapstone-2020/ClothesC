@@ -24,7 +24,6 @@ import com.example.myapplication.Adaptor.ClothesAdapter;
 import com.example.myapplication.Clothes.ClothesItem;
 import com.example.myapplication.Clothes.SubmitActivity;
 import com.example.myapplication.Clothes.SwitchLayoutFragment;
-import com.example.myapplication.Post.WritePostActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.listener.OnPostListener;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -61,6 +60,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
     private boolean topScrolled;
     private int successCount;
 
+
     private Context mContext;
     private FloatingActionButton fab_main;
     private boolean isFabOpen = false;
@@ -89,6 +89,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         storageRef = storage.getReference();
         itemList=new ArrayList<>();
         clothesAdapter=new ClothesAdapter(getActivity(),itemList);
+        clothesAdapter.setOnPostListener(onPostListener);
         final RecyclerView recyclerView = view.findViewById(R.id.itemRecy);
 
         recyclerView.setHasFixedSize(true);
@@ -233,9 +234,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                 String contents = contentList.get(i);
                 if(isStorageUrl(contents)){ //내용이 url인가? (즉 이미지인가 동영상인가)
                     successCount++;
-                    Log.d("TAG","확인: "+id);
-                    Log.d("TAG", "확인: "+storageUrlToName(contents));
-                    Log.d("TAG","확인: "+storageRef);
                     StorageReference desertRef = storageRef.child("outer" + id + "/" + storageUrlToName(contents));
                     desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -258,7 +256,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
 
         @Override
         public void onModify(int position) {
-            goWriteActivity(WritePostActivity.class, itemList.get(position));
+            goWriteActivity(SubmitActivity.class, itemList.get(position));
         }
 
     };
@@ -269,7 +267,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-//                            showToast(HomeFragment.this, "게시글을 삭제하였습니다");
                             boolean clear=true;
                             postsUpdate(clear);
                         }
@@ -277,7 +274,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-//                            showToast(ShowPostActivity.this, "게시글을 삭제하지 못했습니다");
                         }
                     });
         }
