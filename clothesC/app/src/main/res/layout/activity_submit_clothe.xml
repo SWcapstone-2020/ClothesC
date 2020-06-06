@@ -16,74 +16,12 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <EditText
-                android:id="@+id/titleEditText"
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="제목"
-                android:inputType="textPersonName"
-                android:textStyle="bold"
-                android:textSize="30dp"
-                android:paddingLeft="10dp"/>
-            <RadioGroup
-                android:id="@+id/choiceseason"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/spring"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="봄" />
-
-                <RadioButton
-                    android:id="@+id/summer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="여름" />
-
-                <RadioButton
-                    android:id="@+id/fall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="가을" />
-
-                <RadioButton
-                    android:id="@+id/winter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="겨울" />
-            </RadioGroup>
-
-            <RadioGroup
-                android:id="@+id/choicekind"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/outer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="아우터" />
-
-                <RadioButton
-                    android:id="@+id/shirt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="상의" />
-
-                <RadioButton
-                    android:id="@+id/pants"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="하의" />
-            </RadioGroup>
+                android:layout_marginBottom="15dp"
+                android:layout_height="wrap_content"/>
 
             <LinearLayout
                 android:id="@+id/contentsLayout"
@@ -95,27 +33,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="12dp" />
+
                     <include
-                        layout="@layout/view_contents_edit_text"
+                        layout="@layout/view_clothes_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
-                </LinearLayout>
+
+
 
             </LinearLayout>
 
-
+            </LinearLayout>
         </LinearLayout>
+
+
 
     </ScrollView>
 
     <RelativeLayout
         android:id="@+id/buttonsBackgroundLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="#91646464"
         android:visibility="gone">
 
@@ -131,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:id="@+id/btns"
                 android:padding="5dp">
 
                 <Button
@@ -156,19 +96,24 @@
         android:layout_height="match_parent"
         android:visibility="gone"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center|bottom"
+        >
+
 
         <Button
             android:id="@+id/image"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
             android:background="#FF92A4"
             android:drawableLeft="@drawable/ic_image_white_24dp"
             android:drawablePadding="-18dp"
             android:paddingLeft="18dp"
+
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="30dp"
             android:text="이미지"
             android:textColor="#ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -180,8 +125,7 @@
             android:id="@+id/check"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="72dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="10dp"
             android:background="#88D5FF"
             android:drawableLeft="@drawable/ic_check_white_24dp"
             android:drawablePadding="-24dp"
@@ -190,7 +134,5 @@
             android:textColor="#ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+    </LinearLayout>
 </RelativeLayout>

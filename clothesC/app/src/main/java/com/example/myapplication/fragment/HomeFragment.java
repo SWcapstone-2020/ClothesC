@@ -224,7 +224,6 @@ public class HomeFragment extends Fragment {
                                 postList.clear();
                             }
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
                                 postList.add(new PostInfo(
                                         document.getData().get("title").toString(),
                                         (ArrayList<String>) document.getData().get("contents"),

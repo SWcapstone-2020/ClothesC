@@ -25,6 +25,27 @@ public class Util {
     public static boolean isStorageUrl(String url){
         return Patterns.WEB_URL.matcher(url).matches() && url.contains("https://firebasestorage.googleapis.com/v0/b/clothesc-ver1.appspot.com/o/posts");
     }
+
+    public static boolean isItemUrl(String url){
+        return Patterns.WEB_URL.matcher(url).matches() && url.contains("https://firebasestorage.googleapis.com/v0/b/clothesc-ver1.appspot.com/o/outer");
+    }
+
+
+    public static boolean isShirtUrl(String url){
+        return Patterns.WEB_URL.matcher(url).matches() && url.contains("https://firebasestorage.googleapis.com/v0/b/clothesc-ver1.appspot.com/o/shirt");
+    }
+
+    public static boolean isPantUrl(String url){
+        return Patterns.WEB_URL.matcher(url).matches() && url.contains("https://firebasestorage.googleapis.com/v0/b/clothesc-ver1.appspot.com/o/pant");
+    }
+
+    public static boolean isEtcUrl(String url){
+        return Patterns.WEB_URL.matcher(url).matches() && url.contains("https://firebasestorage.googleapis.com/v0/b/clothesc-ver1.appspot.com/o/etc");
+    }
+
+    public static boolean isShoesUrl(String url){
+        return Patterns.WEB_URL.matcher(url).matches() && url.contains("https://firebasestorage.googleapis.com/v0/b/clothesc-ver1.appspot.com/o/shoes");
+    }
     public static String storageUrlToName(String url){
         return url.split("\\?")[0].split("%2F")[url.split("\\?")[0].split("%2F").length - 1];
     }
