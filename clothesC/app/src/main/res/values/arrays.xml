@@ -4,6 +4,7 @@
     <item>아우터</item>
     <item>상의</item>
     <item>하의</item>
+        <item>신발</item>
     <item>기타</item>
     </string-array>
 </resources>

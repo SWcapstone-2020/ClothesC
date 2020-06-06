@@ -25,21 +25,21 @@ import java.util.ArrayList;
 
 import static com.example.myapplication.Util.isItemUrl;
 
-public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.ClothesItemViewHolder> {
+public class OuterAdapter extends RecyclerView.Adapter<OuterAdapter.ItemViewHolder> {
     private ArrayList<ClothesItem> mDataset;
     private Activity activity;
     private OnPostListener onPostListener;
 
-    static class ClothesItemViewHolder extends RecyclerView.ViewHolder {
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
 
-        ClothesItemViewHolder(CardView v) {
+        ItemViewHolder(CardView v) {
             super(v);
             cardView = v;
         }
     }
 
-    public ClothesAdapter(Activity activity, ArrayList<ClothesItem> myDataset) {
+    public OuterAdapter(Activity activity, ArrayList<ClothesItem> myDataset) {
         this.mDataset = myDataset;
         this.activity = activity;
     }
@@ -56,20 +56,9 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.ClothesI
 
     @NonNull
     @Override
-    public ClothesItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         CardView cardView = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_clothes, parent, false);
-        final ClothesItemViewHolder clothesViewHolder = new ClothesItemViewHolder(cardView);
-/*
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(activity, DetailPostActivity.class);
-                intent.putExtra("item", mDataset.get(clothesViewHolder.getAdapterPosition()));
-                activity.startActivity(intent);
-            }
-        });
-*/
-
+        final ItemViewHolder clothesViewHolder = new ItemViewHolder(cardView);
         cardView.findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,9 +70,8 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.ClothesI
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ClothesItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
         CardView cardView = holder.cardView;
-
         //내용 출력
         LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

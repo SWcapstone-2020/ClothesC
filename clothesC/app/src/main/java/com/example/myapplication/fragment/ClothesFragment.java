@@ -20,7 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.Adaptor.ClothesAdapter;
+import com.example.myapplication.Adaptor.OuterAdapter;
 import com.example.myapplication.Clothes.ClothesItem;
 import com.example.myapplication.Clothes.SubmitActivity;
 import com.example.myapplication.Clothes.SwitchLayoutFragment;
@@ -43,7 +43,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.example.myapplication.Util.isStorageUrl;
+import static com.example.myapplication.Util.isItemUrl;
 import static com.example.myapplication.Util.storageUrlToName;
 
 //import com.example.myapplication.ClothesItem.SwitchLayoutActivity;
@@ -54,7 +54,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
 
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageRef;
-    private ClothesAdapter clothesAdapter;
+    private OuterAdapter clothesAdapter;
     private ArrayList<ClothesItem> itemList;
     private boolean updating;
     private boolean topScrolled;
@@ -88,7 +88,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         itemList=new ArrayList<>();
-        clothesAdapter=new ClothesAdapter(getActivity(),itemList);
+        clothesAdapter=new OuterAdapter(getActivity(),itemList);
         clothesAdapter.setOnPostListener(onPostListener);
         final RecyclerView recyclerView = view.findViewById(R.id.itemRecy);
 
@@ -232,7 +232,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
             ArrayList<String> contentList = itemList.get(position).getContents();
             for (int i = 0; i < contentList.size(); i++) {
                 String contents = contentList.get(i);
-                if(isStorageUrl(contents)){ //내용이 url인가? (즉 이미지인가 동영상인가)
+                if(isItemUrl(contents)){ //내용이 url인가? (즉 이미지인가 동영상인가)
                     successCount++;
                     StorageReference desertRef = storageRef.child("outer" + id + "/" + storageUrlToName(contents));
                     desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -290,7 +290,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
     public boolean onOptionsItemSelected(MenuItem item) {
         // toolbar 메뉴 선택 시 동작 지정.
         // AndroidManifest.xml에서 뒤로가기시 이동할 상위 액티비티를 지정.
-
         //menu.xml에서 id 값으로 지정된 '액션바 메뉴'들을 불러옴
         int id = item.getItemId();
 
@@ -312,18 +311,57 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // 네비게이션 드로어 메뉴 선택 시 동작 지정.
-        // 네비게이션 드로어 메뉴가 선택되면, 네비게이션 드로어 닫힘
+
         item.setChecked(true);
         mDrawerLayout.closeDrawers();
-
-        // drawer.xml에서 id 값으로 지정된 네비게이션드로어 메뉴들을 불러옴
         int id = item.getItemId();
+        SwitchLayoutFragment switchLayoutFrag = new SwitchLayoutFragment();
+        Bundle bundle=new Bundle(1);
+        String type;
         switch (id) {
             case R.id.nav_item_outer:
-//                myStartActivity(SwitchLayoutFragment.class);
-//                프레그먼트 전환
-                SwitchLayoutFragment switchLayoutFrag = new SwitchLayoutFragment();
+               type="outer";
+                bundle.putString("type", type);
+                switchLayoutFrag.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, switchLayoutFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            case R.id.nav_item_tops:
+                type="shirt";
+                bundle.putString("type", type);
+                switchLayoutFrag.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, switchLayoutFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+                break;
+
+            case R.id.nav_item_bottoms:
+                type="pant";
+                bundle.putString("type", type);
+                switchLayoutFrag.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, switchLayoutFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+                break;
+
+            case R.id.nav_item_shoes:
+                type="shoes";
+                bundle.putString("type", type);
+                switchLayoutFrag.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, switchLayoutFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+                break;
+
+            case R.id.nav_item_etc:
+                type="etc";
+                bundle.putString("type", type);
+                switchLayoutFrag.setArguments(bundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, switchLayoutFrag, "findThisFragment")
                         .addToBackStack(null)
