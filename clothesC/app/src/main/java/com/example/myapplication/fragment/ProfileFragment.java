@@ -53,7 +53,6 @@ public class ProfileFragment extends Fragment {
         final TextView textName=(TextView)view.findViewById(R.id.nameEditText);
         final TextView textBirth=(TextView)view.findViewById(R.id.introEditText);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Log.d(TAG, "onCreateView: "+user.getUid());
 
@@ -64,9 +63,7 @@ public class ProfileFragment extends Fragment {
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             String name = documentSnapshot.get("name").toString();
                             String intro = documentSnapshot.get("intro").toString();
-                            //TextView textName=(TextView)findViewById(R.id.nameEditText);
                             textName.setText(name);
-                            //TextView textBirth=(TextView)findViewById(R.id.BirthdayEditText);
                             textBirth.setText(intro);
                             Log.d(TAG, "onComplete: " +name+intro);
                         }
@@ -74,7 +71,6 @@ public class ProfileFragment extends Fragment {
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) { //성공시 출력
-//                            Log.d(TAG, "onComplete");
                         }
                     });
         }
@@ -130,7 +126,7 @@ public class ProfileFragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                //Toast.makeText(getApplicationContext(), "다운로드 실패", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

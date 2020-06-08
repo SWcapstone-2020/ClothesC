@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -38,6 +39,7 @@ import static com.example.myapplication.Util.storageUrlToName;
 
 public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
+    private Context context;
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageRef;
     private PostAdapter postAdaptor;
@@ -60,6 +62,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        context=container.getContext(); //Toast창 사용하기 위해 사용
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -154,14 +157,11 @@ public class HomeFragment extends Fragment {
                 String contents = contentList.get(i);
                 if(isStorageUrl(contents)){ //내용이 url인가? (즉 이미지인가 동영상인가)
                     successCount++;
-                    Log.d("TAG","확인: "+id);
-                    Log.d("TAG", "확인: "+storageUrlToName(contents));
-                    Log.d("TAG","확인: "+storageRef);
                     StorageReference desertRef = storageRef.child("posts/" + id + "/" + storageUrlToName(contents));
                     desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-//                            showToast(ShowPostActivity.this, "삭제 했습니다.");
+                            Toast.makeText(context,"이미지 삭제...",Toast.LENGTH_LONG).show();
                             successCount--;
                             storageDeleteUpdate(id);
                         }
@@ -190,7 +190,7 @@ public class HomeFragment extends Fragment {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-//                            showToast(HomeFragment.this, "게시글을 삭제하였습니다");
+                            Toast.makeText(context,"게시글이 삭제되었습니다.",Toast.LENGTH_LONG).show();
                             boolean clear=true;
                             postsUpdate(clear);
                         }
@@ -198,7 +198,7 @@ public class HomeFragment extends Fragment {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-//                            showToast(ShowPostActivity.this, "게시글을 삭제하지 못했습니다");
+                            Toast.makeText(context,"게시글 삭제 실패",Toast.LENGTH_LONG).show();
                         }
                     });
         }
