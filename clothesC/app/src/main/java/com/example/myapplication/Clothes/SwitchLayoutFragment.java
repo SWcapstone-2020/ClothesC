@@ -26,6 +26,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -49,6 +51,7 @@ public class SwitchLayoutFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private FirebaseFirestore firebaseFirestore;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private StorageReference storageRef;
     private ShirtAdapter shirtAdapter;
     private OuterAdapter outerAdapter;
@@ -197,13 +200,18 @@ public class SwitchLayoutFragment extends Fragment {
                             }
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-                                itemList.add(new ClothesItem(
-                                        (ArrayList<String>) document.getData().get("contents"),
-                                        (ArrayList<String>) document.getData().get("formats"),
-                                        document.getData().get("publisher").toString(),
-                                        new Date(document.getDate("createdAt").getTime()),
-                                        document.getData().get("kind").toString(),
-                                        document.getId()));
+                                String id = document.get("publisher").toString();
+                                if(user.getUid().equals(id)){
+                                    itemList.add(new ClothesItem(
+
+                                            (ArrayList<String>) document.getData().get("contents"),
+                                            (ArrayList<String>) document.getData().get("formats"),
+                                            document.getData().get("publisher").toString(),
+                                            new Date(document.getDate("createdAt").getTime()),
+                                            document.getData().get("kind").toString(),
+                                            document.getId()));
+                                }
+
                             }
                             if(type.equals("shirt")){
                                 shirtAdapter.notifyDataSetChanged();
