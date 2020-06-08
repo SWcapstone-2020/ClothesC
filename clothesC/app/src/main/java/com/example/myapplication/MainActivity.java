@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.example.myapplication.fragment.ClothesFragment;
 import com.example.myapplication.fragment.HomeFragment;
 import com.example.myapplication.fragment.ProfileFragment;
@@ -15,10 +19,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,12 +28,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
+        init(getIntent().getIntExtra("choice", R.id.action_home));
 
 
     }
 
-    private void init() {
+    private void init(int no) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user == null) {
@@ -41,8 +41,24 @@ public class MainActivity extends AppCompatActivity {
         } //로그인이 되어있지 않으면 activity_main.xml을 실행하지 않고 startLoginActivity.java 실행하여 로그인 화면으로 넘어감
 
         //프래그먼트
-        HomeFragment homeFragment = new HomeFragment();
-        setFragment(homeFragment);
+        switch (no) {
+            case R.id.action_home:
+                HomeFragment homeFragment = new HomeFragment();
+                setFragment(homeFragment);
+                break;
+            case R.id.action_weather:
+                WeatherFragment weatherFragment = new WeatherFragment();
+                setFragment(weatherFragment);
+                break;
+            case R.id.action_profile:
+                ProfileFragment profileFragment = new ProfileFragment();
+                setFragment(profileFragment);
+                break;
+            case R.id.action_clothes:
+                ClothesFragment clothesFragment = new ClothesFragment();
+                setFragment(clothesFragment);
+                break;
+        }
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

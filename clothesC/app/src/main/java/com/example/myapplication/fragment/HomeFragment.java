@@ -47,6 +47,8 @@ public class HomeFragment extends Fragment {
     private boolean updating;
     private boolean topScrolled;
     private int successCount;
+    private String check;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -64,12 +66,19 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         context=container.getContext(); //Toast창 사용하기 위해 사용
 
+        if(getArguments()!=null){
+            String check=getArguments().getString("check");
+            Log.d("TAG","chch : "+check);
+        }
+
         firebaseFirestore = FirebaseFirestore.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         postList = new ArrayList<>();
         postAdaptor = new PostAdapter(getActivity(), postList);
         postAdaptor.setOnPostListener(onPostListener);
+
+
 
         final RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         view.findViewById(R.id.writePost).setOnClickListener(onClickListener);
@@ -116,6 +125,8 @@ public class HomeFragment extends Fragment {
 
         postsUpdate(false);
 
+
+
         return view;
     }
 
@@ -128,6 +139,16 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+
+    }
+
+    public void onResume() {
+
+        super.onResume();
+        Log.d("TAG","흠");
+        if(getArguments()!=null){
+
+        }
     }
 
     @Override
@@ -151,7 +172,6 @@ public class HomeFragment extends Fragment {
         @Override
         public void onDelete(int position) {
             final String id = postList.get(position).getId();
-
             ArrayList<String> contentList = postList.get(position).getContents();
             for (int i = 0; i < contentList.size(); i++) {
                 String contents = contentList.get(i);
@@ -231,8 +251,10 @@ public class HomeFragment extends Fragment {
                                         document.getData().get("publisher").toString(),
                                         new Date(document.getDate("createdAt").getTime()),
                                         document.getId()));
+
                             }
                             postAdaptor.notifyDataSetChanged();
+                            Log.d("TAG","길이 : "+postList.size());
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -241,9 +263,11 @@ public class HomeFragment extends Fragment {
                 });
     }
 
-
     private void myStartActivity(Class c) {
         Intent intent = new Intent(getActivity(), c);
         startActivityForResult(intent, 0);
     }
+
+
+
 }

@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.GalleryActivity;
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.Util;
 import com.example.myapplication.view.ClothesImgView;
@@ -320,6 +321,7 @@ public class SubmitActivity extends AppCompatActivity {
                         Intent resultIntent = new Intent();
                         resultIntent.putExtra("item", item);
                         setResult(Activity.RESULT_OK, resultIntent);
+                        startActivity(MainActivity.class, R.id.action_clothes);
                         finish();
                     }
                 })
@@ -369,5 +371,11 @@ public class SubmitActivity extends AppCompatActivity {
         Intent intent = new Intent(this, c);
         intent.putExtra(INTENT_MEDIA, media);
         startActivityForResult(intent, requestCode);
+    }
+
+    private void startActivity(Class c, int no){
+        Intent intent=new Intent(this,c);
+        intent.putExtra("choice",no);
+        startActivity(intent);
     }
 }

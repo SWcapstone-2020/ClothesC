@@ -54,7 +54,7 @@ public class ProfileFragment extends Fragment {
         final TextView textBirth=(TextView)view.findViewById(R.id.introEditText);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Log.d(TAG, "onCreateView: "+user.getUid());
+
 
         if (user != null) {
             db.collection("users").document(user.getUid()).get()
@@ -65,7 +65,6 @@ public class ProfileFragment extends Fragment {
                             String intro = documentSnapshot.get("intro").toString();
                             textName.setText(name);
                             textBirth.setText(intro);
-                            Log.d(TAG, "onComplete: " +name+intro);
                         }
                     })
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -135,6 +134,13 @@ public class ProfileFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
+
+/*    private void renew(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+
+    }*/
 
 
 }

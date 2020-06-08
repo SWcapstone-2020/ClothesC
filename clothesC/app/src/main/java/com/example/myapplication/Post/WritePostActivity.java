@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.GalleryActivity;
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.Util;
 import com.example.myapplication.view.ContentsItemView;
@@ -60,12 +61,15 @@ public class WritePostActivity extends AppCompatActivity {
     private EditText titleEditText;
     private PostInfo postInfo;
     private int pathCount, successCount;
+
     private Util util;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_post);
+
+
 
         util=new Util(this);
 
@@ -147,6 +151,10 @@ public class WritePostActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.check:
                     storageUpload();
+/*                    Bundle bundle=new Bundle(1);
+                    bundle.putString("check","check");
+                    HomeFragment homeFragment=new HomeFragment();
+                    homeFragment.setArguments(bundle);*/
                     break;
                 case R.id.image:
                     myStartActivity(GalleryActivity.class, GALLERY_IMAGE, 0);
@@ -280,6 +288,8 @@ public class WritePostActivity extends AppCompatActivity {
         } else {
             showToast(WritePostActivity.this,"제목을 입력해주세요.");
         }
+
+
     }
 
     private void storeUpload(DocumentReference documentReference, final PostInfo postInfo) {
@@ -292,6 +302,7 @@ public class WritePostActivity extends AppCompatActivity {
                         Intent resultIntent = new Intent();
                         resultIntent.putExtra("postinfo", postInfo);
                         setResult(Activity.RESULT_OK, resultIntent);
+                        startActivity(MainActivity.class);
                         finish();
                     }
                 })
@@ -342,5 +353,9 @@ public class WritePostActivity extends AppCompatActivity {
         Intent intent = new Intent(this, c);
         intent.putExtra(INTENT_MEDIA, media);
         startActivityForResult(intent, requestCode);
+    }
+    private void startActivity(Class c){
+        Intent intent=new Intent(this,c);
+        startActivity(intent);
     }
 }

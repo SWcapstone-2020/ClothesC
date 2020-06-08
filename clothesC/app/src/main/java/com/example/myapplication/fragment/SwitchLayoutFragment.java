@@ -7,20 +7,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Adaptor.EtcAdapter;
 import com.example.myapplication.Adaptor.OuterAdapter;
+import com.example.myapplication.Adaptor.PantAdapter;
+import com.example.myapplication.Adaptor.ShirtAdapter;
+import com.example.myapplication.Adaptor.ShoesAdapter;
 import com.example.myapplication.Clothes.ClothesItem;
 import com.example.myapplication.Clothes.SubmitActivity;
 import com.example.myapplication.R;
@@ -29,8 +28,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -44,59 +41,83 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.example.myapplication.Util.isEtcUrl;
 import static com.example.myapplication.Util.isItemUrl;
+import static com.example.myapplication.Util.isPantUrl;
+import static com.example.myapplication.Util.isShirtUrl;
+import static com.example.myapplication.Util.isShoesUrl;
 import static com.example.myapplication.Util.storageUrlToName;
 
-//import com.example.myapplication.ClothesItem.SwitchLayoutActivity;
+public class SwitchLayoutFragment extends Fragment {
+    private static final String TAG = "SwitchLayoutFragment";
 
-public class ClothesFragment extends Fragment  implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String TAG = "ClothesFragment";
-    private DrawerLayout mDrawerLayout;
-
+    private RecyclerView recyclerView;
     private FirebaseFirestore firebaseFirestore;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private StorageReference storageRef;
-    private OuterAdapter clothesAdapter;
+    private ShirtAdapter shirtAdapter;
+    private OuterAdapter outerAdapter;
+    private PantAdapter pantAdapter;
+    private ShoesAdapter shoesAdapter;
+    private EtcAdapter etcAdapter;
     private ArrayList<ClothesItem> itemList;
     private boolean updating;
     private boolean topScrolled;
     private int successCount;
+    private String type;
 
-
-    private Context mContext;
-    private FloatingActionButton fab_main;
-    private boolean isFabOpen = false;
-
-
-    public ClothesFragment() {
+    public SwitchLayoutFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 툴바 메뉴 활성화
-        setHasOptionsMenu(true);
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_switch_layout, container, false);
 
-        View view = inflater.inflate(R.layout.fragment_clothes_item, container, false);
-        mContext = getActivity().getApplicationContext();
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         itemList=new ArrayList<>();
-        clothesAdapter=new OuterAdapter(getActivity(),itemList);
-        clothesAdapter.setOnPostListener(onPostListener);
-        final RecyclerView recyclerView = view.findViewById(R.id.itemRecy);
+        final RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        type= getArguments().getString("type");
+        if(type.equals("shirt")){
+            shirtAdapter=new ShirtAdapter(getActivity(),itemList);
+            shirtAdapter.setOnPostListener(onPostListener);
+            recyclerView.setAdapter(shirtAdapter);
+        }
+        else if(type.equals("outer")){
+            outerAdapter=new OuterAdapter(getActivity(),itemList);
+            outerAdapter.setOnPostListener(onPostListener);
+            recyclerView.setAdapter(outerAdapter);
+        }
+        else if(type.equals("pant")){
+            pantAdapter=new PantAdapter(getActivity(),itemList);
+            pantAdapter.setOnPostListener(onPostListener);
+            recyclerView.setAdapter(pantAdapter);
+        }
+        else if(type.equals("shoes")){
+            shoesAdapter=new ShoesAdapter(getActivity(),itemList);
+            shoesAdapter.setOnPostListener(onPostListener);
+            recyclerView.setAdapter(shoesAdapter);
+        }
+        else if(type.equals("etc")){
+            etcAdapter=new EtcAdapter(getActivity(), itemList);
+            etcAdapter.setOnPostListener(onPostListener);
+            recyclerView.setAdapter(etcAdapter);
+        }
+
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(clothesAdapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -109,7 +130,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                     topScrolled = true;
                 }
                 if(newState == 0 && topScrolled){
-                    postsUpdate(true);
+//                    postsUpdate(true);
                     topScrolled = false;
                 }
             }
@@ -136,25 +157,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         postsUpdate(false);
 
 
-        fab_main=view.findViewById(R.id.fab_main);
-        fab_main.setOnClickListener(onClickListener);
-
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        AppCompatActivity actionBar = (AppCompatActivity) getActivity();
-        actionBar.setSupportActionBar(toolbar);
-        actionBar.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        actionBar.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-        actionBar.setTitle("My Closet");
-
-
-        //Navigation Drawer
-        mDrawerLayout = (DrawerLayout)view.findViewById(R.id.drawer_layout);
-        // fragment_clothes_item.xml 에서 지정한 id 값으로 네비게이션 드로어를 불러옴
-        NavigationView navigationView = (NavigationView)view.findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
-/*         this라고 주고 위에서 implements NavigationView.OnNavigationItemSelectedListener 이렇게 하면,
-        아래에 NavigationView.OnNavigationItemSelectedListener(인터페이스)의 구현체를 따로 빼서 메소드로 처리할 수 있다.
-         위 내용은 잘 모르겠음 그냥 onNavigationItemSelected 메소드(메뉴 선택 시 동작을 지정하는 메소드)를 따로 빼서 처리할 수 있다는 듯.*/
 
         return view;
     }
@@ -175,29 +177,21 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         super.onPause();
     }
 
+
+    private void initItemsData() {
+
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu,inflater);
         inflater.inflate(R.menu.menu,menu);
     }
 
-
-    View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.fab_main:
-                    myStartActivity(SubmitActivity.class);
-                    break;
-            }
-
-        }
-    };
-
     private void postsUpdate(final boolean clear) {
         updating = true;
         Date date = itemList.size() == 0 || clear ? new Date() : itemList.get(itemList.size() - 1).getCreatedAt();
-        CollectionReference collectionReference = firebaseFirestore.collection("outer");
+        CollectionReference collectionReference = firebaseFirestore.collection(type);
         collectionReference.orderBy("createdAt", Query.Direction.DESCENDING).whereLessThan("createdAt", date).limit(10).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -207,10 +201,11 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                                 itemList.clear();
                             }
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
                                 String id = document.get("publisher").toString();
                                 if(user.getUid().equals(id)){
-                                    Log.d(TAG, document.getId() + " => " + document.getData());
                                     itemList.add(new ClothesItem(
+
                                             (ArrayList<String>) document.getData().get("contents"),
                                             (ArrayList<String>) document.getData().get("formats"),
                                             document.getData().get("publisher").toString(),
@@ -218,8 +213,23 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                                             document.getData().get("kind").toString(),
                                             document.getId()));
                                 }
+
                             }
-                            clothesAdapter.notifyDataSetChanged();
+                            if(type.equals("shirt")){
+                                shirtAdapter.notifyDataSetChanged();
+                            }
+                            else if(type.equals("outer")){
+                                outerAdapter.notifyDataSetChanged();
+                            }
+                            else if(type.equals("pant")){
+                                pantAdapter.notifyDataSetChanged();
+                            }
+                            else if(type.equals("shoes")){
+                                shoesAdapter.notifyDataSetChanged();
+                            }
+                            else if(type.equals("etc")){
+                                etcAdapter.notifyDataSetChanged();
+                            }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -227,7 +237,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                     }
                 });
     }
-
 
     OnPostListener onPostListener = new OnPostListener() {
         @Override
@@ -237,24 +246,32 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
             ArrayList<String> contentList = itemList.get(position).getContents();
             for (int i = 0; i < contentList.size(); i++) {
                 String contents = contentList.get(i);
-                if(isItemUrl(contents)){ //내용이 url인가? (즉 이미지인가 동영상인가)
-                    successCount++;
-                    StorageReference desertRef = storageRef.child("outer" + id + "/" + storageUrlToName(contents));
-                    desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-//                            showToast(ShowPostActivity.this, "삭제 했습니다.");
-                            successCount--;
-                            storageDeleteUpdate(id);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-//                            showToast(ShowPostActivity.this, "삭제하지 못했습니다");
-                        }
-                    });
-
+                if(type.equals("shirt")){
+                    if(isShirtUrl(contents)){ //내용이 url인가? (즉 이미지인가 동영상인가)
+                        deleteItem(id, contents);
+                    }
                 }
+                else if(type.equals("outer")){
+                    if(isItemUrl(contents)){
+                     deleteItem(id,contents);
+                    }
+                }
+                else if(type.equals("pant")){
+                    if(isPantUrl(contents)){
+                        deleteItem(id,contents);
+                    }
+                }
+                else if(type.equals("shoes")){
+                    if(isShoesUrl(contents)){
+                        deleteItem(id,contents);
+                    }
+                }
+                else {
+                    if(isEtcUrl(contents)){
+                        deleteItem(id,contents);
+                    }
+                }
+
             }
             storageDeleteUpdate(id);
         }
@@ -265,9 +282,28 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         }
 
     };
+
+    private void deleteItem(final String id, String contents) {
+        successCount++;
+        StorageReference desertRef = storageRef.child(type + id + "/" + storageUrlToName(contents));
+        desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+//                            showToast(ShowPostActivity.this, "삭제 했습니다.");
+                successCount--;
+                storageDeleteUpdate(id);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+//                            showToast(ShowPostActivity.this, "삭제하지 못했습니다");
+            }
+        });
+    }
+
     private void storageDeleteUpdate(String id) {
         if (successCount == 0) {
-            firebaseFirestore.collection("outer").document(id)
+            firebaseFirestore.collection(type).document(id)
                     .delete()
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -291,97 +327,4 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         startActivity(intent);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // toolbar 메뉴 선택 시 동작 지정.
-        // AndroidManifest.xml에서 뒤로가기시 이동할 상위 액티비티를 지정.
-        //menu.xml에서 id 값으로 지정된 '액션바 메뉴'들을 불러옴
-        int id = item.getItemId();
-
-        switch (id) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
-            case R.id.action_settings:
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * @see NavigationView.OnNavigationItemSelectedListener
-     * @param item
-     * @return
-     */
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        item.setChecked(true);
-        mDrawerLayout.closeDrawers();
-        int id = item.getItemId();
-        SwitchLayoutFragment switchLayoutFrag = new SwitchLayoutFragment();
-        Bundle bundle=new Bundle(1);
-        String type;
-        switch (id) {
-            case R.id.nav_item_outer:
-               type="outer";
-                bundle.putString("type", type);
-                switchLayoutFrag.setArguments(bundle);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, switchLayoutFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
-                break;
-            case R.id.nav_item_tops:
-                type="shirt";
-                bundle.putString("type", type);
-                switchLayoutFrag.setArguments(bundle);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, switchLayoutFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
-                break;
-
-            case R.id.nav_item_bottoms:
-                type="pant";
-                bundle.putString("type", type);
-                switchLayoutFrag.setArguments(bundle);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, switchLayoutFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
-                break;
-
-            case R.id.nav_item_shoes:
-                type="shoes";
-                bundle.putString("type", type);
-                switchLayoutFrag.setArguments(bundle);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, switchLayoutFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
-                break;
-
-            case R.id.nav_item_etc:
-                type="etc";
-                bundle.putString("type", type);
-                switchLayoutFrag.setArguments(bundle);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, switchLayoutFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
-                break;
-        }
-        return true;
-    }
-
-
-    private void myStartActivity(Class c) {
-        Intent intent = new Intent(getActivity(), c);
-        startActivityForResult(intent, 0);
-    }
-
-
 }
-

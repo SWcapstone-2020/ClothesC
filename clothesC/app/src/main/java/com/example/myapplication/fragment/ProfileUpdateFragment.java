@@ -77,17 +77,12 @@ public class ProfileUpdateFragment extends Fragment {
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        // 벡터 아이콘 흰색으로 변경
+
         Drawable img_drawble = getResources().getDrawable(R.drawable.ic_cross);
         img_drawble.mutate();
         img_drawble.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
-        // 툴바 아이콘 지정
-//        activity.getSupportActionBar().setIcon(img_drawble);
         activity.getSupportActionBar().setHomeAsUpIndicator(img_drawble);
-        // https://webnautes.tistory.com/1220
-
-//        view.findViewById(R.id.updateButton).setOnClickListener(onClickListener);
         view.findViewById(R.id.renewProfileImge).setOnClickListener(onClickListener);
         return view;
     }
@@ -96,11 +91,6 @@ public class ProfileUpdateFragment extends Fragment {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-//                case R.id.updateButton:
-//                    updateProfile();
-//                    MainActivity mainActivity = (MainActivity) getActivity();
-//                    mainActivity.onFragmentChanged(2);
-//                    break;
                 case R.id.renewProfileImge:
                     loadAlbum();
                     break;
@@ -122,10 +112,6 @@ public class ProfileUpdateFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
-//            case android.R.id.home:
-//                finish();
-//                return true;
-
             case R.id.updateButton:
                 updateProfile();
                 MainActivity mainActivity = (MainActivity) getActivity();
