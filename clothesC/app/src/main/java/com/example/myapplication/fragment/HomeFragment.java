@@ -66,10 +66,6 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         context=container.getContext(); //Toast창 사용하기 위해 사용
 
-        if(getArguments()!=null){
-            String check=getArguments().getString("check");
-            Log.d("TAG","chch : "+check);
-        }
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -142,14 +138,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public void onResume() {
-
-        super.onResume();
-        Log.d("TAG","흠");
-        if(getArguments()!=null){
-
-        }
-    }
 
     @Override
     public void onPause(){
@@ -254,7 +242,6 @@ public class HomeFragment extends Fragment {
 
                             }
                             postAdaptor.notifyDataSetChanged();
-                            Log.d("TAG","길이 : "+postList.size());
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }

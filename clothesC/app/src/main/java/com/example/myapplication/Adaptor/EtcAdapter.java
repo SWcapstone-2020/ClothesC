@@ -72,7 +72,10 @@ public class EtcAdapter extends RecyclerView.Adapter<EtcAdapter.ItemViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
         CardView cardView = holder.cardView;
-        //내용 출력
+
+        TextView titleTextView = cardView.findViewById(R.id.kindsText);
+        titleTextView.setText("ETC");
+
         LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 

@@ -72,6 +72,9 @@ public class ShirtAdapter extends RecyclerView.Adapter<ShirtAdapter.ItemViewHold
     @Override
     public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
         CardView cardView = holder.cardView;
+
+        TextView titleTextView = cardView.findViewById(R.id.kindsText);
+        titleTextView.setText("SHIRT");
         //내용 출력
         LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

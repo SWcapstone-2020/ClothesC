@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -61,6 +63,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
     private boolean updating;
     private boolean topScrolled;
     private int successCount;
+
 
 
     private Context mContext;
@@ -93,6 +96,9 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         clothesAdapter=new OuterAdapter(getActivity(),itemList);
         clothesAdapter.setOnPostListener(onPostListener);
         final RecyclerView recyclerView = view.findViewById(R.id.itemRecy);
+
+
+
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -149,6 +155,9 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
 
         //Navigation Drawer
         mDrawerLayout = (DrawerLayout)view.findViewById(R.id.drawer_layout);
+
+        loadName();
+
         // fragment_clothes_item.xml 에서 지정한 id 값으로 네비게이션 드로어를 불러옴
         NavigationView navigationView = (NavigationView)view.findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -182,6 +191,30 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
     }
 
 
+    private void loadName(){
+        View nameView = (View) getLayoutInflater().
+                inflate(R.layout.drawer_header, null);
+        final TextView printName = (TextView) nameView.findViewById(R.id.userTestName);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(user.getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        String name=documentSnapshot.get("name").toString();
+                        printName.setText(name);
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) { //성공시 출력
+                    }
+                });
+
+    }
+
+
+
+
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -193,6 +226,8 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
 
         }
     };
+
+
 
     private void postsUpdate(final boolean clear) {
         updating = true;

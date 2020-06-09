@@ -72,6 +72,9 @@ public class OuterAdapter extends RecyclerView.Adapter<OuterAdapter.ItemViewHold
     @Override
     public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
         CardView cardView = holder.cardView;
+
+        TextView titleTextView = cardView.findViewById(R.id.kindsText);
+        titleTextView.setText("OUTER");
         //내용 출력
         LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -87,7 +90,7 @@ public class OuterAdapter extends RecyclerView.Adapter<OuterAdapter.ItemViewHold
                     imageView.setLayoutParams(layoutParams);
                     imageView.setAdjustViewBounds(true);
                     imageView.setPadding(10,10,50,20);
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                     contentsLayout.addView(imageView);
                     Glide.with(activity).load(contents).override(1000).thumbnail(0.1f).into(imageView);
                 } else { //텍스트인가
