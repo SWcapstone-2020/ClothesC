@@ -50,6 +50,7 @@ public class WeatherFragment extends Fragment {
                     startActivity(LoginActivity.class);
                     getActivity().finish();
                     break;
+
             }
         }
     };

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">OtmaepC</string>
     <string name="hello_world">Hello world!</string>
     <!-- 옷장 상단바 서브메뉴의 하위메뉴 이름 -->
@@ -15,6 +15,11 @@
     <string name="request_permission">This sample needs camera permission.</string>
     <string name="camera_error">This device doesn\'t support Camera2 API.</string>
     <string name="please_grant_permission">권한을 허용해 주세요.</string>
+
+    략 -->
+    <string name="today">오늘</string>
+    <string name="tomorrow">내일</string>
+    <string name="format_full_friendly_date"><xliff:g id="day">%1$s</xliff:g>, <xliff:g id="date">%2$s</xliff:g></string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
