@@ -78,19 +78,26 @@ public class WeatherFragment extends Fragment {
         curTemp = (TextView) view.findViewById(R.id.temp);
         curWeather = (TextView)view. findViewById(R.id.weather);
         weatherIcon = (ImageView)view. findViewById(R.id.weatherIcon);
-        icon1 = (ImageView)view. findViewById(R.id.icon1); icon2 = (ImageView)view. findViewById(R.id.icon2); icon3 = (ImageView) view.findViewById(R.id.icon3); icon4 = (ImageView) view.findViewById(R.id.icon4);
-        w1 = (TextView)view.findViewById(R.id.w1); w2 = (TextView)view.findViewById(R.id.w2); w3 = (TextView)view.findViewById(R.id.w3); w4 = (TextView)view.findViewById(R.id.w4);
+        icon1 = (ImageView)view. findViewById(R.id.icon1);
+        icon2 = (ImageView)view. findViewById(R.id.icon2);
+        icon3 = (ImageView) view.findViewById(R.id.icon3);
+        icon4 = (ImageView) view.findViewById(R.id.icon4);
+        w1 = (TextView)view.findViewById(R.id.w1);
+        w2 = (TextView)view.findViewById(R.id.w2);
+        w3 = (TextView)view.findViewById(R.id.w3);
+        w4 = (TextView)view.findViewById(R.id.w4);
 
         try {
             Location lo = getLocation();
             //lat=lo.getLatitude();
             //lon=lo.getLongitude();
-            WeatherFragment.MainTimerTask timerTask = new MainTimerTask();
+            //WeatherFragment.MainTimerTask timerTask = new MainTimerTask();
+            MainTimerTask timerTask = new MainTimerTask();
             mTimer = new Timer();
             mTimer.schedule(timerTask, 500, 1000);
 
-            new WeatherFragment.GetWeather().start();
-            new WeatherFragment.GetWeather5day3time().start();
+            new GetWeather().start();
+            new GetWeather5day3time().start();
         }catch (NullPointerException e) {
             //Toast.makeText(this,"위치정보를 받아오지 못했습니다",Toast.LENGTH_SHORT).show();
         }catch (Exception e){
@@ -153,7 +160,7 @@ public class WeatherFragment extends Fragment {
                 temp_max = (int)Math.round(Double.parseDouble(mainArray.get("temp_max").toString()));
                 temp_min = (int)Math.round(Double.parseDouble(mainArray.get("temp_min").toString()));
 
-                runOnUiThread(new Runnable() {
+                getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         curLocation.setText(location);
@@ -173,7 +180,7 @@ public class WeatherFragment extends Fragment {
         public void run() {
             try {
 
-                String urlstr = "http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=metric&appid=8f5437af74a38d00b26d075de28d7da3";
+                String urlstr = "http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=metric&appid=385175092500a1721ec1221e5ba3de8f";
                 URL url = new URL(urlstr);
                 BufferedReader bf;
                 String line;
@@ -206,7 +213,7 @@ public class WeatherFragment extends Fragment {
 
                 }
 
-                runOnUiThread(new Runnable() {
+                getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         SetIcon(weather_id2[0],icon1);
@@ -226,9 +233,6 @@ public class WeatherFragment extends Fragment {
                 System.out.println("에러-------------:" + e);
             }
         }
-    }
-
-    private void runOnUiThread(Runnable runnable) {
     }
 
     private void SetIcon(int weather,ImageView weatherIcon) //날씨 id에 맞춰 아이콘 출력
@@ -346,28 +350,27 @@ public class WeatherFragment extends Fragment {
         return currentLocation;
     }
 
-/*
-    @Override
+
+   // @Override
     public void onLocationChanged(Location location) {
         lat=location.getLatitude();
         lon=location.getLongitude();
     }
 
-    @Override
+  //  @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
 
     }
 
-    @Override
+   // @Override
     public void onProviderEnabled(String provider) {
 
     }
 
-    @Override
+  //  @Override
     public void onProviderDisabled(String provider) {
 
     }
- */
 
     private Handler mHandler = new Handler();
     private Runnable mUpdateTimeTask = new Runnable() {
@@ -409,7 +412,7 @@ public class WeatherFragment extends Fragment {
     public void onResume() {
         try {
             if(mTimer == null) {
-                WeatherFragment.MainTimerTask timerTask = new MainTimerTask();
+                MainTimerTask timerTask = new MainTimerTask();
                 mTimer = new Timer();
                 mTimer.schedule(timerTask, 500, 3000);
             }
