@@ -8,11 +8,15 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 import com.example.myapplication.WeatherList;
@@ -31,9 +35,6 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
 
 public class WeatherFragment extends Fragment {
     private static final String TAG = "WeatherFragment";
@@ -147,12 +148,14 @@ public class WeatherFragment extends Fragment {
 
                 //지역이름 가져오기
                 location=element.getAsJsonObject().get("name").getAsString();
+                Log.d("TAG", "dddd "+location);
 
                 //날씨id가져오기
                 JsonArray weatherArray = (JsonArray) element.getAsJsonObject().get("weather");
                 JsonObject obj = (JsonObject) weatherArray.get(0);
                 weather_id = obj.get("id").getAsInt();
                 weather_str = transferWeather(weather_id);
+                Log.d("TAG", "ddddddd "+weather_id);
 
                 //온도
                 JsonObject mainArray = (JsonObject) element.getAsJsonObject().get("main");

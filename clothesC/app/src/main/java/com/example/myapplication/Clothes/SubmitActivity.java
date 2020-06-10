@@ -67,8 +67,11 @@ public class SubmitActivity extends AppCompatActivity {
 
 
     private String clotheskind;
+    private String lowerkind;
+
 
     private ArrayAdapter<CharSequence> kindspinner;
+    private ArrayAdapter<CharSequence> lowerspinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +99,10 @@ public class SubmitActivity extends AppCompatActivity {
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setPrompt("옷 종류를 선택하세요");
+
+        final Spinner spinner2 = (Spinner) findViewById(R.id.spinner2);
+        spinner2.setPrompt("하위 분류를 선택하세요");
+
         kindspinner = ArrayAdapter.createFromResource(this, R.array.kindsClothes, android.R.layout.simple_spinner_item);
         kindspinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(kindspinner);
@@ -105,18 +112,34 @@ public class SubmitActivity extends AppCompatActivity {
                 clotheskind = kindspinner.getItem(position).toString();
                 if(clotheskind.equals("아우터")){
                     clotheskind="outer";
+                    lowerspinner=ArrayAdapter.createFromResource(SubmitActivity.this, R.array.outerlower,android.R.layout.simple_spinner_item);
+                    lowerspinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(lowerspinner);
+
                 }
                 else if(clotheskind.equals("상의")){
                     clotheskind="shirt";
+                    lowerspinner=ArrayAdapter.createFromResource(SubmitActivity.this, R.array.shirtlower,android.R.layout.simple_spinner_item);
+                    lowerspinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(lowerspinner);
                 }
                 else if(clotheskind.equals("하의")){
                     clotheskind="pant";
+                    lowerspinner=ArrayAdapter.createFromResource(SubmitActivity.this, R.array.pantlower,android.R.layout.simple_spinner_item);
+                    lowerspinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(lowerspinner);
                 }
                 else if(clotheskind.equals("신발")){
                     clotheskind="shoes";
+                    lowerspinner=ArrayAdapter.createFromResource(SubmitActivity.this, R.array.shoselower,android.R.layout.simple_spinner_item);
+                    lowerspinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(lowerspinner);
                 }
                 else {
                     clotheskind="etc";
+                    lowerspinner=ArrayAdapter.createFromResource(SubmitActivity.this, R.array.etclower,android.R.layout.simple_spinner_item);
+                    lowerspinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner2.setAdapter(lowerspinner);
                 }
 
             }
@@ -126,6 +149,19 @@ public class SubmitActivity extends AppCompatActivity {
                 showToast(SubmitActivity.this, "종류를 선택해주세요.");
             }
         });
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                lowerkind = lowerspinner.getItem(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                showToast(SubmitActivity.this, "종류를 선택해주세요.");
+            }
+        });
+
+
 
         item = (ClothesItem) getIntent().getSerializableExtra("item");
         postInit();
@@ -290,7 +326,7 @@ public class SubmitActivity extends AppCompatActivity {
                                         successCount--;
                                         contentsList.set(index, uri.toString());
                                         if (successCount == 0) {
-                                            ClothesItem item = new ClothesItem(contentsList, formatList, user.getUid(), date,clotheskind);
+                                            ClothesItem item = new ClothesItem(contentsList, formatList, user.getUid(), date,clotheskind,lowerkind);
                                             storeUpload(documentReference, item);
                                         }
                                     }
@@ -307,7 +343,7 @@ public class SubmitActivity extends AppCompatActivity {
 
 //            String title, ArrayList contents, ArrayList formats, String publisher, Date createdAt, String season, String kind
         if (successCount == 0) {
-            storeUpload(documentReference, new ClothesItem(contentsList, formatList, user.getUid(), date,clotheskind));
+            storeUpload(documentReference, new ClothesItem(contentsList, formatList, user.getUid(), date,clotheskind,lowerkind));
         }
     }
 

@@ -13,6 +13,7 @@ public class ClothesItem implements Serializable {
     private Date createdAt;
     private String kind;
     private String id;
+    private String lowerkind;
 
     public String toString() {
         return "Item{" +
@@ -25,20 +26,22 @@ public class ClothesItem implements Serializable {
                 '}';
     }
 
-    public ClothesItem(ArrayList contents, ArrayList formats, String publisher, Date createdAt, String kind) {
+    public ClothesItem(ArrayList contents, ArrayList formats, String publisher, Date createdAt, String kind, String lowerkind) {
         this.contents=contents;
         this.formats=formats;
         this.publisher=publisher;
         this.createdAt=createdAt;
         this.kind=kind;
+        this.lowerkind=lowerkind;
     }
 
-    public ClothesItem(ArrayList contents, ArrayList formats, String publisher, Date createdAt, String kind, String id) {
+    public ClothesItem(ArrayList contents, ArrayList formats, String publisher, Date createdAt, String kind, String lowerkind, String id) {
         this.contents=contents;
         this.formats=formats;
         this.publisher=publisher;
         this.createdAt=createdAt;
         this.kind=kind;
+        this.lowerkind=lowerkind;
         this.id=id;
     }
 
@@ -49,6 +52,7 @@ public class ClothesItem implements Serializable {
         itemData.put("publisher",publisher);
         itemData.put("createdAt",createdAt);
         itemData.put("kind",kind);
+        itemData.put("lowerkind",lowerkind);
         return  itemData;
     }
 
@@ -87,5 +91,11 @@ public class ClothesItem implements Serializable {
         this.id = id;
     }
 
+    public String getLowerkind(){
+        return this.lowerkind;
+    }
+    public void setLowerkind(String id){
+        this.lowerkind = lowerkind;
+    }
 
 }

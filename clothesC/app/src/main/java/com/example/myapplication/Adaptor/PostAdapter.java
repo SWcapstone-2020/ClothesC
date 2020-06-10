@@ -86,15 +86,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void onBindViewHolder(@NonNull final PostViewHolder holder, int position) {
         CardView cardView = holder.cardView;
 
-        //제목 출력
         TextView titleTextView = cardView.findViewById(R.id.titleTextView);
         titleTextView.setText(mDataset.get(position).getTitle());
 
-        //작성날짜 출력
         TextView createdAtText = cardView.findViewById(R.id.createAtTextView);
         createdAtText.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(mDataset.get(position).getCreatedAt()));
 
-        //내용 출력
         LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         ArrayList<String> contentList = mDataset.get(position).getContents();
@@ -112,7 +109,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     break;
                 }
                 String contents = contentList.get(i);
-                if (isStorageUrl(contents)) { //내용이 url인가? (즉 이미지인가 동영상인가)
+                if (isStorageUrl(contents)) {
                     ImageView imageView = new ImageView(activity);
                     imageView.setLayoutParams(layoutParams);
                     imageView.setAdjustViewBounds(true);
@@ -147,21 +144,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                         return true;
                     case R.id.delete:
                         onPostListener.onDelete(position);
-                       /* firebaseFirestore.collection("posts").document(mDataset.get(position).getId())
-                                .delete()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(activity, "게시글을 삭제하였습니다",Toast.LENGTH_SHORT).show();
-//                                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                       Toast.makeText(activity, "게시글을 삭제하지 못했습니다.",Toast.LENGTH_SHORT).show();
-                                    }
-                                });*/
                         return true;
                     default:
                         return false;

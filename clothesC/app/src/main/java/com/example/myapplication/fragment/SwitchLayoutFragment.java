@@ -205,7 +205,6 @@ public class SwitchLayoutFragment extends Fragment {
                                 String id = document.get("publisher").toString();
                                 if(user.getUid().equals(id)){
                                     itemList.add(new ClothesItem(
-
                                             (ArrayList<String>) document.getData().get("contents"),
                                             (ArrayList<String>) document.getData().get("formats"),
                                             document.getData().get("publisher").toString(),
@@ -279,6 +278,8 @@ public class SwitchLayoutFragment extends Fragment {
         @Override
         public void onModify(int position) {
             goWriteActivity(SubmitActivity.class, itemList.get(position));
+            Log.d("TAG","position  "+position);
+            Log.d("TAG","list  "+itemList);
         }
 
     };
@@ -323,7 +324,7 @@ public class SwitchLayoutFragment extends Fragment {
 
     private void goWriteActivity(Class c, ClothesItem clothesItem) {
         Intent intent = new Intent(getActivity(), c);
-        intent.putExtra("item", clothesItem);
+        Log.d("TAG","ccc  "+clothesItem);
         startActivity(intent);
     }
 
