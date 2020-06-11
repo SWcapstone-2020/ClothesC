@@ -278,8 +278,6 @@ public class SwitchLayoutFragment extends Fragment {
         @Override
         public void onModify(int position) {
             goWriteActivity(SubmitActivity.class, itemList.get(position));
-            Log.d("TAG","position  "+position);
-            Log.d("TAG","list  "+itemList);
         }
 
     };
@@ -324,6 +322,8 @@ public class SwitchLayoutFragment extends Fragment {
 
     private void goWriteActivity(Class c, ClothesItem clothesItem) {
         Intent intent = new Intent(getActivity(), c);
+        intent.putExtra("item", clothesItem);
+        intent.putExtra("variety",clothesItem.getKind());
         startActivity(intent);
     }
 

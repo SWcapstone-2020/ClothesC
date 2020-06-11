@@ -155,15 +155,10 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
 
         //Navigation Drawer
         mDrawerLayout = (DrawerLayout)view.findViewById(R.id.drawer_layout);
-
         loadName();
 
-        // fragment_clothes_item.xml 에서 지정한 id 값으로 네비게이션 드로어를 불러옴
         NavigationView navigationView = (NavigationView)view.findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
-/*         this라고 주고 위에서 implements NavigationView.OnNavigationItemSelectedListener 이렇게 하면,
-        아래에 NavigationView.OnNavigationItemSelectedListener(인터페이스)의 구현체를 따로 빼서 메소드로 처리할 수 있다.
-         위 내용은 잘 모르겠음 그냥 onNavigationItemSelected 메소드(메뉴 선택 시 동작을 지정하는 메소드)를 따로 빼서 처리할 수 있다는 듯.*/
 
         return view;
     }
@@ -279,7 +274,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                     desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-//                            showToast(ShowPostActivity.this, "삭제 했습니다.");
+
                             successCount--;
                             storageDeleteUpdate(id);
                         }
@@ -324,6 +319,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
     private void goWriteActivity(Class c, ClothesItem clothesItem) {
         Intent intent = new Intent(getActivity(), c);
         intent.putExtra("item", clothesItem);
+        intent.putExtra("variety",clothesItem.getKind());
         startActivity(intent);
     }
 

@@ -45,8 +45,8 @@ import java.util.Date;
 import static com.example.myapplication.Util.GALLERY_IMAGE;
 import static com.example.myapplication.Util.INTENT_MEDIA;
 import static com.example.myapplication.Util.INTENT_PATH;
+import static com.example.myapplication.Util.isClothes;
 import static com.example.myapplication.Util.isImageFile;
-import static com.example.myapplication.Util.isStorageUrl;
 import static com.example.myapplication.Util.showToast;
 import static com.example.myapplication.Util.storageUrlToName;
 
@@ -233,7 +233,7 @@ public class SubmitActivity extends AppCompatActivity {
                 case R.id.delete:
                     final View selectedView = (View) selectedImageVIew.getParent();
                     String path = pathList.get(parent.indexOfChild(selectedView) - 1);
-                    if(isStorageUrl(path)){
+                    if(isClothes(path,clotheskind)){
                         StorageReference desertRef = storageRef.child(clotheskind+"/" + item.getId() + "/" + storageUrlToName(path));
                         desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -296,7 +296,7 @@ public class SubmitActivity extends AppCompatActivity {
                         contentsList.add(text);
                         formatList.add("text");
                     }
-                } else if (!isStorageUrl(pathList.get(pathCount))) {
+                } else if (!isClothes(pathList.get(pathCount),clotheskind)) {
                     String path = pathList.get(pathCount);
                     successCount++;
                     contentsList.add(path);
@@ -352,7 +352,6 @@ public class SubmitActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
                         loaderLayout.setVisibility(View.GONE); //업로드 성공시 로딩 화면 끄게 함
                         Intent resultIntent = new Intent();
                         resultIntent.putExtra("item", item);
@@ -364,7 +363,6 @@ public class SubmitActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
                         loaderLayout.setVisibility(View.GONE);
                     }
                 });
@@ -375,7 +373,10 @@ public class SubmitActivity extends AppCompatActivity {
             ArrayList<String> contentsList = item.getContents(); //contentsList에 작성한 내용을 넣음
             for (int i = 0; i < contentsList.size(); i++) {
                 String contents = contentsList.get(i);
-                if (isStorageUrl(contents)) { // isStorageUrl = 파이어베이스 데이터베이스 주소 불러옴
+                Intent kindintent=getIntent();
+                clotheskind=kindintent.getExtras().getString("variety");
+
+                if (isClothes(contents, clotheskind)) {
                     pathList.add(contents);
                     ContentsItemView contentsItemView = new ContentsItemView(this);
                     parent.addView(contentsItemView);
@@ -392,7 +393,7 @@ public class SubmitActivity extends AppCompatActivity {
                     contentsItemView.setOnFocusChangeListener(onFocusChangeListener);
                     if (i < contentsList.size() - 1) {
                         String nextContents = contentsList.get(i + 1);
-                        if (!isStorageUrl(nextContents)) {
+                        if (!isClothes(nextContents, clotheskind)) {
                             contentsItemView.setText(nextContents);
                         }
                     }

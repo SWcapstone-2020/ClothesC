@@ -25,6 +25,9 @@ public class Util {
     public static boolean isStorageUrl(String url){
         return Patterns.WEB_URL.matcher(url).matches() && url.contains("https://firebasestorage.googleapis.com/v0/b/clothesc-ver1.appspot.com/o/posts");
     }
+    public static boolean isClothes(String url, String kind){
+        return Patterns.WEB_URL.matcher(url).matches() && url.contains("https://firebasestorage.googleapis.com/v0/b/clothesc-ver1.appspot.com/o/"+kind);
+    }
 
     public static boolean isItemUrl(String url){
         return Patterns.WEB_URL.matcher(url).matches() && url.contains("https://firebasestorage.googleapis.com/v0/b/clothesc-ver1.appspot.com/o/outer");
