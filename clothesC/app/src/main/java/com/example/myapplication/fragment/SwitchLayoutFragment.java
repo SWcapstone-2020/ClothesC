@@ -284,7 +284,7 @@ public class SwitchLayoutFragment extends Fragment {
 
     private void deleteItem(final String id, String contents) {
         successCount++;
-        StorageReference desertRef = storageRef.child(type + id + "/" + storageUrlToName(contents));
+        StorageReference desertRef = storageRef.child(type+"/" + id + "/" + storageUrlToName(contents));
         desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

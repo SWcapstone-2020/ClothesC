@@ -270,11 +270,11 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                 String contents = contentList.get(i);
                 if(isItemUrl(contents)){ //내용이 url인가? (즉 이미지인가 동영상인가)
                     successCount++;
-                    StorageReference desertRef = storageRef.child("outer" + id + "/" + storageUrlToName(contents));
+                    StorageReference desertRef = storageRef.child("outer/" + id + "/" + storageUrlToName(contents));
+                    Log.d("TAG","ddd "+ id+" : "+ storageUrlToName(contents));
                     desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-
                             successCount--;
                             storageDeleteUpdate(id);
                         }
@@ -298,11 +298,12 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
     };
     private void storageDeleteUpdate(String id) {
         if (successCount == 0) {
-            firebaseFirestore.collection("outer").document(id)
+            firebaseFirestore.collection("outer").document(id+"/")
                     .delete()
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
+                            Log.d("TAG","success 성공");
                             boolean clear=true;
                             postsUpdate(clear);
                         }
@@ -310,6 +311,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                            Log.d("TAG","failure 실패");
                         }
                     });
         }
