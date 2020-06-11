@@ -20,9 +20,10 @@ public class ClothesItem implements Serializable {
                 ", contents=" + contents +
                 ", formats=" + formats +
                 ", publisher='" + publisher + '\'' +
-                ", createdAt=" + createdAt +
-                ", id='" + id + '\'' +
+                ", createdAt=" + createdAt +'\'' +
                 ", kind="+kind+
+                ", id='" + id +'\''+
+                ", lowerkid="+lowerkind+
                 '}';
     }
 

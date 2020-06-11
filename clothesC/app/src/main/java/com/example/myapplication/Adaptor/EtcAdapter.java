@@ -69,12 +69,18 @@ public class EtcAdapter extends RecyclerView.Adapter<EtcAdapter.ItemViewHolder> 
         return clothesViewHolder;
     }
 
+    public void loadLowerKind(){
+
+    }
+
     @Override
     public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
         CardView cardView = holder.cardView;
 
         TextView titleTextView = cardView.findViewById(R.id.kindsText);
-        titleTextView.setText("ETC");
+
+        String lower=mDataset.get(position).getLowerkind();
+        titleTextView.setText(lower);
 
         LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

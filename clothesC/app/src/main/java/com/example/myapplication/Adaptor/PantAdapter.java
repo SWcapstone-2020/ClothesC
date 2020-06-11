@@ -74,8 +74,9 @@ public class PantAdapter extends RecyclerView.Adapter<PantAdapter.ItemViewHolder
         CardView cardView = holder.cardView;
 
         TextView titleTextView = cardView.findViewById(R.id.kindsText);
-        titleTextView.setText("PANT");
-        //내용 출력
+        String lower=mDataset.get(position).getLowerkind();
+        titleTextView.setText(lower);
+
         LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 

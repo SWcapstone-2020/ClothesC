@@ -201,7 +201,6 @@ public class SwitchLayoutFragment extends Fragment {
                                 itemList.clear();
                             }
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
                                 String id = document.get("publisher").toString();
                                 if(user.getUid().equals(id)){
                                     itemList.add(new ClothesItem(
@@ -210,6 +209,7 @@ public class SwitchLayoutFragment extends Fragment {
                                             document.getData().get("publisher").toString(),
                                             new Date(document.getDate("createdAt").getTime()),
                                             document.getData().get("kind").toString(),
+                                            document.getData().get("lowerkind").toString(),
                                             document.getId()));
                                 }
 
@@ -324,7 +324,6 @@ public class SwitchLayoutFragment extends Fragment {
 
     private void goWriteActivity(Class c, ClothesItem clothesItem) {
         Intent intent = new Intent(getActivity(), c);
-        Log.d("TAG","ccc  "+clothesItem);
         startActivity(intent);
     }
 

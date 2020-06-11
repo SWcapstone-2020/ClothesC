@@ -251,6 +251,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                                             document.getData().get("publisher").toString(),
                                             new Date(document.getDate("createdAt").getTime()),
                                             document.getData().get("kind").toString(),
+                                            document.getData().get("lowerkind").toString(),
                                             document.getId()));
                                 }
                             }
