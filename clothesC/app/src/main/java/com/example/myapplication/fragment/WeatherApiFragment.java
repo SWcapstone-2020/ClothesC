@@ -113,9 +113,9 @@ public class WeatherApiFragment extends Fragment {
                             String ny = "38";
                             String dataType = "JSON";
                             String key = "8Gnkss2kI%2F%2BVSjVNBRpY9QcW53gpQ953TJoA2E%2B1260r6hNjBYOBotBXFuhE3XXfy2Hzx%2BSV9JdIsoEriCzApQ%3D%3D";
-                            String baseDate = "20200613";
+                            String baseDate = "20200614";
 
-                            String baseTime = "1906";//현재시간
+                            String baseTime = "2104";//현재시간
                             int hour = Integer.valueOf(baseTime.substring(0, 2));
                             int min = Integer.valueOf(baseTime.substring(2, 4));
 //                            min = 0;
