@@ -13,7 +13,8 @@ import com.example.myapplication.fragment.ClothesFragment;
 import com.example.myapplication.fragment.HomeFragment;
 import com.example.myapplication.fragment.ProfileFragment;
 import com.example.myapplication.fragment.ProfileUpdateFragment;
-import com.example.myapplication.fragment.WeatherFragment;
+import com.example.myapplication.fragment.WeatherApiFragment;
+//import com.example.myapplication.fragment.WeatherFragment;
 import com.example.myapplication.signup.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 setFragment(homeFragment);
                 break;
             case R.id.action_weather:
-                WeatherFragment weatherFragment = new WeatherFragment();
+                WeatherApiFragment weatherFragment = new WeatherApiFragment();
                 setFragment(weatherFragment);
                 break;
             case R.id.action_profile:
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         setFragment(homeFragment);
                         return true;
                     case R.id.action_weather:
-                        WeatherFragment weatherFragment = new WeatherFragment();
+                        WeatherApiFragment weatherFragment = new WeatherApiFragment();
                         setFragment(weatherFragment);
                         return true;
                     case R.id.action_profile:
