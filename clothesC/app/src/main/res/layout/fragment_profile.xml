@@ -6,23 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:orientation="vertical">-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/profile"-->
-    <!--            style="bold"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="300dp"-->
-    <!--            android:text="프로필"-->
-    <!--            android:gravity="center"-->
-    <!--            android:textColor="#000000"-->
-    <!--            android:textSize="24sp" />-->
-    <!--    </LinearLayout>-->
-
-    <!--  프로필 영역  -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="230dp"
@@ -103,38 +86,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:textColor="@android:color/white" />
-        <!--   TextView로 대체    -->
-        <!--        <EditText-->
-        <!--            android:id="@+id/nameEditText"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="30dp"-->
-        <!--            android:ems="10"-->
-        <!--            android:textColor ="@android:color/black"-->
-        <!--            android:enabled="false" />-->
 
-        <!--        <EditText-->
-        <!--            android:id="@+id/introEditText"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="10dp"-->
-        <!--            android:textColor ="@android:color/black"-->
-        <!--            android:ems="10"-->
-        <!--            android:enabled="false" />-->
-
-        <!--   Icon으로 대체  -->
-        <!--        <Button-->
-        <!--            android:id="@+id/profileUpdate"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="프로필 업데이트" />-->
-
-        <!--        <Button-->
-        <!--            android:id="@+id/logoutButton"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_gravity="left"-->
-        <!--            android:text="로그아웃" />-->
     </LinearLayout>
 
     <!-- 메뉴바 -->
@@ -174,6 +126,7 @@
 
     <!-- 메뉴 아래 실선 -->
     <LinearLayout
+        android:id="@+id/liner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="230dp"
@@ -187,87 +140,13 @@
             android:layout_marginLeft="0dp"
             android:background="#272727" />
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mypost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/liner"/>
     <!--  그리드 레이아웃  -->
-    <GridLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="290dp"
-        android:layout_centerHorizontal="true"
-        android:columnCount="3"
-        android:rowCount="3"
-        android:orientation="horizontal">
 
-        <View
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:background="@android:color/white"
-        android:elevation="2dp"/>
-
-        <View
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@android:color/white"
-            android:elevation="2dp"/>
-
-        <View
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@android:color/white"
-            android:elevation="2dp"/>
-
-        <View
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@android:color/white"
-            android:elevation="2dp"/>
-
-        <View
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@android:color/white"
-            android:elevation="2dp"/>
-
-        <View
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@android:color/white"
-            android:elevation="2dp"/>
-
-        <View
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@android:color/white"
-            android:elevation="2dp"/>
-
-        <View
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@android:color/white"
-            android:elevation="2dp"/>
-
-        <View
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@android:color/white"
-            android:elevation="2dp"/>
-
-    </GridLayout>
 </RelativeLayout>
