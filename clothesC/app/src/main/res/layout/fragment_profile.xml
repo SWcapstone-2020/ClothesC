@@ -109,19 +109,7 @@
                 android:tint="#000000"
                 app:srcCompat="@drawable/ic_shirt" />
 
-            <ImageButton
-                android:layout_width="200dp"
-                android:layout_height="24dp"
-                android:paddingLeft="10dp"
-                android:background="@android:color/transparent"
-                android:tint="#000000"
-                app:srcCompat="@drawable/ic_heart" />
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_below="@+id/menu_bar"
-            android:background="@drawable/drop_shadow" />
     </RelativeLayout>
 
     <!-- 메뉴 아래 실선 -->
@@ -134,7 +122,7 @@
 
         <View
             android:id="@+id/menuLine"
-            android:layout_width="208dp"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="48dp"
             android:layout_marginLeft="0dp"
