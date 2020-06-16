@@ -44,7 +44,6 @@
         <activity android:name=".Post.ShowPostActivity"/>
         <activity android:name=".Post.DetailPostActivity"/>
         <activity android:name=".Clothes.SubmitActivity"/>
-        <activity android:name=".Weather.WeatherTestActivity"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

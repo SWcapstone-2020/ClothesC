@@ -10,6 +10,9 @@
 
     <!-- 툴바(상단바) 추가 -->
     <!--  ClothesitemActivity.java에서 해당 id 값으로 toolbar를 불러와 사용  -->
+
+    <!--  네비게이션 드로어 추가  -->
+    <!--  ClothesitemActivity.java에서 해당 id 값으로 네비게이션 드로어를 불러와 사용  -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,19 +35,17 @@
             android:id="@+id/fab_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
             android:backgroundTint="#009688"
-            app:srcCompat="@drawable/ic_span_1"
             app:borderWidth="0dp"
-            app:fabSize="normal" />
+            app:fabSize="normal"
+            app:srcCompat="@drawable/ic_span_1" />
 
     </RelativeLayout>
 
-    <!--  네비게이션 드로어 추가  -->
-    <!--  ClothesitemActivity.java에서 해당 id 값으로 네비게이션 드로어를 불러와 사용  -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"

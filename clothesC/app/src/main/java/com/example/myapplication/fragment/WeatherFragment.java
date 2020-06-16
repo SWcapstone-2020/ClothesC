@@ -7,6 +7,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ public class WeatherFragment extends Fragment {
     private Context context;
     Spinner spinner;	//스피너
     Button getBtn;		//날씨 가져오는 버튼
+    Button recommend;
     TextView text;		//날씨 뿌려주는 텍스트창
     String sCategory;	//동네
     String sTm;			//발표시각
@@ -59,9 +61,11 @@ public class WeatherFragment extends Fragment {
 
 
     //동네 코드정보 정말이지 너무많다;; 나중에 db배우면 전국을 다 넣어보자
-    String dongcode[]={"5011063000","5011061000"};
+    String dongcode[]={"5011063000","5011061000","5011025000","5011025300", "5011025600", "5011025900",
+            "5011031000", "5011032000", "5011033000", "5011051000","5011052000","5011053000","5011054000","5011055000","5011056000","5011057000","5011058000", "5011059000",
+            "5011060000","5011062000", "5011064000","5011065000","5011066000","5011067000","5011068000","5011069000"};
     //동네 이름
-    String donglist[]={"아라동","삼양동"};
+    String donglist[]={"아라동","삼양동", "한림읍", "애월읍", "구좌읍", "조천읍", "한경면", "추자면", "우도면", "일도1동", "일도2동", "이도1동", "삼도1동", "삼도2동", "용담1동", "용담2동", "건입동","화북동", "봉개동", "오라동", "연동", "노형동", "외도동", "이호동", "도두동" };
     String dong;	//최종적으로 가져다 붙일 동네코드가 저장되는 변수
 
 
@@ -77,10 +81,12 @@ public class WeatherFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_test, container, false);
+        View view = inflater.inflate(R.layout.fragment_weather, container, false);
 
         handler=new Handler();	//스레드&핸들러처리
         spinner=(Spinner)view.findViewById(R.id.spinner);
+
+
 
         bCategory=bTm=bHour=bTemp=bWdKor=bReh=bDay=bWfKor=tCategory=tTm=tItem=false;	//부울상수는 false로 초기화해주자
 
@@ -93,6 +99,7 @@ public class WeatherFragment extends Fragment {
 
         spinner = (Spinner) view.findViewById(R.id.spinner);		//스피너 객체생성
         spinner.setOnItemSelectedListener(new OnItemSelectedListener() {	//이부분은 스피너에 나타나는 내용
+
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {	//선택시
@@ -117,20 +124,48 @@ public class WeatherFragment extends Fragment {
 
 
         text=(TextView) view.findViewById(R.id.textView1);	//텍스트 객체생성
-        getBtn=(Button) view.findViewById(R.id.getBtn);		//버튼 객체생성
+        getBtn=(Button) view.findViewById(R.id.getBtn);
+        recommend=(Button)view.findViewById(R.id.recommend);
+        recommend.setVisibility(View.GONE);
+        recommend.setOnClickListener(onClickListener);//버튼 객체생성
         getBtn.setOnClickListener(new OnClickListener() {	//버튼을 눌러보자
-
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-
                 text.setText("");	//일단 중복해서 누를경우 대비해서 내용 지워줌
                 network_thread thread=new network_thread();		//스레드생성(UI 스레드사용시 system 뻗는다)
                 thread.start();	//스레드 시작
+                recommend.setVisibility(View.VISIBLE);
             }
         });
         return view;
     }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            RecommendFragment recommendFragment=new RecommendFragment();
+            Bundle bundle=new Bundle();
+            switch (v.getId()) {
+                case R.id.recommend:
+                    bundle.putString("currentTemp",sTemp[0]);
+                    recommendFragment.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container, recommendFragment, "findThisFragment")
+                            .addToBackStack(null)
+                            .commit();
+                    break;
+            }
+        }
+    };
+
+    private void myStartActivity(Class c) {
+        Intent intent = new Intent(getActivity(), c);
+        intent.putExtra("temp",sTemp[0]);
+        startActivity(intent);
+    }
+
+
     class network_thread extends Thread{	//기상청 연결을 위한 스레드
         /**
          * 기상청을 연결하는 스레드
