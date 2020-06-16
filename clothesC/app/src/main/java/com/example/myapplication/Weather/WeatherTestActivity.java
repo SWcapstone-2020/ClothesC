@@ -1,11 +1,5 @@
 package com.example.myapplication.Weather;
 
-import java.io.InputStream;
-import java.net.URL;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +13,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.InputStream;
+import java.net.URL;
 
 
 public class WeatherTestActivity extends Activity {
@@ -54,9 +54,11 @@ public class WeatherTestActivity extends Activity {
 
 
     //동네 코드정보 정말이지 너무많다;; 나중에 db배우면 전국을 다 넣어보자
-    String dongcode[]={"5011063000","5011061000"};
+    String dongcode[]={"5011063000","5011061000","5011025000","5011025300", "5011025600", "5011025900",
+            "5011031000", "5011032000", "5011033000", "5011051000","5011052000","5011053000","5011054000","5011055000","5011056000","5011057000","5011058000", "5011059000",
+            "5011060000","5011062000", "5011064000","5011065000","5011066000","5011067000","5011068000","5011069000"};
     //동네 이름
-    String donglist[]={"아라동","삼양동"};
+    String donglist[]={"아라동","삼양동", "한림읍", "애월읍", "구좌읍", "조천읍", "한경면", "추자면", "우도면", "일도1동", "일도2동", "이도1동", "삼도1동", "삼도2동", "용담1동", "용담2동", "건입동","화북동", "봉개동", "오라동", "연동", "노형동", "외도동", "이호동", "도두동" };
     String dong;	//최종적으로 가져다 붙일 동네코드가 저장되는 변수
 
     @Override
