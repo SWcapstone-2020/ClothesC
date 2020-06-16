@@ -5,12 +5,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Adaptor.OuterAdapter;
+import com.example.myapplication.Adaptor.PantAdapter;
 import com.example.myapplication.Adaptor.ShirtAdapter;
 import com.example.myapplication.Adaptor.Temp20_22Adapter;
 import com.example.myapplication.Clothes.ClothesItem;
@@ -30,16 +35,27 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.example.myapplication.Util.showToast;
+
 public class RecommendFragment extends Fragment {
 
     private FirebaseFirestore firebaseFirestore;
     private double cTemp;
     private ArrayList<ClothesItem> itemList;
     private StorageReference storageRef;
-    private ShirtAdapter shirtAdapter;
+    private Temp20_22Adapter temp20_22Adapter;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private boolean topScrolled;
     private boolean updating;
+    private ShirtAdapter shirtAdapter;
+    private OuterAdapter outerAdapter;
+    private PantAdapter pantAdapter;
+
+    private ArrayList<String> tempClothes=new ArrayList<>();
+
+    private ArrayAdapter<CharSequence> hightKind;
+
+    private String clotheskind="outer";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,13 +73,52 @@ public class RecommendFragment extends Fragment {
         itemList=new ArrayList<>();
         final RecyclerView recyclerView = view.findViewById(R.id.recommendRecycler);
 
+        Spinner spinner = (Spinner) view.findViewById(R.id.hightKind);
+        spinner.setPrompt("옷 종류를 선택하세요");
+        hightKind=ArrayAdapter.createFromResource(getActivity(),R.array.recommendKind, android.R.layout.simple_spinner_item);
+        hightKind.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(hightKind);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                clotheskind = hightKind.getItem(position).toString();
+                if (clotheskind.equals("아우터")) {
+                    clotheskind = "outer";
+                    itemList.clear();
+                    outerAdapter = new OuterAdapter(getActivity(), itemList);
+                    recyclerView.setAdapter(outerAdapter);
+                    loadClothes(false);
+
+                } else if (clotheskind.equals("상의")) {
+                    clotheskind = "shirt";
+                    itemList.clear();
+                    shirtAdapter = new ShirtAdapter(getActivity(), itemList);
+                    recyclerView.setAdapter(shirtAdapter);
+                    loadClothes(false);
+                } else {
+                    clotheskind = "pant";
+                    itemList.clear();
+                    pantAdapter=new PantAdapter(getActivity(), itemList);
+                    recyclerView.setAdapter(pantAdapter);
+                    loadClothes(false);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                showToast(getActivity(), "종류를 선택해주세요.");
+            }
+        });
+
+
         if (getArguments() != null) {
             String param1 = getArguments().getString("currentTemp");
             cTemp=Double.parseDouble(param1);
-            Log.d("TAG","ddd "+cTemp);
             if(19<cTemp&&cTemp<23){
-                shirtAdapter=new ShirtAdapter(getActivity(),itemList);
-                recyclerView.setAdapter(shirtAdapter);
+                tempClothes.add("셔츠");
+                tempClothes.add("블라우스");
+                tempClothes.add("긴바지");
             }
         }
 
@@ -96,7 +151,7 @@ public class RecommendFragment extends Fragment {
                 int lastVisibleItemPosition = ((LinearLayoutManager)layoutManager).findLastVisibleItemPosition();
 
                 if(totalItemCount - 3 <= lastVisibleItemPosition && !updating){
-                    shirtUpdate(false);
+                    loadClothes(false);
                 }
 
                 if(0 < firstVisibleItemPosition){
@@ -104,18 +159,15 @@ public class RecommendFragment extends Fragment {
                 }
             }
         });
-
-        shirtUpdate(false);
-
-
-
+        loadClothes(false);
 
         return view;
     }
-    private void shirtUpdate(final boolean clear) {
+
+    private void loadClothes(final boolean clear) {
         updating = true;
         Date date = itemList.size() == 0 || clear ? new Date() : itemList.get(itemList.size() - 1).getCreatedAt();
-        CollectionReference collectionReference = firebaseFirestore.collection("shirt");
+        CollectionReference collectionReference = firebaseFirestore.collection(clotheskind);
         collectionReference.orderBy("createdAt", Query.Direction.DESCENDING).whereLessThan("createdAt", date).limit(10).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -126,20 +178,32 @@ public class RecommendFragment extends Fragment {
                             }
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String id = document.get("publisher").toString();
-                                String kind=document.get("lowerkind").toString();
+                                String kind_L=document.get("lowerkind").toString();
                                 if (user.getUid().equals(id)) {
-                                    if(kind.equals("셔츠")||kind.equals("블라우스")){
-                                        itemList.add(new ClothesItem(
-                                                (ArrayList<String>) document.getData().get("contents"),
-                                                (ArrayList<String>) document.getData().get("formats"),
-                                                document.getData().get("publisher").toString(),
-                                                new Date(document.getDate("createdAt").getTime()),
-                                                document.getData().get("kind").toString(),
-                                                document.getData().get("lowerkind").toString(),
-                                                document.getId()));
-                                        shirtAdapter.notifyDataSetChanged();
+                                    for(int i=0; i<tempClothes.size(); i++){
+                                        if((tempClothes.get(i)).equals(kind_L)){
+                                            itemList.add(new ClothesItem(
+                                                    (ArrayList<String>) document.getData().get("contents"),
+                                                    (ArrayList<String>) document.getData().get("formats"),
+                                                    document.getData().get("publisher").toString(),
+                                                    new Date(document.getDate("createdAt").getTime()),
+                                                    document.getData().get("kind").toString(),
+                                                    document.getData().get("lowerkind").toString(),
+                                                    document.getId()));
+                                            Log.d("TAG","dddd123"+itemList);
+                                        }
                                     }
                                 }
+                            }
+
+                            if(clotheskind.equals("shirt")){
+                                shirtAdapter.notifyDataSetChanged();
+                            }
+                            else if(clotheskind.equals("outer")){
+                                outerAdapter.notifyDataSetChanged();
+                            }
+                            else if(clotheskind.equals("pant")){
+                                pantAdapter.notifyDataSetChanged();
                             }
                         }
                         updating = false;

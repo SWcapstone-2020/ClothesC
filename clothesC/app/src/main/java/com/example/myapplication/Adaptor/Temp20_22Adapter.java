@@ -2,7 +2,6 @@ package com.example.myapplication.Adaptor;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,24 +23,24 @@ import com.example.myapplication.listener.OnPostListener;
 
 import java.util.ArrayList;
 
-import static com.example.myapplication.Util.isPantUrl;
+import static com.example.myapplication.Util.isClothes;
 import static com.example.myapplication.Util.isShirtUrl;
 
-public class Temp20_22Adapter extends RecyclerView.Adapter<Temp20_22Adapter.RecommendHolder> {
+public class Temp20_22Adapter extends RecyclerView.Adapter<Temp20_22Adapter.ItemViewHolder> {
     private ArrayList<ClothesItem> mDataset;
     private Activity activity;
     private OnPostListener onPostListener;
 
-    static class RecommendHolder extends RecyclerView.ViewHolder{
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-        RecommendHolder(CardView v){
+
+        ItemViewHolder(CardView v) {
             super(v);
-            cardView=v;
-            Log.d("TAG","어뎁터실행");
+            cardView = v;
         }
     }
 
-    public Temp20_22Adapter(Activity activity, ArrayList<ClothesItem> myDataset){
+    public Temp20_22Adapter(Activity activity, ArrayList<ClothesItem> myDataset) {
         this.mDataset = myDataset;
         this.activity = activity;
     }
@@ -55,54 +54,69 @@ public class Temp20_22Adapter extends RecyclerView.Adapter<Temp20_22Adapter.Reco
         return position;
     }
 
-    public RecommendHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+    @NonNull
+    @Override
+    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         CardView cardView = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_clothes, parent, false);
-        final RecommendHolder recommendHolder=new RecommendHolder(cardView);
-        cardView.findViewById(R.id.menu).setOnClickListener(new View.OnClickListener(){
+        final ItemViewHolder clothesViewHolder = new ItemViewHolder(cardView);
+        cardView.findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopup(v,recommendHolder.getAdapterPosition());
+                showPopup(v,clothesViewHolder.getAdapterPosition());
             }
         });
-        return recommendHolder;
+
+        return clothesViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecommendHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
         CardView cardView = holder.cardView;
 
+      TextView titleTextView = cardView.findViewById(R.id.kindsText);
         String lower=mDataset.get(position).getLowerkind();
-            TextView titleTextView = cardView.findViewById(R.id.kindsText);
-            titleTextView.setText(lower);
-            LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        titleTextView.setText(lower);
+        LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-            ArrayList<String> contentList = mDataset.get(position).getContents();
-            if(contentsLayout.getTag()==null || !contentsLayout.equals(contentList)){
-                contentsLayout.setTag(contentList);
-                contentsLayout.removeAllViews();
-                for (int i = 0; i < contentList.size(); i++) {
-                    String contents = contentList.get(i);
-                    if (isShirtUrl(contents)) { //내용이 url인가? (즉 이미지인가 동영상인가)
-                        ImageView imageView = new ImageView(activity);
-                        imageView.setLayoutParams(layoutParams);
-                        imageView.setAdjustViewBounds(true);
-                        imageView.setPadding(10,10,50,20);
-                        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                        contentsLayout.addView(imageView);
-                        Glide.with(activity).load(contents).override(1000).thumbnail(0.1f).into(imageView);
-                    } else { //텍스트인가
-                        TextView textView = new TextView(activity);
-                        textView.setLayoutParams(layoutParams);
-                        textView.setText(contents);
-                        textView.setPadding(20,10,30,20);
-                        textView.setTextSize(20);
-                        textView.setTextColor(Color.rgb(0,0,0)); //텍스트 내용 색깔 지정
-                        contentsLayout.addView(textView);
-                    }
+        ArrayList<String> contentList = mDataset.get(position).getContents();
+        if(contentsLayout.getTag()==null || !contentsLayout.equals(contentList)){
+            contentsLayout.setTag(contentList);
+            contentsLayout.removeAllViews();
+            for (int i = 0; i < contentList.size(); i++) {
+                String contents = contentList.get(i);
+                if (isClothes(contents,"shirt")) { //내용이 url인가? (즉 이미지인가 동영상인가)
+                    ImageView imageView = new ImageView(activity);
+                    imageView.setLayoutParams(layoutParams);
+                    imageView.setAdjustViewBounds(true);
+                    imageView.setPadding(10,10,50,20);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    contentsLayout.addView(imageView);
+                    Glide.with(activity).load(contents).override(1000).thumbnail(0.1f).into(imageView);
+                }
+                else if (isClothes(contents,"pant")) { //내용이 url인가? (즉 이미지인가 동영상인가)
+                    ImageView imageView = new ImageView(activity);
+                    imageView.setLayoutParams(layoutParams);
+                    imageView.setAdjustViewBounds(true);
+                    imageView.setPadding(10,10,50,20);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    contentsLayout.addView(imageView);
+                    Glide.with(activity).load(contents).override(1000).thumbnail(0.1f).into(imageView);
+                }
+                else { //텍스트인가
+                    TextView textView = new TextView(activity);
+                    textView.setLayoutParams(layoutParams);
+                    textView.setText(contents);
+                    textView.setPadding(20,10,30,20);
+                    textView.setTextSize(20);
+                    textView.setTextColor(Color.rgb(0,0,0)); //텍스트 내용 색깔 지정
+                    contentsLayout.addView(textView);
                 }
             }
+        }
     }
+
 
     @Override
     public int getItemCount() {
@@ -131,5 +145,7 @@ public class Temp20_22Adapter extends RecyclerView.Adapter<Temp20_22Adapter.Reco
         inflater.inflate(R.menu.post, popup.getMenu());
         popup.show();
     }
+
+
 
 }
