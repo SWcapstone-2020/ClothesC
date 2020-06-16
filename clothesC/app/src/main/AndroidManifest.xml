@@ -23,6 +23,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- ▲ 상단바 없게 스타일 조정 -->
         <!-- android:name="android.support.multidex.MultiDexApplication" -->
@@ -40,14 +41,11 @@
         <activity android:name=".signup.InfoActivity" />
         <activity android:name=".Post.WritePostActivity"/>
         <activity android:name=".GalleryActivity"/>
-        <activity android:name=".WeahterActivity"/>
         <activity android:name=".Post.ShowPostActivity"/>
         <activity android:name=".Post.DetailPostActivity"/>
         <activity android:name=".Clothes.SubmitActivity"/>
-        <activity
-            android:name=".Clothes.ClothesItemActivity"
-            android:theme="@style/AppTheme.NoActionBar" /><!-- 상단바 없음 -->
-            <!-- "com.example.prac2" -->
+        <activity android:name=".Weather.WeatherTestActivity"/>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}"

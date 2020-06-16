@@ -1,18 +1,16 @@
-package com.example.myapplication.fragment;
+package com.example.myapplication.Weather;
+
 import java.io.InputStream;
 import java.net.URL;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-
-import android.content.Context;
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -22,11 +20,8 @@ import android.widget.TextView;
 
 import com.example.myapplication.R;
 
-import androidx.fragment.app.Fragment;
 
-public class WeatherFragment extends Fragment {
-
-    private Context context;
+public class WeatherTestActivity extends Activity {
     Spinner spinner;	//스피너
     Button getBtn;		//날씨 가져오는 버튼
     TextView text;		//날씨 뿌려주는 텍스트창
@@ -64,23 +59,12 @@ public class WeatherFragment extends Fragment {
     String donglist[]={"아라동","삼양동"};
     String dong;	//최종적으로 가져다 붙일 동네코드가 저장되는 변수
 
-
-    public WeatherFragment(){
-
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_test, container, false);
-
+        setContentView(R.layout.activity_test);
         handler=new Handler();	//스레드&핸들러처리
-        spinner=(Spinner)view.findViewById(R.id.spinner);
+        spinner=(Spinner)findViewById(R.id.spinner);
 
         bCategory=bTm=bHour=bTemp=bWdKor=bReh=bDay=bWfKor=tCategory=tTm=tItem=false;	//부울상수는 false로 초기화해주자
 
@@ -91,7 +75,7 @@ public class WeatherFragment extends Fragment {
         sReh=new String[20];	//습도
         sWfKor=new String[20];	//날씨
 
-        spinner = (Spinner) view.findViewById(R.id.spinner);		//스피너 객체생성
+        spinner = (Spinner) findViewById(R.id.spinner);		//스피너 객체생성
         spinner.setOnItemSelectedListener(new OnItemSelectedListener() {	//이부분은 스피너에 나타나는 내용
 
             @Override
@@ -108,7 +92,7 @@ public class WeatherFragment extends Fragment {
         });
         // 어댑터 객체 생성
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                getActivity(), android.R.layout.simple_spinner_item, donglist);	//어댑터를 통해 스피너에 donglist 넣어줌
+                this, android.R.layout.simple_spinner_item, donglist);	//어댑터를 통해 스피너에 donglist 넣어줌
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);	//dropdown형식
 
         // 어댑터 설정
@@ -116,8 +100,8 @@ public class WeatherFragment extends Fragment {
 
 
 
-        text=(TextView) view.findViewById(R.id.textView1);	//텍스트 객체생성
-        getBtn=(Button) view.findViewById(R.id.getBtn);		//버튼 객체생성
+        text=(TextView) findViewById(R.id.textView1);	//텍스트 객체생성
+        getBtn=(Button) findViewById(R.id.getBtn);		//버튼 객체생성
         getBtn.setOnClickListener(new OnClickListener() {	//버튼을 눌러보자
 
             @Override
@@ -129,8 +113,15 @@ public class WeatherFragment extends Fragment {
                 thread.start();	//스레드 시작
             }
         });
-        return view;
     }
+
+
+    /**
+     * 기상청을 연결하여 정보받고 뿌려주는 스레드
+     *
+     * @author Ans
+     *
+     */
     class network_thread extends Thread{	//기상청 연결을 위한 스레드
         /**
          * 기상청을 연결하는 스레드

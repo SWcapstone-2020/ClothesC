@@ -9,7 +9,6 @@ import com.example.myapplication.fragment.ClothesFragment;
 import com.example.myapplication.fragment.HomeFragment;
 import com.example.myapplication.fragment.ProfileFragment;
 import com.example.myapplication.fragment.ProfileUpdateFragment;
-import com.example.myapplication.fragment.WeatherApiFragment;
 import com.example.myapplication.fragment.WeatherFragment;
 import com.example.myapplication.signup.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 setFragment(homeFragment);
                 break;
             case R.id.action_weather:
-                WeatherApiFragment weatherFragment = new WeatherApiFragment();
+                WeatherFragment weatherFragment = new WeatherFragment();
                 setFragment(weatherFragment);
                 break;
             case R.id.action_profile:
