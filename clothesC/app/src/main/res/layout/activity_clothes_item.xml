@@ -33,7 +33,8 @@
             android:backgroundTint="#88D5FF"
             android:src="@drawable/ic_clothes_add"
             app:borderWidth="0dp"
-            app:fabSize="normal" />
+            app:fabSize="normal"
+            />
 
     </RelativeLayout>
 
