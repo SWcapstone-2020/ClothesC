@@ -40,7 +40,7 @@
         <activity android:name=".signup.InfoActivity" />
         <activity android:name=".Post.WritePostActivity"/>
         <activity android:name=".GalleryActivity"/>
-        <activity android:name=".WeatherActivity"/>
+        <activity android:name=".WeahterActivity"/>
         <activity android:name=".Post.ShowPostActivity"/>
         <activity android:name=".Post.DetailPostActivity"/>
         <activity android:name=".Clothes.SubmitActivity"/>
