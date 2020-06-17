@@ -1,11 +1,4 @@
 package com.example.myapplication.fragment;
-import java.io.InputStream;
-import java.net.URL;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +15,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.InputStream;
+import java.net.URL;
 
 import androidx.fragment.app.Fragment;
 
@@ -65,7 +64,7 @@ public class WeatherFragment extends Fragment {
             "5011031000", "5011032000", "5011033000", "5011051000","5011052000","5011053000","5011054000","5011055000","5011056000","5011057000","5011058000", "5011059000",
             "5011060000","5011062000", "5011064000","5011065000","5011066000","5011067000","5011068000","5011069000"};
     //동네 이름
-    String donglist[]={"아라동","삼양동", "한림읍", "애월읍", "구좌읍", "조천읍", "한경면", "추자면", "우도면", "일도1동", "일도2동", "이도1동", "삼도1동", "삼도2동", "용담1동", "용담2동", "건입동","화북동", "봉개동", "오라동", "연동", "노형동", "외도동", "이호동", "도두동" };
+    String donglist[]={"아라동","삼양동", "한림읍", "애월읍", "구좌읍", "조천읍", "한경면", "추자면", "우도면", "일도1동", "일도2동", "이도1동", "이동2동", "삼도1동", "삼도2동", "용담1동", "용담2동", "건입동","화북동", "봉개동", "오라동", "연동", "노형동", "외도동", "이호동", "도두동" };
     String dong;	//최종적으로 가져다 붙일 동네코드가 저장되는 변수
 
 
