@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -30,7 +33,11 @@ public class WeatherFragment extends Fragment {
     Spinner spinner;	//스피너
     Button getBtn;		//날씨 가져오는 버튼
     Button recommend;
-    TextView text;		//날씨 뿌려주는 텍스트창
+    TextView text0;		//날씨 뿌려주는 텍스트창
+    TextView text1;		//날씨 뿌려주는 텍스트창
+    TextView text2;		//날씨 뿌려주는 텍스트창
+    TextView text3;		//날씨 뿌려주는 텍스트창
+    TextView text4;		//날씨 뿌려주는 텍스트창
     String sCategory;	//동네
     String sTm;			//발표시각
     String [] sHour;	//예보시간(총 15개정도 받아옴 3일*5번)
@@ -122,7 +129,11 @@ public class WeatherFragment extends Fragment {
 
 
 
-        text=(TextView) view.findViewById(R.id.textView1);	//텍스트 객체생성
+        text0=(TextView) view.findViewById(R.id.textView0);	//텍스트 객체생성
+        text1=(TextView) view.findViewById(R.id.textView1);	//텍스트 객체생성
+//        text2=(TextView) view.findViewById(R.id.textView2);	//텍스트 객체생성
+        text3=(TextView) view.findViewById(R.id.textView3);	//텍스트 객체생성
+        text4=(TextView) view.findViewById(R.id.textView4);	//텍스트 객체생성
         getBtn=(Button) view.findViewById(R.id.getBtn);
         recommend=(Button)view.findViewById(R.id.recommend);
         recommend.setVisibility(View.GONE);
@@ -131,7 +142,11 @@ public class WeatherFragment extends Fragment {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                text.setText("");	//일단 중복해서 누를경우 대비해서 내용 지워줌
+                text0.setText("");	//일단 중복해서 누를경우 대비해서 내용 지워줌
+                text1.setText("");
+//                text2.setText("");
+                text3.setText("");
+                text4.setText("");
                 network_thread thread=new network_thread();		//스레드생성(UI 스레드사용시 system 뻗는다)
                 thread.start();	//스레드 시작
                 recommend.setVisibility(View.VISIBLE);
@@ -288,28 +303,84 @@ public class WeatherFragment extends Fragment {
                 public void run() {
 
                     if(tCategory){	//동네이름 들어왔다
-                        text.setText(text.getText()+"지역:"+sCategory+"\n");
+//                        text.setText(text1.getText()+"지역:"+sCategory+"\n");
+                        text0.setText(text0.getText()+sCategory+"\n");              //지역
                         tCategory=false;
                     }if(tTm){		//발표시각 들어왔다
-                        text.setText(text.getText()+"발표시각:"+sTm+"\n\n");
-                        tTm=false;
-                    }if(tItem){		//문서를 다 읽었다
+//                        text.setText(text1.getText()+"발표시각:"+sTm+"\n\n");
+                        StringBuilder sb = new StringBuilder(sTm); //객체 생성
 
+                        //문자열 끝에 추가
+                        sb.append(" 발표");
+
+                        sb.insert(4, ".");//4번째 문자 뒤에 .를 삽입
+                        sb.insert(7, ".");
+                        sb.insert(10, " ");
+                        sb.insert(13, ":");
+
+                        text0.setText(text0.getText()+sb.toString()+"\n\n");
+                        tTm=false;
+                    } if(tItem){		//문서를 다 읽었다
+//                        text0.setText(text0.getText()+sTemp[0].substring(0,2)+"º\n\n");	//현재(+3시간) 온도
+
+                        //글자 크기
+                        text0.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+                        text1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+                        text3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+                        text4.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+
+
+                        int flag = 0;
                         for(int i=0;i<data;i++){	//array로 되어있으니 for문으로
                             if(sDay[i]!=null){		//이건 null integer 에러 예방을 위해(String은 null이 가능하지만intger는 안되니깐)
                                 if(Integer.parseInt(sDay[i])==0){	//발표시각이 0이면 오늘
-                                    text.setText(text.getText()+"날짜:"+"오늘"+"\n");
+//                                  text.setText(text.getText()+"날짜:"+"오늘"+"\n");
+                                    text1.setText(text1.getText()+"오늘"+" ");
                                 }else if(Integer.parseInt(sDay[i])==1){	//1이면 내일
-                                    text.setText(text.getText()+"날짜:"+"내일"+"\n");
+//                                    text.setText(text.getText()+"날짜:"+"내일"+"\n");
+                                    text1.setText(text1.getText()+"내일"+" ");
                                 }else if(Integer.parseInt(sDay[i])==2){	//2이면 모레
-                                    text.setText(text.getText()+"날짜:"+"모레"+"\n");
+//                                    text.setText(text.getText()+"날짜:"+"모레"+"\n");
+                                    text1.setText(text1.getText()+"모레"+" ");
                                 }
                             }
-                            text.setText(text.getText()+"예보시간:"+sHour[i]+"시\n");			//예보시간
-                            text.setText(text.getText()+"현재시간온도:"+sTemp[i]+"도"+"\n");	//온도
-                            text.setText(text.getText()+"풍향:"+sWdKor[i]+"풍"+"\n");			//풍향
-                            text.setText(text.getText()+"습도:"+sReh[i]+"%"+"\n");			//습도
-                            text.setText(text.getText()+"날씨:"+sWfKor[i]+"\n\n\n");			//날씨
+
+//                            if(!sTmn[i].equals("-999.0") && !sTmx[i].equals("-999.0")){ // 최저, 최고기온 값이 있을 때
+////                                flag++; // 초기값 0. 최저, 최고기온 값이 있을 때 증가
+////                                if (flag == 1){ // 한번만 출력
+//                                text0.setText(text0.getText()+sTmn[i].substring(0,2)+"º / ");
+//                                text0.setText(text0.getText()+sTmx[i].substring(0,2)+"º\n\n");
+////                                }
+//                            }
+
+                            text1.setText(text1.getText()+sHour[i]+"시\n\n\n");			        //예보시간
+                            text3.setText(text3.getText()+sWfKor[i]+"\n\n\n");			        //날씨
+                            text4.setText(text4.getText()+sTemp[i].substring(0,2)+"º\n\n\n");	//온도
+
+                            switch (sWfKor[i]){
+                                case "맑음":
+//                                    text2.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sun_1, 0, 0, 0);
+                                    break;
+                                case "구름많음":
+//                                    text2.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_sun, 0, 0, 0);
+                                    break;
+                                case "흐림":
+//                                    text2.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cloud_black_24dp, 0, 0, 0);
+                                    break;
+                                case "비":
+//                                    text2.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_rain, 0, 0, 0);
+//
+                                    break;
+                                default :
+                                    break;
+                            }
+
+//                            text.setText(text.getText()+"예보시간:"+sHour[i]+"시\n");			//예보시간
+//                            text.setText(text.getText()+"현재시간온도:"+sTemp[i]+"도"+"\n");	//온도
+//                            text.setText(text.getText()+"풍향:"+sWdKor[i]+"풍"+"\n");			//풍향
+//                            text.setText(text.getText()+"습도:"+sReh[i]+"%"+"\n");			//습도
+//                            text.setText(text.getText()+"날씨:"+sWfKor[i]+"\n\n\n");			//날씨
+                            //날씨
                         }
                         tItem=false;
                         data=0;		//다음에 날씨를 더가져오게 되면 처음부터 저장해야겠지?
