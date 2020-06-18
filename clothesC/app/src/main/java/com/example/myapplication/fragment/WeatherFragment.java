@@ -89,12 +89,12 @@ public class WeatherFragment extends Fragment {
 
         bCategory=bTm=bHour=bTemp=bWdKor=bReh=bDay=bWfKor=tCategory=tTm=tItem=false;	//부울상수는 false로 초기화해주자
 
-        sHour=new String[20];	//예보시간(사실 15개밖에 안들어오지만 넉넉하게 20개로 잡아놓음)
-        sDay=new String[20];	//날짜
-        sTemp=new String[20];	//현재온도
-        sWdKor=new String[20];	//풍향
-        sReh=new String[20];	//습도
-        sWfKor=new String[20];	//날씨
+        sHour=new String[30];	//예보시간(사실 15개밖에 안들어오지만 넉넉하게 20개로 잡아놓음)
+        sDay=new String[30];	//날짜
+        sTemp=new String[30];	//현재온도
+        sWdKor=new String[30];	//풍향
+        sReh=new String[30];	//습도
+        sWfKor=new String[30];	//날씨
 
         spinner = (Spinner) view.findViewById(R.id.spinner);		//스피너 객체생성
         spinner.setOnItemSelectedListener(new OnItemSelectedListener() {	//이부분은 스피너에 나타나는 내용

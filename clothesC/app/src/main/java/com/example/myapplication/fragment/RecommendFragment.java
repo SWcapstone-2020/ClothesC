@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.Adaptor.OuterAdapter;
 import com.example.myapplication.Adaptor.PantAdapter;
 import com.example.myapplication.Adaptor.ShirtAdapter;
-import com.example.myapplication.Adaptor.Temp20_22Adapter;
 import com.example.myapplication.Clothes.ClothesItem;
 import com.example.myapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,7 +42,6 @@ public class RecommendFragment extends Fragment {
     private double cTemp;
     private ArrayList<ClothesItem> itemList;
     private StorageReference storageRef;
-    private Temp20_22Adapter temp20_22Adapter;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private boolean topScrolled;
     private boolean updating;
@@ -115,10 +113,18 @@ public class RecommendFragment extends Fragment {
         if (getArguments() != null) {
             String param1 = getArguments().getString("currentTemp");
             cTemp=Double.parseDouble(param1);
-            if(19<cTemp&&cTemp<23){
+            if(20<=cTemp&&cTemp<=22){
                 tempClothes.add("셔츠");
                 tempClothes.add("블라우스");
                 tempClothes.add("긴바지");
+            }
+            else if(23<=cTemp&&cTemp<=27){
+                tempClothes.add("반팔");
+                tempClothes.add("짧은바지");
+            }
+            else if(28<=cTemp){
+                tempClothes.add("민소매");
+                tempClothes.add("짧은바지");
             }
         }
 

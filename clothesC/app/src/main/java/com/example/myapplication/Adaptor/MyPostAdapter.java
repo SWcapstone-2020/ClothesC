@@ -3,6 +3,7 @@ package com.example.myapplication.Adaptor;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +23,8 @@ import com.example.myapplication.Post.DetailPostActivity;
 import com.example.myapplication.Post.PostInfo;
 import com.example.myapplication.R;
 import com.example.myapplication.listener.OnPostListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,8 +51,8 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
         this.activity = activity;
     }
 
-    public void setOnPostListener(OnPostListener onPostListener){
-        this.onPostListener=onPostListener;
+    public void setOnPostListener(OnPostListener onPostListener) {
+        this.onPostListener = onPostListener;
     }
 
     @Override
@@ -71,11 +74,10 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
                 activity.startActivity(intent);
             }
         });
-
         cardView.findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopup(v,postViewHolder.getAdapterPosition());
+                showPopup(v, postViewHolder.getAdapterPosition());
             }
         });
 
@@ -96,12 +98,12 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         ArrayList<String> contentList = mDataset.get(position).getContents();
 
-        if(contentsLayout.getTag()==null || !contentsLayout.equals(contentList)){
+        if (contentsLayout.getTag() == null || !contentsLayout.equals(contentList)) {
             contentsLayout.setTag(contentList);
             contentsLayout.removeAllViews();
-            final int MORE_NEED=2;
+            final int MORE_NEED = 2;
             for (int i = 0; i < contentList.size(); i++) {
-                if(i==MORE_NEED){
+                if (i == MORE_NEED) {
                     TextView textView = new TextView(activity);
                     textView.setLayoutParams(layoutParams);
                     textView.setText("더보기...");
@@ -120,7 +122,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
                     TextView textView = new TextView(activity);
                     textView.setLayoutParams(layoutParams);
                     textView.setText(contents);
-                    textView.setTextColor(Color.rgb(0,0,0)); //텍스트 내용 색깔 지정
+                    textView.setTextColor(Color.rgb(0, 0, 0)); //텍스트 내용 색깔 지정
                     contentsLayout.addView(textView);
                 }
             }
@@ -154,8 +156,8 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.post, popup.getMenu());
         popup.show();
-    }
 
+    }
 
 
 }

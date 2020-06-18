@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static com.example.myapplication.Util.isStorageUrl;
+import static com.example.myapplication.Util.showToast;
 import static com.example.myapplication.Util.storageUrlToName;
 
 public class HomeFragment extends Fragment {
@@ -48,6 +51,10 @@ public class HomeFragment extends Fragment {
     private boolean topScrolled;
     private int successCount;
     private String check;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+
+    private String writer;
 
 
     public HomeFragment() {
@@ -159,35 +166,46 @@ public class HomeFragment extends Fragment {
     OnPostListener onPostListener = new OnPostListener() {
         @Override
         public void onDelete(int position) {
-            final String id = postList.get(position).getId();
-            ArrayList<String> contentList = postList.get(position).getContents();
-            for (int i = 0; i < contentList.size(); i++) {
-                String contents = contentList.get(i);
-                if(isStorageUrl(contents)){ //내용이 url인가? (즉 이미지인가 동영상인가)
-                    successCount++;
-                    StorageReference desertRef = storageRef.child("posts/" + id + "/" + storageUrlToName(contents));
-                    desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(context,"이미지 삭제...",Toast.LENGTH_LONG).show();
-                            successCount--;
-                            storageDeleteUpdate(id);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-//                            showToast(ShowPostActivity.this, "삭제하지 못했습니다");
-                        }
-                    });
+            if(user.getUid().equals(postList.get(position).getPublisher())){
+                final String id = postList.get(position).getId();
+                ArrayList<String> contentList = postList.get(position).getContents();
+                for (int i = 0; i < contentList.size(); i++) {
+                    String contents = contentList.get(i);
+                    if(isStorageUrl(contents)){ //내용이 url인가? (즉 이미지인가 동영상인가)
+                        successCount++;
+                        StorageReference desertRef = storageRef.child("posts/" + id + "/" + storageUrlToName(contents));
+                        desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                successCount--;
+                                storageDeleteUpdate(id);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(context,"게시글 삭제에 실패했습니다",Toast.LENGTH_LONG).show();
+                            }
+                        });
 
+                    }
                 }
+                storageDeleteUpdate(id);
             }
-            storageDeleteUpdate(id);
+               else{
+                Toast.makeText(context,"본인이 작성하신 게시물이 아니라 삭제가 불가능합니다", Toast.LENGTH_LONG).show();
+            }
+
         }
 
         @Override
         public void onModify(int position) {
-            goWriteActivity(WritePostActivity.class, postList.get(position));
+            if(user.getUid().equals(postList.get(position).getPublisher())) {
+                goWriteActivity(WritePostActivity.class, postList.get(position));
+            }
+            else{
+                Toast.makeText(context,"본인이 작성하신 게시물이 아니라 수정이 불가능합니다", Toast.LENGTH_LONG).show();
+            }
+
         }
 
     };
@@ -239,7 +257,7 @@ public class HomeFragment extends Fragment {
                                         document.getData().get("publisher").toString(),
                                         new Date(document.getDate("createdAt").getTime()),
                                         document.getId()));
-
+                                writer=document.getData().get("publisher").toString();
                             }
                             postAdaptor.notifyDataSetChanged();
                         } else {
