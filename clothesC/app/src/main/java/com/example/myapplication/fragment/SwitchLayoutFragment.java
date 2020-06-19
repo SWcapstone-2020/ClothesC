@@ -192,7 +192,7 @@ public class SwitchLayoutFragment extends Fragment {
         updating = true;
         Date date = itemList.size() == 0 || clear ? new Date() : itemList.get(itemList.size() - 1).getCreatedAt();
         CollectionReference collectionReference = firebaseFirestore.collection(type);
-        collectionReference.orderBy("createdAt", Query.Direction.DESCENDING).whereLessThan("createdAt", date).limit(10).get()
+        collectionReference.orderBy("createdAt", Query.Direction.DESCENDING).whereLessThan("createdAt", date).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -202,6 +202,7 @@ public class SwitchLayoutFragment extends Fragment {
                             }
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String id = document.get("publisher").toString();
+                                Log.d("TAG","id"+user.getUid()+"    "+id);
                                 if(user.getUid().equals(id)){
                                     itemList.add(new ClothesItem(
                                             (ArrayList<String>) document.getData().get("contents"),
@@ -211,6 +212,10 @@ public class SwitchLayoutFragment extends Fragment {
                                             document.getData().get("kind").toString(),
                                             document.getData().get("lowerkind").toString(),
                                             document.getId()));
+
+                                }
+                                else{
+                                    continue;
                                 }
 
                             }

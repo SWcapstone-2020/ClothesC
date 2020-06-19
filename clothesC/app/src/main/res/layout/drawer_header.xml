@@ -14,17 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="4dp"
+        android:text="USER"
         android:drawableLeft="@drawable/ic_person_black_24dp"
         android:drawablePadding="10dp"
         android:textColor="#000"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
  />
 
-    <!--    <ImageView-->
-    <!--        android:id="@+id/profileTestImg"-->
-    <!--        android:layout_width="40dp"-->
-    <!--        android:layout_height="40dp"-->
-    <!--        android:scaleType="centerCrop"-->
-    <!--        tools:srcCompat="@tools:sample/avatars" />-->
 
 </LinearLayout>

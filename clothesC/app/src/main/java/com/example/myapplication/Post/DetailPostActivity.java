@@ -1,13 +1,17 @@
 package com.example.myapplication.Post;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
@@ -23,6 +27,12 @@ public class DetailPostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_post);
+
+        LayoutInflater inflater=(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view=inflater.inflate(R.layout.view_post,null);
+        CardView cardView=(CardView)view.findViewById(R.id.menu);
+        cardView.setVisibility(View.GONE);
+
 
         PostInfo postInfo = (PostInfo) getIntent().getSerializableExtra("postInfo");
         //제목 출력

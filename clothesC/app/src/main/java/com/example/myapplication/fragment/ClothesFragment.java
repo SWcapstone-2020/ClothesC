@@ -155,10 +155,29 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
 
         //Navigation Drawer
         mDrawerLayout = (DrawerLayout)view.findViewById(R.id.drawer_layout);
-        loadName();
 
         NavigationView navigationView = (NavigationView)view.findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View nameview=navigationView.getHeaderView(0);
+        final TextView printName=(TextView) nameview.findViewById(R.id.userTestName);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(user.getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        String name=documentSnapshot.get("name").toString();
+                        Log.d("TAG","name  "+name);
+                        printName.setText(name);
+                        Log.d("TAG","test "+printName.getText());
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) { //성공시 출력
+                    }
+                });
+
 
         return view;
     }
@@ -186,26 +205,28 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
     }
 
 
-    private void loadName(){
-        View nameView = (View) getLayoutInflater().
-                inflate(R.layout.drawer_header, null);
-        final TextView printName = (TextView) nameView.findViewById(R.id.userTestName);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users").document(user.getUid()).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        String name=documentSnapshot.get("name").toString();
-                        printName.setText(name);
-                    }
-                })
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) { //성공시 출력
-                    }
-                });
-
-    }
+//    private void loadName(){
+//        View nameView = (View) getLayoutInflater().
+//                inflate(R.layout.drawer_header, null);
+//        final TextView printName = (TextView) nameView.findViewById(R.id.userTestName);
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        db.collection("users").document(user.getUid()).get()
+//                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                        String name=documentSnapshot.get("name").toString();
+//                        Log.d("TAG","name  "+name);
+//                        printName.setText(name);
+//                        Log.d("TAG","test "+printName.getText());
+//                    }
+//                })
+//                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) { //성공시 출력
+//                    }
+//                });
+//
+//    }
 
 
 
@@ -226,9 +247,10 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
 
     private void postsUpdate(final boolean clear) {
         updating = true;
+        final boolean flag = true;
         Date date = itemList.size() == 0 || clear ? new Date() : itemList.get(itemList.size() - 1).getCreatedAt();
         CollectionReference collectionReference = firebaseFirestore.collection("outer");
-        collectionReference.orderBy("createdAt", Query.Direction.DESCENDING).whereLessThan("createdAt", date).limit(10).get()
+        collectionReference.orderBy("createdAt", Query.Direction.DESCENDING).whereLessThan("createdAt", date).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
