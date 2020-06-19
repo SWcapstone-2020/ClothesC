@@ -3,6 +3,7 @@ package com.example.myapplication.Post;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +23,15 @@ import java.util.Locale;
 
 import static com.example.myapplication.Util.isStorageUrl;
 
+
 public class DetailPostActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_post);
 
-        LayoutInflater inflater=(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view=inflater.inflate(R.layout.view_post,null);
-        CardView cardView=(CardView)view.findViewById(R.id.menu);
-        cardView.setVisibility(View.GONE);
+        CardView cardView=(CardView)findViewById(R.id.menu);
+        cardView.setVisibility(View.INVISIBLE);
 
 
         PostInfo postInfo = (PostInfo) getIntent().getSerializableExtra("postInfo");
