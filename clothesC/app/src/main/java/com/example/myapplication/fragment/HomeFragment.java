@@ -234,6 +234,7 @@ public class HomeFragment extends Fragment {
     private void goWriteActivity(Class c, PostInfo postInfo) {
         Intent intent = new Intent(getActivity(), c);
         intent.putExtra("postInfo", postInfo);
+        intent.putExtra("content",postInfo.getContents());
         startActivity(intent);
     }
 

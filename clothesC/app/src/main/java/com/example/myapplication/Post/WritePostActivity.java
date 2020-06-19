@@ -99,7 +99,11 @@ public class WritePostActivity extends AppCompatActivity {
         storageRef = storage.getReference();
 
         postInfo = (PostInfo) getIntent().getSerializableExtra("postInfo"); //postinfo애서 정보 불러옴
+
+
         postInit();
+
+
     }
 
     @Override
@@ -242,8 +246,6 @@ public class WritePostActivity extends AppCompatActivity {
                         contentsList.add(path);
                         if(isImageFile(path)){
                             formatList.add("image");
-                        }else if (isVideoFile(path)){
-                            formatList.add("video");
                         }else{
                             formatList.add("text");
                         }
@@ -279,6 +281,15 @@ public class WritePostActivity extends AppCompatActivity {
                             Log.e("로그", "에러: " + e.toString());
                         }
                         pathCount++;
+                    }
+                    else if(isStorageUrl(pathList.get(pathCount))){
+                        for(int j=0; j<postInfo.getContents().size(); j++){
+                            if(isStorageUrl(postInfo.getContents().get(j))){
+                                Log.d("TAG","ddd "+j+postInfo.getContents().get(j));
+                                contentsList.add(postInfo.getContents().get(j));
+
+                            }
+                        }
                     }
                 }
             }
