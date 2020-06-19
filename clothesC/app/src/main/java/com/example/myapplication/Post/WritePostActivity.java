@@ -282,7 +282,7 @@ public class WritePostActivity extends AppCompatActivity {
                         }
                         pathCount++;
                     }
-                    else if(isStorageUrl(pathList.get(pathCount))){
+/*                    else if(isStorageUrl(pathList.get(pathCount))){
                         for(int j=0; j<postInfo.getContents().size(); j++){
                             if(isStorageUrl(postInfo.getContents().get(j))){
                                 Log.d("TAG","ddd "+j+postInfo.getContents().get(j));
@@ -290,7 +290,7 @@ public class WritePostActivity extends AppCompatActivity {
 
                             }
                         }
-                    }
+                    }*/
                 }
             }
             if (successCount == 0) {

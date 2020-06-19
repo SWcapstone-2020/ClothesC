@@ -356,7 +356,7 @@ public class SubmitActivity extends AppCompatActivity {
                         Intent resultIntent = new Intent();
                         resultIntent.putExtra("item", item);
                         setResult(Activity.RESULT_OK, resultIntent);
-                        startActivity(MainActivity.class, R.id.action_clothes);
+                        startActivity(MainActivity.class, R.id.action_home);
                         finish();
                     }
                 })
