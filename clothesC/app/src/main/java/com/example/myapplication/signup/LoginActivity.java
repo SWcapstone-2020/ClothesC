@@ -9,6 +9,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -77,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 showToast(LoginActivity.this,"로그인을 성공했습니다.");
-                                finish();
+                                startActivity(MainActivity.class);
                             } else {
                                 if(task.getException().toString() !=null){
                                     showToast(LoginActivity.this,"이메일 혹은 비밀번호를 확인해주세요");
