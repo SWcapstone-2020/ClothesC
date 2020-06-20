@@ -190,14 +190,14 @@ public class ProfileFragment extends Fragment {
         super.onAttach(context);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://clothesc-ver1.appspot.com");
-        StorageReference pathReference = storageReference.child("profileImage/" + user.getUid() + "/" + "profile.PNG");
-        String path = pathReference.toString();
-        if (isProfile(path, user.getUid())) {
+        StorageReference pathReference = storageReference.child("profileImage/"+user.getUid());
+        Log.d(TAG,"ddd "+pathReference);
+        if (pathReference==null) {
             StorageReference tempReference = storageReference.child("profileImage/temp/profileImg.png");
             tempReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    Log.d(TAG, uri.toString());
+                    Log.d(TAG, "ddd  " +uri.toString());
 
                     Glide.with(context).load(uri).into(imageView);
 
@@ -209,7 +209,8 @@ public class ProfileFragment extends Fragment {
                 }
             });
         } else {
-            pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            StorageReference submitProfile = storageReference.child("profileImage/" + user.getUid()+"/"+"profile.PNG");
+            submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
                     Log.d(TAG, uri.toString());
