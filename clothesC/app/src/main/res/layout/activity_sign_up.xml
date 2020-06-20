@@ -82,7 +82,7 @@
             android:textColor="#ffffff"
             android:background="@drawable/bt_singup"
             android:layout_gravity="center"
-
+            android:paddingBottom="5dp"
             />
 
     </LinearLayout>
