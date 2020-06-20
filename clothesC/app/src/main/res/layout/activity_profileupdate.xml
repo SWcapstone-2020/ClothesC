@@ -12,12 +12,14 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorBlue"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="edit" />
+        app:title="프로필 수정"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
+        android:background="#ffffff"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,14 +34,15 @@
                 android:paddingTop="8dp"
                 android:textColor="#000000"
                 android:textSize="15sp"
-                android:text="Profile photo" />
+                 />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginTop="35dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="80dp"
@@ -69,6 +72,16 @@
                     app:srcCompat="@drawable/ic_pencil" />
 
             </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center_horizontal"
+                android:paddingTop="8dp"
+                android:text="프로필사진"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -89,7 +102,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:ems="10"
-                    android:hint="Username" />
+                    android:hint="유저 이름"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="18dp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -104,7 +120,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:ems="10"
-                    android:hint="Bio" />
+                    android:hint="자기소개"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="18dp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--  툴바 메뉴(버튼)로 대체  -->

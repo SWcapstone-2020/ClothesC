@@ -11,31 +11,42 @@
         android:layout_height="230dp"
         android:background="#C8C8C8">
         <!--   프로필 수정 아이콘    -->
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="25dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="25dp">
 
-            <ImageButton
+            <Button
                 android:id="@+id/logoutButton"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginLeft="20dp"
+                android:layout_width="55dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="16dp"
                 android:background="@android:color/transparent"
-                android:tint="#FFFFFF"
-                app:srcCompat="@drawable/ic_lock_blue_24dp" />
-            <ImageButton
-                android:id="@+id/profileUpdate"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginLeft="300dp"
-                android:background="@android:color/transparent"
-                android:tint="#FFFFFF"
-                app:srcCompat="@drawable/ic_pencil" />
+                android:drawableTop="@drawable/ic_logout_white"
 
-        </LinearLayout>
+                android:textSize="11dp"
+                android:textColor="#ffffff"
+                android:tint="#FFFFFF"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="1dp" />
+
+            <Button
+                android:id="@+id/profileUpdate"
+                android:layout_width="34dp"
+                android:layout_height="41dp"
+                android:layout_marginEnd="24dp"
+                android:background="@android:color/transparent"
+                android:drawableTop="@drawable/ic_edit_white"
+                android:textSize="11dp"
+                android:textColor="#FFFFFF"
+                android:tint="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteY="1dp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
         <!--    프로필 아이콘    -->
         <LinearLayout
@@ -62,6 +73,9 @@
     </RelativeLayout>
 
     <!-- 닉네임, 소개 -->
+
+    <!-- 메뉴바 -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -74,40 +88,47 @@
             android:id="@+id/nameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="38dp"
             android:gravity="center_horizontal"
-            android:textStyle="bold"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/introEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center_horizontal"
-            android:textColor="@android:color/white" />
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+
+            />
 
     </LinearLayout>
 
-    <!-- 메뉴바 -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:id="@+id/menu_bar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="230dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="#ffffff"
+            >
 
-            <ImageButton
+            <TextView
                 android:layout_width="200dp"
                 android:layout_height="24dp"
-                android:paddingRight="10dp"
-                android:background="@android:color/transparent"
-                android:tint="#000000"
-                app:srcCompat="@drawable/ic_shirt" />
+                android:text="내 게시글"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:textColor="#35B8FF"
+                android:orientation="vertical"
+                 />
 
         </LinearLayout>
     </RelativeLayout>
@@ -123,10 +144,11 @@
         <View
             android:id="@+id/menuLine"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="5dp"
             android:layout_marginTop="48dp"
             android:layout_marginLeft="0dp"
-            android:background="#272727" />
+            android:background="@drawable/shadow"
+            />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
