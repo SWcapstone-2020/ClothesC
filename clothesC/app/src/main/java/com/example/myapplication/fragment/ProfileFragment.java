@@ -24,6 +24,7 @@ import com.example.myapplication.Post.PostInfo;
 import com.example.myapplication.Post.WritePostActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.listener.OnPostListener;
+import com.example.myapplication.signup.InfoActivity;
 import com.example.myapplication.signup.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,6 +44,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.example.myapplication.Util.isProfile;
 import static com.example.myapplication.Util.isStorageUrl;
 import static com.example.myapplication.Util.storageUrlToName;
 
@@ -80,7 +82,7 @@ public class ProfileFragment extends Fragment {
 
         final RecyclerView recyclerView = view.findViewById(R.id.mypost);
 
-       db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         postList = new ArrayList<>();
 
         if (user != null) {
@@ -88,10 +90,16 @@ public class ProfileFragment extends Fragment {
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            String name = documentSnapshot.get("name").toString();
-                            String intro = documentSnapshot.get("intro").toString();
-                            textName.setText(name);
-                            textBirth.setText(intro);
+                            if(documentSnapshot.get("name")==null || documentSnapshot.get("intro")==null){
+                                startActivity(InfoActivity.class);
+                            }
+                            else {
+                                String name = documentSnapshot.get("name").toString();
+                                String intro = documentSnapshot.get("intro").toString();
+                                textName.setText(name);
+                                textBirth.setText(intro);
+                            }
+
                         }
                     })
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -107,7 +115,7 @@ public class ProfileFragment extends Fragment {
         view.findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
         view.findViewById(R.id.profileUpdate).setOnClickListener(onClickListener);
 
-        myPostAdapter=new MyPostAdapter(getActivity(),postList);
+        myPostAdapter = new MyPostAdapter(getActivity(), postList);
         myPostAdapter.setOnPostListener(onPostListener);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -180,24 +188,43 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onAttach(@NonNull final Context context) {
         super.onAttach(context);
-
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://clothesc-ver1.appspot.com");
         StorageReference pathReference = storageReference.child("profileImage/" + user.getUid() + "/" + "profile.PNG");
-        pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Log.d(TAG, uri.toString());
+        String path = pathReference.toString();
+        if (isProfile(path, user.getUid())) {
+            StorageReference tempReference = storageReference.child("profileImage/temp/profileImg.png");
+            tempReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Log.d(TAG, uri.toString());
 
-                Glide.with(context).load(uri).into(imageView);
+                    Glide.with(context).load(uri).into(imageView);
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
 
-            }
-        });
+                }
+            });
+        } else {
+            pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Log.d(TAG, uri.toString());
+
+                    Glide.with(context).load(uri).into(imageView);
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+        }
+
     }
 
     @Override

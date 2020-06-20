@@ -116,6 +116,7 @@ public class InfoActivity extends AppCompatActivity {
 
 
         }
+
     }
     public String getPath(Uri uri){
         String [] proj={MediaStore.Images.Media.DATA};

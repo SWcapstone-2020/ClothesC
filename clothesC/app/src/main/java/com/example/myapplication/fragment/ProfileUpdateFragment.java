@@ -27,6 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.loader.content.CursorLoader;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,6 +42,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.InputStream;
+
+import static com.example.myapplication.Util.isProfile;
 
 public class ProfileUpdateFragment extends Fragment {
     ImageView renewProfile;
@@ -157,47 +160,52 @@ public class ProfileUpdateFragment extends Fragment {
         StorageReference storageRef = storage.getReferenceFromUrl("gs://clothesc-ver1.appspot.com");
         if (requestCode == GALLERY_CODE) {
             StorageReference desertRef = storageRef.child("profileImage/" + user.getUid()+"/"+"profile.PNG");
-            desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Toast.makeText(context,"기존 이미지 삭제 성공",Toast.LENGTH_LONG).show();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    Toast.makeText(context,"기존 이미지 삭제 실패.",Toast.LENGTH_LONG).show();
-                }
-            });
-            Uri file = Uri.fromFile(new File(getPath(data.getData())));
-            String profile=file.getLastPathSegment();
-            profile="profile.PNG";
-            StorageReference riversRef = storageRef.child("profileImage/" + user.getUid()+"/"+profile);
-            UploadTask uploadTask = riversRef.putFile(file);
-
-            try {
-                // 선택한 이미지에서 비트맵 생성
-                InputStream in = getActivity().getContentResolver().openInputStream(data.getData());
-
-                Bitmap img = BitmapFactory.decodeStream(in);
-                in.close();
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            String path=desertRef.toString();
+            if(isProfile(path, user.getUid())){
+                desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context,"기존 이미지 삭제 성공",Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Toast.makeText(context,"기존 이미지 삭제 실패.",Toast.LENGTH_LONG).show();
+                    }
+                });
             }
 
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
+                Uri file = Uri.fromFile(new File(getPath(data.getData())));
+                String profile=file.getLastPathSegment();
+                profile="profile.PNG";
+                StorageReference riversRef = storageRef.child("profileImage/" + user.getUid()+"/"+profile);
+                UploadTask uploadTask = riversRef.putFile(file);
+
+                try {
+                    // 선택한 이미지에서 비트맵 생성
+                    InputStream in = getActivity().getContentResolver().openInputStream(data.getData());
+
+                    Bitmap img = BitmapFactory.decodeStream(in);
+                    Glide.with(this).load(img).into(renewProfile);
+                    in.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                }
-            });
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
+                    }
+                });
 
-        }
+            }
+
     }
 
     public String getPath(Uri uri){
