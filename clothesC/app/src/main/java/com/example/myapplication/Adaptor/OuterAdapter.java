@@ -11,19 +11,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.myapplication.Clothes.ClothesItem;
 import com.example.myapplication.R;
 import com.example.myapplication.listener.OnPostListener;
-
 import java.util.ArrayList;
-
 import static com.example.myapplication.Util.isItemUrl;
+
 
 public class OuterAdapter extends RecyclerView.Adapter<OuterAdapter.ItemViewHolder> {
     private ArrayList<ClothesItem> mDataset;
@@ -32,7 +29,6 @@ public class OuterAdapter extends RecyclerView.Adapter<OuterAdapter.ItemViewHold
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-
         ItemViewHolder(CardView v) {
             super(v);
             cardView = v;
@@ -52,7 +48,6 @@ public class OuterAdapter extends RecyclerView.Adapter<OuterAdapter.ItemViewHold
     public int getItemViewType(int position) {
         return position;
     }
-
 
     @NonNull
     @Override
@@ -74,12 +69,10 @@ public class OuterAdapter extends RecyclerView.Adapter<OuterAdapter.ItemViewHold
         CardView cardView = holder.cardView;
 
         TextView titleTextView = cardView.findViewById(R.id.kindsText);
-
         String lower=mDataset.get(position).getLowerkind();
         titleTextView.setText(lower);
         titleTextView.setTextSize(20);
         titleTextView.setTextColor(Color.parseColor("#2a88e0"));
-
 
         //내용 출력
         LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
@@ -112,7 +105,6 @@ public class OuterAdapter extends RecyclerView.Adapter<OuterAdapter.ItemViewHold
         }
     }
 
-
     @Override
     public int getItemCount() {
         return mDataset.size();
@@ -140,7 +132,4 @@ public class OuterAdapter extends RecyclerView.Adapter<OuterAdapter.ItemViewHold
         inflater.inflate(R.menu.post, popup.getMenu());
         popup.show();
     }
-
-
-
 }

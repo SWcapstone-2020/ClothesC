@@ -3,7 +3,6 @@ package com.example.myapplication.Adaptor;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,24 +12,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.myapplication.Post.DetailPostActivity;
 import com.example.myapplication.Post.PostInfo;
 import com.example.myapplication.R;
 import com.example.myapplication.listener.OnPostListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-
 import static com.example.myapplication.Util.isStorageUrl;
+
 
 public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHolder> {
     private ArrayList<PostInfo> mDataset;
@@ -39,7 +33,6 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
 
     static class PostViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-
         PostViewHolder(CardView v) {
             super(v);
             cardView = v;
@@ -60,7 +53,6 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
         return position;
     }
 
-
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -80,7 +72,6 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
                 showPopup(v, postViewHolder.getAdapterPosition());
             }
         });
-
         return postViewHolder;
     }
 
@@ -129,7 +120,6 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
         }
     }
 
-
     @Override
     public int getItemCount() {
         return mDataset.size();
@@ -158,6 +148,4 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.PostViewHo
         popup.show();
 
     }
-
-
 }

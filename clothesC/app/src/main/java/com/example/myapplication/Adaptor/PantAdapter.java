@@ -11,19 +11,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.myapplication.Clothes.ClothesItem;
 import com.example.myapplication.R;
 import com.example.myapplication.listener.OnPostListener;
-
 import java.util.ArrayList;
-
 import static com.example.myapplication.Util.isPantUrl;
+
 
 public class PantAdapter extends RecyclerView.Adapter<PantAdapter.ItemViewHolder> {
     private ArrayList<ClothesItem> mDataset;
@@ -32,7 +29,6 @@ public class PantAdapter extends RecyclerView.Adapter<PantAdapter.ItemViewHolder
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-
         ItemViewHolder(CardView v) {
             super(v);
             cardView = v;
@@ -52,7 +48,6 @@ public class PantAdapter extends RecyclerView.Adapter<PantAdapter.ItemViewHolder
     public int getItemViewType(int position) {
         return position;
     }
-
 
     @NonNull
     @Override
@@ -109,7 +104,6 @@ public class PantAdapter extends RecyclerView.Adapter<PantAdapter.ItemViewHolder
         }
     }
 
-
     @Override
     public int getItemCount() {
         return mDataset.size();
@@ -137,7 +131,4 @@ public class PantAdapter extends RecyclerView.Adapter<PantAdapter.ItemViewHolder
         inflater.inflate(R.menu.post, popup.getMenu());
         popup.show();
     }
-
-
-
 }

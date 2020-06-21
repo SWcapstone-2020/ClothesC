@@ -11,19 +11,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.myapplication.Clothes.ClothesItem;
 import com.example.myapplication.R;
 import com.example.myapplication.listener.OnPostListener;
-
 import java.util.ArrayList;
-
 import static com.example.myapplication.Util.isShoesUrl;
+
 
 public class ShoesAdapter extends RecyclerView.Adapter<ShoesAdapter.ItemViewHolder> {
     private ArrayList<ClothesItem> mDataset;
@@ -32,7 +29,6 @@ public class ShoesAdapter extends RecyclerView.Adapter<ShoesAdapter.ItemViewHold
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-
         ItemViewHolder(CardView v) {
             super(v);
             cardView = v;
@@ -53,7 +49,6 @@ public class ShoesAdapter extends RecyclerView.Adapter<ShoesAdapter.ItemViewHold
         return position;
     }
 
-
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -72,12 +67,12 @@ public class ShoesAdapter extends RecyclerView.Adapter<ShoesAdapter.ItemViewHold
     @Override
     public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
         CardView cardView = holder.cardView;
+
         TextView titleTextView = cardView.findViewById(R.id.kindsText);
         String lower=mDataset.get(position).getLowerkind();
         titleTextView.setText(lower);
         titleTextView.setTextSize(20);
         titleTextView.setTextColor(Color.parseColor("#2a88e0"));
-
 
         LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -109,7 +104,6 @@ public class ShoesAdapter extends RecyclerView.Adapter<ShoesAdapter.ItemViewHold
         }
     }
 
-
     @Override
     public int getItemCount() {
         return mDataset.size();
@@ -137,7 +131,4 @@ public class ShoesAdapter extends RecyclerView.Adapter<ShoesAdapter.ItemViewHold
         inflater.inflate(R.menu.post, popup.getMenu());
         popup.show();
     }
-
-
-
 }

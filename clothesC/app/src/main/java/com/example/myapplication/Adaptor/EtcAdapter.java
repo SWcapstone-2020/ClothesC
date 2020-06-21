@@ -11,19 +11,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.myapplication.Clothes.ClothesItem;
 import com.example.myapplication.R;
 import com.example.myapplication.listener.OnPostListener;
-
 import java.util.ArrayList;
-
 import static com.example.myapplication.Util.isEtcUrl;
+
 
 public class EtcAdapter extends RecyclerView.Adapter<EtcAdapter.ItemViewHolder> {
     private ArrayList<ClothesItem> mDataset;
@@ -32,7 +29,6 @@ public class EtcAdapter extends RecyclerView.Adapter<EtcAdapter.ItemViewHolder> 
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-
         ItemViewHolder(CardView v) {
             super(v);
             cardView = v;
@@ -69,16 +65,12 @@ public class EtcAdapter extends RecyclerView.Adapter<EtcAdapter.ItemViewHolder> 
         return clothesViewHolder;
     }
 
-    public void loadLowerKind(){
-
-    }
 
     @Override
     public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
         CardView cardView = holder.cardView;
 
         TextView titleTextView = cardView.findViewById(R.id.kindsText);
-
         String lower=mDataset.get(position).getLowerkind();
         titleTextView.setText(lower);
         titleTextView.setTextSize(20);
@@ -142,7 +134,5 @@ public class EtcAdapter extends RecyclerView.Adapter<EtcAdapter.ItemViewHolder> 
         inflater.inflate(R.menu.post, popup.getMenu());
         popup.show();
     }
-
-
 
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -50,8 +49,8 @@ import static com.example.myapplication.Util.isImageFile;
 import static com.example.myapplication.Util.showToast;
 import static com.example.myapplication.Util.storageUrlToName;
 
+
 public class SubmitActivity extends AppCompatActivity {
-    private static final String TAG = "Submit";
     private FirebaseUser user;
     private StorageReference storageRef;
     private ArrayList<String> pathList = new ArrayList<>();
@@ -64,12 +63,8 @@ public class SubmitActivity extends AppCompatActivity {
     private ClothesItem item;
     private int pathCount, successCount;
     private Util util;
-
-
     private String clotheskind;
     private String lowerkind;
-
-
     private ArrayAdapter<CharSequence> kindspinner;
     private ArrayAdapter<CharSequence> lowerspinner;
 
@@ -89,10 +84,8 @@ public class SubmitActivity extends AppCompatActivity {
         findViewById(R.id.image).setOnClickListener(onClickListener);
         findViewById(R.id.imageModify).setOnClickListener(onClickListener);
         findViewById(R.id.delete).setOnClickListener(onClickListener);
-
         buttonsBackgroundLayout.setOnClickListener(onClickListener);
         contentsEditText.setOnFocusChangeListener(onFocusChangeListener);
-
 
         FirebaseStorage storage = FirebaseStorage.getInstance(); //파이어스토어 초기화
         storageRef = storage.getReference();
@@ -110,34 +103,29 @@ public class SubmitActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 clotheskind = kindspinner.getItem(position).toString();
-                if(clotheskind.equals("아우터")){
-                    clotheskind="outer";
-                    lowerspinner=ArrayAdapter.createFromResource(SubmitActivity.this, R.array.outerlower,android.R.layout.simple_spinner_item);
+                if (clotheskind.equals("아우터")) {
+                    clotheskind = "outer";
+                    lowerspinner = ArrayAdapter.createFromResource(SubmitActivity.this, R.array.outerlower, android.R.layout.simple_spinner_item);
                     lowerspinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner2.setAdapter(lowerspinner);
-
-                }
-                else if(clotheskind.equals("상의")){
-                    clotheskind="shirt";
-                    lowerspinner=ArrayAdapter.createFromResource(SubmitActivity.this, R.array.shirtlower,android.R.layout.simple_spinner_item);
+                } else if (clotheskind.equals("상의")) {
+                    clotheskind = "shirt";
+                    lowerspinner = ArrayAdapter.createFromResource(SubmitActivity.this, R.array.shirtlower, android.R.layout.simple_spinner_item);
                     lowerspinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner2.setAdapter(lowerspinner);
-                }
-                else if(clotheskind.equals("하의")){
-                    clotheskind="pant";
-                    lowerspinner=ArrayAdapter.createFromResource(SubmitActivity.this, R.array.pantlower,android.R.layout.simple_spinner_item);
+                } else if (clotheskind.equals("하의")) {
+                    clotheskind = "pant";
+                    lowerspinner = ArrayAdapter.createFromResource(SubmitActivity.this, R.array.pantlower, android.R.layout.simple_spinner_item);
                     lowerspinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner2.setAdapter(lowerspinner);
-                }
-                else if(clotheskind.equals("신발")){
-                    clotheskind="shoes";
-                    lowerspinner=ArrayAdapter.createFromResource(SubmitActivity.this, R.array.shoselower,android.R.layout.simple_spinner_item);
+                } else if (clotheskind.equals("신발")) {
+                    clotheskind = "shoes";
+                    lowerspinner = ArrayAdapter.createFromResource(SubmitActivity.this, R.array.shoselower, android.R.layout.simple_spinner_item);
                     lowerspinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner2.setAdapter(lowerspinner);
-                }
-                else {
-                    clotheskind="etc";
-                    lowerspinner=ArrayAdapter.createFromResource(SubmitActivity.this, R.array.etclower,android.R.layout.simple_spinner_item);
+                } else {
+                    clotheskind = "etc";
+                    lowerspinner = ArrayAdapter.createFromResource(SubmitActivity.this, R.array.etclower, android.R.layout.simple_spinner_item);
                     lowerspinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner2.setAdapter(lowerspinner);
                 }
@@ -160,9 +148,6 @@ public class SubmitActivity extends AppCompatActivity {
                 showToast(SubmitActivity.this, "종류를 선택해주세요.");
             }
         });
-
-
-
         item = (ClothesItem) getIntent().getSerializableExtra("item");
         postInit();
     }
@@ -188,7 +173,6 @@ public class SubmitActivity extends AppCompatActivity {
                             }
                         }
                     }
-
                     clothesImgView.setImage(path);
                     clothesImgView.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -233,8 +217,8 @@ public class SubmitActivity extends AppCompatActivity {
                 case R.id.delete:
                     final View selectedView = (View) selectedImageVIew.getParent();
                     String path = pathList.get(parent.indexOfChild(selectedView) - 1);
-                    if(isClothes(path,clotheskind)){
-                        StorageReference desertRef = storageRef.child(clotheskind+"/" + item.getId() + "/" + storageUrlToName(path));
+                    if (isClothes(path, clotheskind)) {
+                        StorageReference desertRef = storageRef.child(clotheskind + "/" + item.getId() + "/" + storageUrlToName(path));
                         desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -249,7 +233,7 @@ public class SubmitActivity extends AppCompatActivity {
                                 showToast(SubmitActivity.this, "파일을 삭제하는데 실패하였습니다.");
                             }
                         });
-                    }else{
+                    } else {
                         pathList.remove(parent.indexOfChild(selectedView) - 1);
                         parent.removeView(selectedView);
                         buttonsBackgroundLayout.setVisibility(View.GONE);
@@ -269,23 +253,19 @@ public class SubmitActivity extends AppCompatActivity {
     };
 
     private void storageUpload() {
-        loaderLayout.setVisibility(View.VISIBLE); // 게시글 올릴 때 로딩화면을 나오게 함
-        final ArrayList<String> contentsList = new ArrayList<>(); // 입력한 내용을 배열로 저장
+        loaderLayout.setVisibility(View.VISIBLE);
+        final ArrayList<String> contentsList = new ArrayList<>();
         final ArrayList<String> formatList = new ArrayList<>();
-        user = FirebaseAuth.getInstance().getCurrentUser(); //파이어베이스에서 유저를 불러옴
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-        //205~207까지 파이어베이스 사용을 위해 쓰는 코드
 
         ClothesItem item = (ClothesItem) getIntent().getSerializableExtra("item");
 
         final DocumentReference documentReference = item == null ? firebaseFirestore.collection(clotheskind).document() : firebaseFirestore.collection(clotheskind).document(item.getId());
-//            firebaseFirestore.collection == (홈페이지) 파이어베이스 데이터베이스에서 괄호 안에 적힌 것과 같은 폴더에 접근함.
-
-
-        final Date date = item == null ? new Date() : item.getCreatedAt();  //수정시 수정된 날짜로 변경되는걸 방지
+        final Date date = item == null ? new Date() : item.getCreatedAt();
         for (int i = 0; i < parent.getChildCount(); i++) {
             LinearLayout linearLayout = (LinearLayout) parent.getChildAt(i);
             for (int ii = 0; ii < linearLayout.getChildCount(); ii++) {
@@ -296,7 +276,7 @@ public class SubmitActivity extends AppCompatActivity {
                         contentsList.add(text);
                         formatList.add("text");
                     }
-                } else if (!isClothes(pathList.get(pathCount),clotheskind)) {
+                } else if (!isClothes(pathList.get(pathCount), clotheskind)) {
                     String path = pathList.get(pathCount);
                     successCount++;
                     contentsList.add(path);
@@ -306,8 +286,7 @@ public class SubmitActivity extends AppCompatActivity {
                         formatList.add("text");
                     }
                     String[] pathArray = path.split("\\.");
-                    final StorageReference mountainImagesRef = storageRef.child(clotheskind+"/" + documentReference.getId() + "/" + pathCount + "." + pathArray[pathArray.length - 1]);
-                    //238~239 파이어베이스 스토어에 이미지 저장
+                    final StorageReference mountainImagesRef = storageRef.child(clotheskind + "/" + documentReference.getId() + "/" + pathCount + "." + pathArray[pathArray.length - 1]);
                     try {
                         InputStream stream = new FileInputStream(new File(pathList.get(pathCount)));
                         StorageMetadata metadata = new StorageMetadata.Builder().setCustomMetadata("index", "" + (contentsList.size() - 1)).build();
@@ -326,7 +305,7 @@ public class SubmitActivity extends AppCompatActivity {
                                         successCount--;
                                         contentsList.set(index, uri.toString());
                                         if (successCount == 0) {
-                                            ClothesItem item = new ClothesItem(contentsList, formatList, user.getUid(), date,clotheskind,lowerkind);
+                                            ClothesItem item = new ClothesItem(contentsList, formatList, user.getUid(), date, clotheskind, lowerkind);
                                             storeUpload(documentReference, item);
                                         }
                                     }
@@ -334,16 +313,14 @@ public class SubmitActivity extends AppCompatActivity {
                             }
                         });
                     } catch (FileNotFoundException e) {
-                        Log.e("로그", "에러: " + e.toString());
                     }
                     pathCount++;
                 }
             }
         }
 
-//            String title, ArrayList contents, ArrayList formats, String publisher, Date createdAt, String season, String kind
         if (successCount == 0) {
-            storeUpload(documentReference, new ClothesItem(contentsList, formatList, user.getUid(), date,clotheskind,lowerkind));
+            storeUpload(documentReference, new ClothesItem(contentsList, formatList, user.getUid(), date, clotheskind, lowerkind));
         }
     }
 
@@ -373,8 +350,8 @@ public class SubmitActivity extends AppCompatActivity {
             ArrayList<String> contentsList = item.getContents(); //contentsList에 작성한 내용을 넣음
             for (int i = 0; i < contentsList.size(); i++) {
                 String contents = contentsList.get(i);
-                Intent kindintent=getIntent();
-                clotheskind=kindintent.getExtras().getString("variety");
+                Intent kindintent = getIntent();
+                clotheskind = kindintent.getExtras().getString("variety");
 
                 if (isClothes(contents, clotheskind)) {
                     pathList.add(contents);
@@ -410,9 +387,9 @@ public class SubmitActivity extends AppCompatActivity {
         startActivityForResult(intent, requestCode);
     }
 
-    private void startActivity(Class c, int no){
-        Intent intent=new Intent(this,c);
-        intent.putExtra("choice",no);
+    private void startActivity(Class c, int no) {
+        Intent intent = new Intent(this, c);
+        intent.putExtra("choice", no);
         startActivity(intent);
     }
 }

@@ -49,7 +49,6 @@ import static com.example.myapplication.Util.isShoesUrl;
 import static com.example.myapplication.Util.storageUrlToName;
 
 public class SwitchLayoutFragment extends Fragment {
-    private static final String TAG = "SwitchLayoutFragment";
 
     private RecyclerView recyclerView;
     private FirebaseFirestore firebaseFirestore;
@@ -80,37 +79,33 @@ public class SwitchLayoutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_switch_layout, container, false);
+        View view = inflater.inflate(R.layout.fragment_switch_layout, container, false);
 
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
-        itemList=new ArrayList<>();
+        itemList = new ArrayList<>();
         final RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        type= getArguments().getString("type");
-        if(type.equals("shirt")){
-            shirtAdapter=new ShirtAdapter(getActivity(),itemList);
+        type = getArguments().getString("type");
+        if (type.equals("shirt")) {
+            shirtAdapter = new ShirtAdapter(getActivity(), itemList);
             shirtAdapter.setOnPostListener(onPostListener);
             recyclerView.setAdapter(shirtAdapter);
-        }
-        else if(type.equals("outer")){
-            outerAdapter=new OuterAdapter(getActivity(),itemList);
+        } else if (type.equals("outer")) {
+            outerAdapter = new OuterAdapter(getActivity(), itemList);
             outerAdapter.setOnPostListener(onPostListener);
             recyclerView.setAdapter(outerAdapter);
-        }
-        else if(type.equals("pant")){
-            pantAdapter=new PantAdapter(getActivity(),itemList);
+        } else if (type.equals("pant")) {
+            pantAdapter = new PantAdapter(getActivity(), itemList);
             pantAdapter.setOnPostListener(onPostListener);
             recyclerView.setAdapter(pantAdapter);
-        }
-        else if(type.equals("shoes")){
-            shoesAdapter=new ShoesAdapter(getActivity(),itemList);
+        } else if (type.equals("shoes")) {
+            shoesAdapter = new ShoesAdapter(getActivity(), itemList);
             shoesAdapter.setOnPostListener(onPostListener);
             recyclerView.setAdapter(shoesAdapter);
-        }
-        else if(type.equals("etc")){
-            etcAdapter=new EtcAdapter(getActivity(), itemList);
+        } else if (type.equals("etc")) {
+            etcAdapter = new EtcAdapter(getActivity(), itemList);
             etcAdapter.setOnPostListener(onPostListener);
             recyclerView.setAdapter(etcAdapter);
         }
@@ -124,38 +119,37 @@ public class SwitchLayoutFragment extends Fragment {
                 super.onScrollStateChanged(recyclerView, newState);
 
                 RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-                int firstVisibleItemPosition = ((LinearLayoutManager)layoutManager).findFirstVisibleItemPosition();
+                int firstVisibleItemPosition = ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
 
-                if(newState == 1 && firstVisibleItemPosition == 0){
+                if (newState == 1 && firstVisibleItemPosition == 0) {
                     topScrolled = true;
                 }
-                if(newState == 0 && topScrolled){
+                if (newState == 0 && topScrolled) {
 //                    postsUpdate(true);
                     topScrolled = false;
                 }
             }
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
                 RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
                 int totalItemCount = layoutManager.getItemCount();
-                int firstVisibleItemPosition = ((LinearLayoutManager)layoutManager).findFirstVisibleItemPosition();
-                int lastVisibleItemPosition = ((LinearLayoutManager)layoutManager).findLastVisibleItemPosition();
+                int firstVisibleItemPosition = ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
+                int lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
 
-                if(totalItemCount - 3 <= lastVisibleItemPosition && !updating){
+                if (totalItemCount - 3 <= lastVisibleItemPosition && !updating) {
                     postsUpdate(false);
                 }
 
-                if(0 < firstVisibleItemPosition){
+                if (0 < firstVisibleItemPosition) {
                     topScrolled = false;
                 }
             }
         });
 
         postsUpdate(false);
-
 
 
         return view;
@@ -173,7 +167,7 @@ public class SwitchLayoutFragment extends Fragment {
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
     }
 
@@ -184,8 +178,8 @@ public class SwitchLayoutFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu,inflater);
-        inflater.inflate(R.menu.menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu, menu);
     }
 
     private void postsUpdate(final boolean clear) {
@@ -197,13 +191,13 @@ public class SwitchLayoutFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            if(clear){
+                            if (clear) {
                                 itemList.clear();
                             }
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String id = document.get("publisher").toString();
-                                Log.d("TAG","id"+user.getUid()+"    "+id);
-                                if(user.getUid().equals(id)){
+                                Log.d("TAG", "id" + user.getUid() + "    " + id);
+                                if (user.getUid().equals(id)) {
                                     itemList.add(new ClothesItem(
                                             (ArrayList<String>) document.getData().get("contents"),
                                             (ArrayList<String>) document.getData().get("formats"),
@@ -213,29 +207,23 @@ public class SwitchLayoutFragment extends Fragment {
                                             document.getData().get("lowerkind").toString(),
                                             document.getId()));
 
-                                }
-                                else{
+                                } else {
                                     continue;
                                 }
 
                             }
-                            if(type.equals("shirt")){
+                            if (type.equals("shirt")) {
                                 shirtAdapter.notifyDataSetChanged();
-                            }
-                            else if(type.equals("outer")){
+                            } else if (type.equals("outer")) {
                                 outerAdapter.notifyDataSetChanged();
-                            }
-                            else if(type.equals("pant")){
+                            } else if (type.equals("pant")) {
                                 pantAdapter.notifyDataSetChanged();
-                            }
-                            else if(type.equals("shoes")){
+                            } else if (type.equals("shoes")) {
                                 shoesAdapter.notifyDataSetChanged();
-                            }
-                            else if(type.equals("etc")){
+                            } else if (type.equals("etc")) {
                                 etcAdapter.notifyDataSetChanged();
                             }
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                         updating = false;
                     }
@@ -250,29 +238,25 @@ public class SwitchLayoutFragment extends Fragment {
             ArrayList<String> contentList = itemList.get(position).getContents();
             for (int i = 0; i < contentList.size(); i++) {
                 String contents = contentList.get(i);
-                if(type.equals("shirt")){
-                    if(isShirtUrl(contents)){ //내용이 url인가? (즉 이미지인가 동영상인가)
+                if (type.equals("shirt")) {
+                    if (isShirtUrl(contents)) { //내용이 url인가? (즉 이미지인가 동영상인가)
                         deleteItem(id, contents);
                     }
-                }
-                else if(type.equals("outer")){
-                    if(isItemUrl(contents)){
-                     deleteItem(id,contents);
+                } else if (type.equals("outer")) {
+                    if (isItemUrl(contents)) {
+                        deleteItem(id, contents);
                     }
-                }
-                else if(type.equals("pant")){
-                    if(isPantUrl(contents)){
-                        deleteItem(id,contents);
+                } else if (type.equals("pant")) {
+                    if (isPantUrl(contents)) {
+                        deleteItem(id, contents);
                     }
-                }
-                else if(type.equals("shoes")){
-                    if(isShoesUrl(contents)){
-                        deleteItem(id,contents);
+                } else if (type.equals("shoes")) {
+                    if (isShoesUrl(contents)) {
+                        deleteItem(id, contents);
                     }
-                }
-                else {
-                    if(isEtcUrl(contents)){
-                        deleteItem(id,contents);
+                } else {
+                    if (isEtcUrl(contents)) {
+                        deleteItem(id, contents);
                     }
                 }
 
@@ -289,18 +273,16 @@ public class SwitchLayoutFragment extends Fragment {
 
     private void deleteItem(final String id, String contents) {
         successCount++;
-        StorageReference desertRef = storageRef.child(type+"/" + id + "/" + storageUrlToName(contents));
+        StorageReference desertRef = storageRef.child(type + "/" + id + "/" + storageUrlToName(contents));
         desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-//                            showToast(ShowPostActivity.this, "삭제 했습니다.");
                 successCount--;
                 storageDeleteUpdate(id);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-//                            showToast(ShowPostActivity.this, "삭제하지 못했습니다");
             }
         });
     }
@@ -312,7 +294,7 @@ public class SwitchLayoutFragment extends Fragment {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            boolean clear=true;
+                            boolean clear = true;
                             postsUpdate(clear);
                         }
                     })
@@ -328,7 +310,7 @@ public class SwitchLayoutFragment extends Fragment {
     private void goWriteActivity(Class c, ClothesItem clothesItem) {
         Intent intent = new Intent(getActivity(), c);
         intent.putExtra("item", clothesItem);
-        intent.putExtra("variety",clothesItem.getKind());
+        intent.putExtra("variety", clothesItem.getKind());
         startActivity(intent);
     }
 

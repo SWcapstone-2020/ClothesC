@@ -59,26 +59,23 @@ public class ProfileUpdateFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 툴바 메뉴 활성화
         setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_profileupdate, container, false);
+        View view = inflater.inflate(R.layout.fragment_profileupdate, container, false);
         renewProfile=view.findViewById(R.id.renewProfileImge);
 
         context=container.getContext();
 
-        // 툴바 추가
+
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
-        // 툴바 홈 버튼
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
 
         Drawable img_drawble = getResources().getDrawable(R.drawable.ic_cross);
@@ -101,11 +98,9 @@ public class ProfileUpdateFragment extends Fragment {
         }
     };
 
-    // 툴바 메뉴(버튼) 추가
     // https://hjink247.tistory.com/17
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        MenuInflater inflater = getMenuInflater();
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.profile_update_menu, menu);;
     }
@@ -130,7 +125,6 @@ public class ProfileUpdateFragment extends Fragment {
         String renewalName=((TextView)getView().findViewById(R.id.updateName)).getText().toString();
         String renewalIntro=((TextView)getView().findViewById(R.id.updateIntro)).getText().toString();
         DocumentReference users = db.collection("users").document(user.getUid());
-
         users.update("name",renewalName, "intro", renewalIntro)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -184,7 +178,6 @@ public class ProfileUpdateFragment extends Fragment {
                 try {
                     // 선택한 이미지에서 비트맵 생성
                     InputStream in = getActivity().getContentResolver().openInputStream(data.getData());
-
                     Bitmap img = BitmapFactory.decodeStream(in);
                     Glide.with(this).load(img).into(renewProfile);
                     in.close();
@@ -211,7 +204,6 @@ public class ProfileUpdateFragment extends Fragment {
     public String getPath(Uri uri){
         String [] proj={MediaStore.Images.Media.DATA};
         CursorLoader cursorLoader=new CursorLoader(context,uri,proj,null,null,null);
-
         Cursor cursor=cursorLoader.loadInBackground();
         int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();

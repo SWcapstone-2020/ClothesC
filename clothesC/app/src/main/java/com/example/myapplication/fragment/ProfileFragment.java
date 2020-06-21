@@ -49,7 +49,6 @@ import static com.example.myapplication.Util.isStorageUrl;
 import static com.example.myapplication.Util.storageUrlToName;
 
 public class ProfileFragment extends Fragment {
-    private static final String TAG = "ProfileFragment";
     ImageView imageView;
     private boolean topScrolled;
     private FirebaseFirestore db;
@@ -90,10 +89,9 @@ public class ProfileFragment extends Fragment {
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if(documentSnapshot.get("name")==null || documentSnapshot.get("intro")==null){
+                            if (documentSnapshot.get("name") == null || documentSnapshot.get("intro") == null) {
                                 startActivity(InfoActivity.class);
-                            }
-                            else {
+                            } else {
                                 String name = documentSnapshot.get("name").toString();
                                 String intro = documentSnapshot.get("intro").toString();
                                 textName.setText(name);
@@ -161,7 +159,6 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -190,15 +187,12 @@ public class ProfileFragment extends Fragment {
         super.onAttach(context);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://clothesc-ver1.appspot.com");
-        StorageReference pathReference = storageReference.child("profileImage/"+user.getUid());
-        Log.d(TAG,"ddd "+pathReference);
-        if (pathReference==null) {
+        StorageReference pathReference = storageReference.child("profileImage/" + user.getUid());
+        if (pathReference == null) {
             StorageReference tempReference = storageReference.child("profileImage/temp/profileImg.png");
             tempReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    Log.d(TAG, "ddd  " +uri.toString());
-
                     Glide.with(context).load(uri).into(imageView);
 
                 }
@@ -209,12 +203,10 @@ public class ProfileFragment extends Fragment {
                 }
             });
         } else {
-            StorageReference submitProfile = storageReference.child("profileImage/" + user.getUid()+"/"+"profile.PNG");
+            StorageReference submitProfile = storageReference.child("profileImage/" + user.getUid() + "/" + "profile.PNG");
             submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    Log.d(TAG, uri.toString());
-
                     Glide.with(context).load(uri).into(imageView);
 
                 }
@@ -225,7 +217,6 @@ public class ProfileFragment extends Fragment {
                 }
             });
         }
-
     }
 
     @Override
@@ -260,7 +251,6 @@ public class ProfileFragment extends Fragment {
                             }
                             myPostAdapter.notifyDataSetChanged();
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                         updating = false;
                     }

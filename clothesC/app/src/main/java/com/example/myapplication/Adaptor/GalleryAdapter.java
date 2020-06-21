@@ -6,17 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
-
 import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import static com.example.myapplication.Util.INTENT_PATH;
+
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder> {
     private ArrayList<String> mDataset;
@@ -49,7 +46,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
                 activity.finish();
             }
         });
-
         return galleryViewHolder;
     }
 

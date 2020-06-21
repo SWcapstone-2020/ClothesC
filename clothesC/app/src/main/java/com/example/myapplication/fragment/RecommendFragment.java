@@ -51,11 +51,8 @@ public class RecommendFragment extends Fragment {
     private ShirtAdapter shirtAdapter;
     private OuterAdapter outerAdapter;
     private PantAdapter pantAdapter;
-
     private ArrayList<String> tempClothes=new ArrayList<>();
-
     private ArrayAdapter<CharSequence> hightKind;
-
     private String clotheskind="outer";
 
     @Override
@@ -228,7 +225,6 @@ public class RecommendFragment extends Fragment {
                     }
                 });
     }
-
 
 
 }

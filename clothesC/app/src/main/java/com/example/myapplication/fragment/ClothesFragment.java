@@ -3,7 +3,6 @@ package com.example.myapplication.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,7 +18,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myapplication.Adaptor.OuterAdapter;
 import com.example.myapplication.CameraActivity;
 import com.example.myapplication.Clothes.ClothesItem;
@@ -43,14 +40,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import java.util.ArrayList;
 import java.util.Date;
-
 import static com.example.myapplication.Util.isItemUrl;
 import static com.example.myapplication.Util.storageUrlToName;
 
-//import com.example.myapplication.ClothesItem.SwitchLayoutActivity;
 
 public class ClothesFragment extends Fragment  implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerLayout;
@@ -63,22 +57,17 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
     private boolean updating;
     private boolean topScrolled;
     private int successCount;
-
-
     private Context mContext;
     private FloatingActionButton fab_main;
     private FloatingActionButton fab_camera;
     private boolean isFabOpen = false;
 
-
     public ClothesFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 툴바 메뉴 활성화
         setHasOptionsMenu(true);
     }
 
@@ -96,9 +85,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         clothesAdapter=new OuterAdapter(getActivity(),itemList);
         clothesAdapter.setOnPostListener(onPostListener);
         final RecyclerView recyclerView = view.findViewById(R.id.itemRecy);
-
-
-
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -119,7 +105,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                     topScrolled = false;
                 }
             }
-
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy){
                 super.onScrolled(recyclerView, dx, dy);
@@ -153,10 +138,8 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         actionBar.setSupportActionBar(toolbar);
         actionBar.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         actionBar.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-        actionBar.setTitle("My Closet");
+        actionBar.setTitle("My Closet_Outer");
 
-
-        //Navigation Drawer
         mDrawerLayout = (DrawerLayout)view.findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView)view.findViewById(R.id.navigation_view);
@@ -178,8 +161,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) { //성공시 출력
                     }
                 });
-
-
         return view;
     }
 
@@ -205,9 +186,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         inflater.inflate(R.menu.menu,menu);
     }
 
-
-
-
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -222,7 +200,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
 
         }
     };
-
 
 
     private void postsUpdate(final boolean clear) {
@@ -258,7 +235,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                     }
                 });
     }
-
 
     OnPostListener onPostListener = new OnPostListener() {
         @Override
@@ -324,9 +300,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // toolbar 메뉴 선택 시 동작 지정.
-        // AndroidManifest.xml에서 뒤로가기시 이동할 상위 액티비티를 지정.
-        //menu.xml에서 id 값으로 지정된 '액션바 메뉴'들을 불러옴
         int id = item.getItemId();
 
         switch (id) {
@@ -406,7 +379,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         }
         return true;
     }
-
 
     private void myStartActivity(Class c) {
         Intent intent = new Intent(getActivity(), c);

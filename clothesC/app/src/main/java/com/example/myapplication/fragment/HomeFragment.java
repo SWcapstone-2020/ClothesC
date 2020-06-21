@@ -8,12 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myapplication.Adaptor.PostAdapter;
 import com.example.myapplication.Post.PostInfo;
 import com.example.myapplication.Post.WritePostActivity;
@@ -40,7 +38,6 @@ import static com.example.myapplication.Util.isStorageUrl;
 import static com.example.myapplication.Util.storageUrlToName;
 
 public class HomeFragment extends Fragment {
-    private static final String TAG = "HomeFragment";
     private Context context;
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageRef;
@@ -49,11 +46,7 @@ public class HomeFragment extends Fragment {
     private boolean updating;
     private boolean topScrolled;
     private int successCount;
-    private String check;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-
-    private String writer;
 
 
     public HomeFragment() {
@@ -79,7 +72,6 @@ public class HomeFragment extends Fragment {
         postList = new ArrayList<>();
         postAdaptor = new PostAdapter(getActivity(), postList);
         postAdaptor.setOnPostListener(onPostListener);
-
 
 
         final RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
@@ -127,8 +119,6 @@ public class HomeFragment extends Fragment {
 
         postsUpdate(false);
 
-
-
         return view;
     }
 
@@ -148,7 +138,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onPause(){
         super.onPause();
-//        postAdaptor.playerStop();
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -257,11 +246,9 @@ public class HomeFragment extends Fragment {
                                         document.getData().get("publisher").toString(),
                                         new Date(document.getDate("createdAt").getTime()),
                                         document.getId()));
-                                writer=document.getData().get("publisher").toString();
                             }
                             postAdaptor.notifyDataSetChanged();
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                         updating = false;
                     }
@@ -272,7 +259,5 @@ public class HomeFragment extends Fragment {
         Intent intent = new Intent(getActivity(), c);
         startActivityForResult(intent, 0);
     }
-
-
 
 }

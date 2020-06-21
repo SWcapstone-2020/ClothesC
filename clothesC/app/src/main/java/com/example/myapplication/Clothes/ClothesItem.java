@@ -84,14 +84,12 @@ public class ClothesItem implements Serializable {
     }
     public String getKind(){return this.kind;}
     public void setKind(String kind){this.kind=kind; }
-
     public String getId(){
         return this.id;
     }
     public void setId(String id){
         this.id = id;
     }
-
     public String getLowerkind(){
         return this.lowerkind;
     }

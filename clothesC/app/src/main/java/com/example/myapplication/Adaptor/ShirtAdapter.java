@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 import static com.example.myapplication.Util.isShirtUrl;
 
+
 public class ShirtAdapter extends RecyclerView.Adapter<ShirtAdapter.ItemViewHolder> {
     private ArrayList<ClothesItem> mDataset;
     private Activity activity;
@@ -44,15 +45,14 @@ public class ShirtAdapter extends RecyclerView.Adapter<ShirtAdapter.ItemViewHold
         this.activity = activity;
     }
 
-    public void setOnPostListener(OnPostListener onPostListener){
-        this.onPostListener=onPostListener;
+    public void setOnPostListener(OnPostListener onPostListener) {
+        this.onPostListener = onPostListener;
     }
 
     @Override
     public int getItemViewType(int position) {
         return position;
     }
-
 
     @NonNull
     @Override
@@ -62,7 +62,7 @@ public class ShirtAdapter extends RecyclerView.Adapter<ShirtAdapter.ItemViewHold
         cardView.findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopup(v,clothesViewHolder.getAdapterPosition());
+                showPopup(v, clothesViewHolder.getAdapterPosition());
             }
         });
 
@@ -73,16 +73,17 @@ public class ShirtAdapter extends RecyclerView.Adapter<ShirtAdapter.ItemViewHold
     public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
         CardView cardView = holder.cardView;
 
-      TextView titleTextView = cardView.findViewById(R.id.kindsText);
-        String lower=mDataset.get(position).getLowerkind();
+        TextView titleTextView = cardView.findViewById(R.id.kindsText);
+        String lower = mDataset.get(position).getLowerkind();
         titleTextView.setText(lower);
         titleTextView.setTextSize(20);
         titleTextView.setTextColor(Color.parseColor("#2a88e0"));
+
         LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         ArrayList<String> contentList = mDataset.get(position).getContents();
-        if(contentsLayout.getTag()==null || !contentsLayout.equals(contentList)){
+        if (contentsLayout.getTag() == null || !contentsLayout.equals(contentList)) {
             contentsLayout.setTag(contentList);
             contentsLayout.removeAllViews();
             for (int i = 0; i < contentList.size(); i++) {
@@ -91,7 +92,7 @@ public class ShirtAdapter extends RecyclerView.Adapter<ShirtAdapter.ItemViewHold
                     ImageView imageView = new ImageView(activity);
                     imageView.setLayoutParams(layoutParams);
                     imageView.setAdjustViewBounds(true);
-                    imageView.setPadding(10,10,50,20);
+                    imageView.setPadding(10, 10, 50, 20);
                     imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                     contentsLayout.addView(imageView);
                     Glide.with(activity).load(contents).override(1000).thumbnail(0.1f).into(imageView);
@@ -99,15 +100,14 @@ public class ShirtAdapter extends RecyclerView.Adapter<ShirtAdapter.ItemViewHold
                     TextView textView = new TextView(activity);
                     textView.setLayoutParams(layoutParams);
                     textView.setText(contents);
-                    textView.setPadding(20,10,30,20);
+                    textView.setPadding(20, 10, 30, 20);
                     textView.setTextSize(20);
-                    textView.setTextColor(Color.rgb(0,0,0)); //텍스트 내용 색깔 지정
+                    textView.setTextColor(Color.rgb(0, 0, 0)); //텍스트 내용 색깔 지정
                     contentsLayout.addView(textView);
                 }
             }
         }
     }
-
 
     @Override
     public int getItemCount() {
@@ -136,7 +136,4 @@ public class ShirtAdapter extends RecyclerView.Adapter<ShirtAdapter.ItemViewHold
         inflater.inflate(R.menu.post, popup.getMenu());
         popup.show();
     }
-
-
-
 }

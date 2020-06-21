@@ -12,22 +12,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.myapplication.Post.DetailPostActivity;
 import com.example.myapplication.Post.PostInfo;
 import com.example.myapplication.R;
 import com.example.myapplication.listener.OnPostListener;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-
 import static com.example.myapplication.Util.isStorageUrl;
+
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
     private ArrayList<PostInfo> mDataset;
@@ -36,7 +33,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     static class PostViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-
         PostViewHolder(CardView v) {
             super(v);
             cardView = v;
@@ -56,7 +52,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public int getItemViewType(int position) {
         return position;
     }
-
 
     @NonNull
     @Override
@@ -127,7 +122,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
     }
 
-
     @Override
     public int getItemCount() {
         return mDataset.size();
@@ -155,7 +149,4 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         inflater.inflate(R.menu.post, popup.getMenu());
         popup.show();
     }
-
-
-
 }
