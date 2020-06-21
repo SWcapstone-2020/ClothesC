@@ -56,7 +56,7 @@
             app:borderWidth="0dp"
             app:fabSize="normal"
             android:clickable="true"
-            app:srcCompat="@drawable/ic_baseline_camera_alt_24" />
+            app:srcCompat="@drawable/ic_camera" />
 
     </RelativeLayout>
 
