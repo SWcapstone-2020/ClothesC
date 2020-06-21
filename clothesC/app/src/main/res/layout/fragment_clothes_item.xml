@@ -44,6 +44,20 @@
             app:borderWidth="0dp"
             app:fabSize="normal"  />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/cameraFloating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="#88D5FF"
+            app:borderWidth="0dp"
+            app:fabSize="normal"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_baseline_camera_alt_24" />
+
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView

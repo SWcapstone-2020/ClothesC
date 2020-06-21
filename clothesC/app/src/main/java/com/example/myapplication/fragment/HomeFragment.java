@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static com.example.myapplication.Util.isStorageUrl;
-import static com.example.myapplication.Util.showToast;
 import static com.example.myapplication.Util.storageUrlToName;
 
 public class HomeFragment extends Fragment {

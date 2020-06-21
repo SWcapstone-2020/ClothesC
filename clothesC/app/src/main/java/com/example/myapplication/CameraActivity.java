@@ -55,6 +55,7 @@ public class CameraActivity extends AppCompatActivity {
             try {
                 output = new FileOutputStream(mFile);
                 output.write(bytes);
+
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {

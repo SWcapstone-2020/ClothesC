@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Adaptor.OuterAdapter;
+import com.example.myapplication.CameraActivity;
 import com.example.myapplication.Clothes.ClothesItem;
 import com.example.myapplication.Clothes.SubmitActivity;
 import com.example.myapplication.R;
@@ -52,7 +53,6 @@ import static com.example.myapplication.Util.storageUrlToName;
 //import com.example.myapplication.ClothesItem.SwitchLayoutActivity;
 
 public class ClothesFragment extends Fragment  implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String TAG = "ClothesFragment";
     private DrawerLayout mDrawerLayout;
 
     private FirebaseFirestore firebaseFirestore;
@@ -65,9 +65,9 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
     private int successCount;
 
 
-
     private Context mContext;
     private FloatingActionButton fab_main;
+    private FloatingActionButton fab_camera;
     private boolean isFabOpen = false;
 
 
@@ -145,6 +145,9 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         fab_main=view.findViewById(R.id.fab_main);
         fab_main.setOnClickListener(onClickListener);
 
+        fab_camera=view.findViewById(R.id.cameraFloating);
+        fab_camera.setOnClickListener(onClickListener);
+
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         AppCompatActivity actionBar = (AppCompatActivity) getActivity();
         actionBar.setSupportActionBar(toolbar);
@@ -167,9 +170,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String name=documentSnapshot.get("name").toString();
-                        Log.d("TAG","name  "+name);
                         printName.setText(name);
-                        Log.d("TAG","test "+printName.getText());
                     }
                 })
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -205,30 +206,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
     }
 
 
-//    private void loadName(){
-//        View nameView = (View) getLayoutInflater().
-//                inflate(R.layout.drawer_header, null);
-//        final TextView printName = (TextView) nameView.findViewById(R.id.userTestName);
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection("users").document(user.getUid()).get()
-//                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                        String name=documentSnapshot.get("name").toString();
-//                        Log.d("TAG","name  "+name);
-//                        printName.setText(name);
-//                        Log.d("TAG","test "+printName.getText());
-//                    }
-//                })
-//                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) { //성공시 출력
-//                    }
-//                });
-//
-//    }
-
-
 
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -237,6 +214,9 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
             switch (v.getId()) {
                 case R.id.fab_main:
                     myStartActivity(SubmitActivity.class);
+                    break;
+                case R.id.cameraFloating:
+                    myStartActivity(CameraActivity.class);
                     break;
             }
 
@@ -247,7 +227,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
 
     private void postsUpdate(final boolean clear) {
         updating = true;
-        final boolean flag = true;
         Date date = itemList.size() == 0 || clear ? new Date() : itemList.get(itemList.size() - 1).getCreatedAt();
         CollectionReference collectionReference = firebaseFirestore.collection("outer");
         collectionReference.orderBy("createdAt", Query.Direction.DESCENDING).whereLessThan("createdAt", date).get()
@@ -261,7 +240,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String id = document.get("publisher").toString();
                                 if(user.getUid().equals(id)){
-                                    Log.d(TAG, document.getId() + " => " + document.getData());
                                     itemList.add(new ClothesItem(
                                             (ArrayList<String>) document.getData().get("contents"),
                                             (ArrayList<String>) document.getData().get("formats"),
@@ -274,7 +252,7 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                             }
                             clothesAdapter.notifyDataSetChanged();
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+
                         }
                         updating = false;
                     }
@@ -293,7 +271,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                 if(isItemUrl(contents)){ //내용이 url인가? (즉 이미지인가 동영상인가)
                     successCount++;
                     StorageReference desertRef = storageRef.child("outer/" + id + "/" + storageUrlToName(contents));
-                    Log.d("TAG","ddd "+ id+" : "+ storageUrlToName(contents));
                     desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -325,7 +302,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Log.d("TAG","success 성공");
                             boolean clear=true;
                             postsUpdate(clear);
                         }
@@ -333,7 +309,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("TAG","failure 실패");
                         }
                     });
         }
