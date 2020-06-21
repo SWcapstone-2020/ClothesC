@@ -9,13 +9,17 @@
 
     <Spinner
         android:id="@+id/spinner"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:padding="3dp"
+        android:layout_height="35dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_marginBottom="15dp"
         android:orientation="horizontal">
 
         <Button

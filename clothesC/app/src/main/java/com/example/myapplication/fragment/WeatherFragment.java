@@ -130,10 +130,14 @@ public class WeatherFragment extends Fragment {
 
 
         text0=(TextView) view.findViewById(R.id.textView0);	//텍스트 객체생성
+        text0.setPadding(10,10,10,10);
         text1=(TextView) view.findViewById(R.id.textView1);	//텍스트 객체생성
+        text1.setPadding(10,10,10,10);
 //        text2=(TextView) view.findViewById(R.id.textView2);	//텍스트 객체생성
         text3=(TextView) view.findViewById(R.id.textView3);	//텍스트 객체생성
+        text3.setPadding(10,10,10,10);
         text4=(TextView) view.findViewById(R.id.textView4);	//텍스트 객체생성
+        text4.setPadding(10,10,10,10);
         getBtn=(Button) view.findViewById(R.id.getBtn);
         recommend=(Button)view.findViewById(R.id.recommend);
         recommend.setVisibility(View.GONE);

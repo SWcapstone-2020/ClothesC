@@ -1,5 +1,7 @@
 package com.example.myapplication.fragment;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -70,13 +73,13 @@ public class RecommendFragment extends Fragment {
         storageRef = storage.getReference();
         itemList=new ArrayList<>();
         final RecyclerView recyclerView = view.findViewById(R.id.recommendRecycler);
-
         Spinner spinner = (Spinner) view.findViewById(R.id.hightKind);
         spinner.setPrompt("옷 종류를 선택하세요");
         hightKind=ArrayAdapter.createFromResource(getActivity(),R.array.recommendKind, android.R.layout.simple_spinner_item);
         hightKind.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(hightKind);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 clotheskind = hightKind.getItem(position).toString();
@@ -225,5 +228,7 @@ public class RecommendFragment extends Fragment {
                     }
                 });
     }
+
+
 
 }
