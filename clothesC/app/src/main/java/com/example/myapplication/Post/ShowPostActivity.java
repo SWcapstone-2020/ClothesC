@@ -67,13 +67,11 @@ public class ShowPostActivity extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         if (document != null) {
                             if (document.exists()) {
-//                                Log.d("show","Document data:"+document.getData());
                             } else {
                                 startActivity(LoginActivity.class);
                             }
                         }
                     } else {
-//                        Log.d("show","get failed with"+task.getException());
                     }
                 }
             });
@@ -95,7 +93,6 @@ public class ShowPostActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         postUpdate();
-
 
     }
 
@@ -129,7 +126,6 @@ public class ShowPostActivity extends AppCompatActivity {
             }
             storageDeleteUpdate(id);
         }
-
 
         @Override
         public void onModify(int position) {

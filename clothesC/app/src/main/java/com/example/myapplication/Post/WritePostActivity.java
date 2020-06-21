@@ -10,10 +10,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
 import com.example.myapplication.GalleryActivity;
 import com.example.myapplication.MainActivity;
@@ -30,25 +28,21 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
-
 import static com.example.myapplication.Util.GALLERY_IMAGE;
 import static com.example.myapplication.Util.INTENT_MEDIA;
 import static com.example.myapplication.Util.INTENT_PATH;
 import static com.example.myapplication.Util.isImageFile;
 import static com.example.myapplication.Util.isStorageUrl;
-import static com.example.myapplication.Util.isVideoFile;
 import static com.example.myapplication.Util.showToast;
 import static com.example.myapplication.Util.storageUrlToName;
 
 public class WritePostActivity extends AppCompatActivity {
-    private static final String TAG = "WritePostActivity";
     private FirebaseUser user;
     private StorageReference storageRef;
     private ArrayList<String> pathList = new ArrayList<>();
@@ -155,10 +149,6 @@ public class WritePostActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.check:
                     storageUpload();
-/*                    Bundle bundle=new Bundle(1);
-                    bundle.putString("check","check");
-                    HomeFragment homeFragment=new HomeFragment();
-                    homeFragment.setArguments(bundle);*/
                     break;
                 case R.id.image:
                     myStartActivity(GalleryActivity.class, GALLERY_IMAGE, 0);
@@ -221,12 +211,10 @@ public class WritePostActivity extends AppCompatActivity {
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageRef = storage.getReference();
             FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-            //205~207까지 파이어베이스 사용을 위해 쓰는 코드
 
             PostInfo postinfo=(PostInfo)getIntent().getSerializableExtra("postInfo");
 
             final DocumentReference documentReference = postInfo == null ? firebaseFirestore.collection("posts").document() : firebaseFirestore.collection("posts").document(postInfo.getId());
-//            firebaseFirestore.collection == (홈페이지) 파이어베이스 데이터베이스에서 괄호 안에 적힌 것과 같은 폴더에 접근함.
 
 
             final Date date = postInfo == null ? new Date() : postInfo.getCreatedAt();  //수정시 수정된 날짜로 변경되는걸 방지
@@ -282,15 +270,7 @@ public class WritePostActivity extends AppCompatActivity {
                         }
                         pathCount++;
                     }
-/*                    else if(isStorageUrl(pathList.get(pathCount))){
-                        for(int j=0; j<postInfo.getContents().size(); j++){
-                            if(isStorageUrl(postInfo.getContents().get(j))){
-                                Log.d("TAG","ddd "+j+postInfo.getContents().get(j));
-                                contentsList.add(postInfo.getContents().get(j));
 
-                            }
-                        }
-                    }*/
                 }
             }
             if (successCount == 0) {
@@ -308,7 +288,6 @@ public class WritePostActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
                         loaderLayout.setVisibility(View.GONE); //업로드 성공시 로딩 화면 끄게 함
                         Intent resultIntent = new Intent();
                         resultIntent.putExtra("postinfo", postInfo);
@@ -320,7 +299,6 @@ public class WritePostActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
                         loaderLayout.setVisibility(View.GONE);
                     }
                 });

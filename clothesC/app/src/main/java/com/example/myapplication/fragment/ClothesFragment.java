@@ -137,7 +137,6 @@ public class ClothesFragment extends Fragment  implements NavigationView.OnNavig
         AppCompatActivity actionBar = (AppCompatActivity) getActivity();
         actionBar.setSupportActionBar(toolbar);
         actionBar.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        actionBar.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         actionBar.setTitle("My Closet_Outer");
 
         mDrawerLayout = (DrawerLayout)view.findViewById(R.id.drawer_layout);

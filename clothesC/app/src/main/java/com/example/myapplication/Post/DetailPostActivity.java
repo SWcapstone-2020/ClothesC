@@ -1,22 +1,16 @@
 package com.example.myapplication.Post;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -32,7 +26,6 @@ public class DetailPostActivity extends AppCompatActivity {
 
         CardView cardView=(CardView)findViewById(R.id.menu);
         cardView.setVisibility(View.INVISIBLE);
-
 
         PostInfo postInfo = (PostInfo) getIntent().getSerializableExtra("postInfo");
         //제목 출력
