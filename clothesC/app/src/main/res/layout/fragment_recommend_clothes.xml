@@ -9,15 +9,15 @@
     <Spinner
         android:id="@+id/hightKind"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
-        android:layout_height="1dp"
-        android:background="#99004C">
+        android:layout_height="2dp"
+        android:background="#F38395">
 
     </RelativeLayout>
 
