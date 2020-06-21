@@ -81,6 +81,8 @@ public class EtcAdapter extends RecyclerView.Adapter<EtcAdapter.ItemViewHolder> 
 
         String lower=mDataset.get(position).getLowerkind();
         titleTextView.setText(lower);
+        titleTextView.setTextSize(20);
+        titleTextView.setTextColor(Color.parseColor("#2a88e0"));
 
         LinearLayout contentsLayout = cardView.findViewById(R.id.contentLayout);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

@@ -77,6 +77,8 @@ public class OuterAdapter extends RecyclerView.Adapter<OuterAdapter.ItemViewHold
 
         String lower=mDataset.get(position).getLowerkind();
         titleTextView.setText(lower);
+        titleTextView.setTextSize(20);
+        titleTextView.setTextColor(Color.parseColor("#2a88e0"));
 
 
         //내용 출력
