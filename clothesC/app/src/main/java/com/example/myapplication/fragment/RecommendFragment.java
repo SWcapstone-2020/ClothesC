@@ -121,10 +121,19 @@ public class RecommendFragment extends Fragment {
             else if(23<=cTemp&&cTemp<=27){
                 tempClothes.add("반팔");
                 tempClothes.add("짧은바지");
+                tempClothes.add("미니스커트");
             }
             else if(28<=cTemp){
                 tempClothes.add("민소매");
                 tempClothes.add("짧은바지");
+                tempClothes.add("미니스커트");
+            }
+            else if(17<=cTemp&&cTemp<=19){
+                tempClothes.add("긴팔");
+                tempClothes.add("긴바지");
+                tempClothes.add("자켓");
+                tempClothes.add("롱스커트");
+                tempClothes.add("가디건");
             }
         }
 
