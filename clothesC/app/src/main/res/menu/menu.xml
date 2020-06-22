@@ -9,10 +9,10 @@
         app:showAsAction="never" />
 
     <!-- SwitchLayoutActivity.java에서 이 아이디 값으로 를 불러옴-->
-    <item
-        android:id="@+id/menu_switch_layout"
-        android:title="switch"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_span_1"/>
+<!--    <item-->
+<!--        android:id="@+id/menu_switch_layout"-->
+<!--        android:title="switch"-->
+<!--        app:showAsAction="always"-->
+<!--        android:icon="@drawable/ic_span_1"/>-->
 
 </menu>
